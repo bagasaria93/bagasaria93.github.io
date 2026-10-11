@@ -1,0 +1,31 @@
+---
+// Interactive demonstration of the "fail safe" document send used for the accounting integration.
+// Generic and fictional. Behaviour is implemented in src/scripts/site.js (initSafeSend).
+const { variant = 'light' } = Astro.props;
+const steps = [
+  'Validate against the accounting master data',
+  'Claim the document so it cannot be sent twice',
+  'Send once, with no automatic retry',
+  'Read back and compare the amounts',
+];
+---
+<div class={`widget ${variant === 'light' ? 'widget--light' : ''}`} data-safesend>
+  <div class="widget-title"><span>Send a document to accounting</span><span data-send-status>Ready</span></div>
+  <ol class="steps" role="list">
+    {steps.map((s, i) => (
+      <li class="step" data-step={i} data-state="idle"><span>{s}</span><span class="who"></span></li>
+    ))}
+  </ol>
+  <div class="widget-controls">
+    <label for={`scenario-${variant}`} class="visually-hidden">Scenario</label>
+    <select class="select" id={`scenario-${variant}`} data-send-scenario>
+      <option value="ok">Everything matches</option>
+      <option value="invalid">The data is invalid</option>
+      <option value="rejected">Accounting refuses the document</option>
+      <option value="dropped">The connection drops after sending</option>
+      <option value="mismatch">An amount differs after sending</option>
+    </select>
+    <button class="btn btn--small btn--primary" type="button" data-send-run>Run</button>
+  </div>
+  <p class="readout" data-send-readout aria-live="polite">Choose a scenario and run it. Every outcome has its own status, and none of them corrupts the accounting data.</p>
+</div>

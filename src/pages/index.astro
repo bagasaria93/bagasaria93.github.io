@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ApprovalWidget from '../components/ApprovalWidget.astro';
+import projects from '../data/projects.json';
+import { profile, stats, ticker, experience, skills, education, certifications, testimonials } from '../data/site.js';
+
+const featured = projects.filter((p) => p.featured);
+const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', Integration: 'plug', Delivery: 'rocket', Practice: 'compass' };
+---
+<Base current="home">
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas class="hero-grid" aria-hidden="true" data-dotgrid></canvas>
+    <div class="container hero-inner">
+      <div>
+        <p class="eyebrow">Full-Stack Developer / Bekasi, Indonesia</p>
+        <h1 class="hero-title" id="hero-title">
+          <span class="line" style="--i:0"><span>Bagas</span></span>
+          <span class="line" style="--i:1"><span>Aria <em>Sativa</em></span></span>
+        </h1>
+        <p class="hero-lead">I build production business systems: ERP, HR and booking platforms, and the integrations that connect them to accounting.</p>
+        <div class="hero-cta">
+          <a class="btn btn--primary" href="#work" data-magnetic>View selected work <Icon name="arrow-right" /></a>
+          <a class="btn btn--ghost" href={profile.cv} download data-magnetic>Download CV <Icon name="download" /></a>
+        </div>
+        <p class="status"><span class="dot" aria-hidden="true"></span>Open to remote and onsite roles</p>
+      </div>
+      <figure class="hero-photo" data-tilt>
+        <div class="hero-photo-frame">
+          <img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" fetchpriority="high" decoding="async" />
+        </div>
+        <span class="float-tag float-tag--a">Laravel <small>/ PHP / MySQL</small></span>
+        <span class="float-tag float-tag--b">ERP <small>/ 12 departments</small></span>
+      </figure>
+    </div>
+    <ul class="container hero-stats" role="list">
+      {stats.map((s) => (
+        <li>
+          <strong data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</strong>
+          <span>{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker" aria-label="Core technologies">
+    <div class="ticker-track">
+      <ul class="ticker-group" role="list">{ticker.map((t) => <li>{t}</li>)}</ul>
+      <ul class="ticker-group" role="list" aria-hidden="true">{ticker.map((t) => <li>{t}</li>)}</ul>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">About</p>
+        <h2 class="section-title" id="about-title">Systems that people use every day</h2>
+        <p class="section-lead">Based in Bekasi, I build production-grade systems used daily by real teams. My work spans ERP and HRIS platforms, booking systems and POS applications across manufacturing and service industries.</p>
+        <p class="section-lead">I work end to end: from database design and backend logic in Laravel to the interfaces people click through. Beyond writing code, I analyse business workflows and gather requirements, so that what I ship fits how people actually work.</p>
+        <p class="section-lead">Currently pursuing a Master of Computer Science at Universitas Esa Unggul.</p>
+      </div>
+      <div class="reveal" style="--i:2">
+        <div class="hero-photo-frame" style="aspect-ratio:1/1;background:var(--accent-soft)">
+          <img src="/assets/img/profile2.webp" alt="Bagas Aria Sativa playing golf" width="1080" height="1080" loading="lazy" decoding="async" style="object-fit:contain" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected work -->
+  <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Selected work</p>
+        <h2 class="section-title" id="work-title">Working software, not mockups</h2>
+        <p class="section-lead">Six demos that run in your browser. Every one is built by hand, with a real data model behind it.</p>
+      </div>
+      <div class="work-grid work-grid--feature">
+        {featured.map((p, i) => <div class="reveal" style={`--i:${i % 3}`}><ProjectCard project={p} index={i} /></div>)}
+      </div>
+      <p class="reveal" style="margin-top:2.5rem">
+        <a class="btn btn--ghost" href="/work/">Browse all {projects.length} projects <Icon name="arrow-right" /></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Case study band -->
+  <section class="section band" id="case" aria-labelledby="case-title">
+    <div class="container case-grid">
+      <div class="reveal">
+        <p class="eyebrow">Case study</p>
+        <h2 class="section-title" id="case-title">A manufacturing ERP for 12 departments, built end to end</h2>
+        <ul class="case-points" role="list">
+          <li data-n="01"><span><strong>Access you can trust.</strong> 30+ roles across staff, supervisor and manager tiers, enforced on the server.</span></li>
+          <li data-n="02"><span><strong>Approvals that cannot be skipped.</strong> Each department has its own chain, and every step is checked in order.</span></li>
+          <li data-n="03"><span><strong>Accounting that fails safe.</strong> Documents are validated, sent once and read back, and the purchasing flows never delete accounting data.</span></li>
+        </ul>
+        <p style="margin-top:2rem"><a class="btn btn--on-band btn--ghost" href="/case-study/erp/">Read the case study <Icon name="arrow-right" /></a></p>
+      </div>
+      <div class="reveal" style="--i:2"><ApprovalWidget variant="band" /></div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section" id="experience" aria-labelledby="exp-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Experience</p>
+        <h2 class="section-title" id="exp-title">Where I have built things</h2>
+      </div>
+      <div class="timeline" data-timeline>
+        <span class="timeline-fill" aria-hidden="true"></span>
+        {experience.map((j, i) => (
+          <article class="job reveal" data-job>
+            <div>
+              <p class="job-period">{j.period}</p>
+              <h3>{j.title}</h3>
+              <p class="job-org">{j.org}</p>
+              <p class="job-meta">{j.meta}</p>
+              <p class="job-stack">{j.stack}</p>
+            </div>
+            <ul role="list">{j.points.map((p) => <li>{p}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section" id="skills" aria-labelledby="skills-title" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Toolbox</p>
+        <h2 class="section-title" id="skills-title">What I work with</h2>
+      </div>
+      <div class="skills-grid">
+        {skills.map((g, i) => (
+          <section class="skill-card reveal" style={`--i:${i % 3}`}>
+            <h3><Icon name={skillIcons[g.group]} /> {g.group}</h3>
+            <ul role="list">{g.items.map((it) => <li>{it}</li>)}</ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">Education</p>
+        <h2 class="section-title" id="edu-title" style="margin-bottom:1.5rem">Studies</h2>
+        {education.map((e) => (
+          <div class="entry">
+            <h3>{e.degree}</h3><span class="when">{e.period}</span>
+            <span class="school">{e.school}</span>
+            <p>{e.note}</p>
+          </div>
+        ))}
+      </div>
+      <div class="reveal" style="--i:2">
+        <p class="eyebrow">Credentials</p>
+        <h2 class="section-title" style="margin-bottom:1.5rem">Certifications</h2>
+        {certifications.map((c) => (
+          <div class="entry">
+            <h3>{c.name}</h3><span class="when">{c.year}</span>
+            <span class="school">{c.issuer}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section" id="testimonials" aria-labelledby="quotes-title" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Testimonials</p>
+        <h2 class="section-title" id="quotes-title">What colleagues say</h2>
+      </div>
+      <div class="reveal" data-carousel aria-roledescription="carousel" aria-label="Testimonials">
+        <div class="quotes" data-track tabindex="0" aria-label="Testimonials, scroll horizontally">
+          {testimonials.map((t, i) => (
+            <figure class="quote" data-slide aria-roledescription="slide" aria-label={`${i + 1} of ${testimonials.length}`}>
+              <blockquote>{t.quote}</blockquote>
+              <figcaption><strong>{t.name}</strong><span>{t.role}, {t.org}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+        <div class="carousel-controls">
+          <button class="icon-btn" type="button" data-prev aria-label="Previous testimonial"><Icon name="arrow-left" /></button>
+          <button class="icon-btn" type="button" data-next aria-label="Next testimonial"><Icon name="arrow-right" /></button>
+          <span class="carousel-count" data-count-label aria-hidden="true">1 / {testimonials.length}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section band" id="contact" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">Contact</p>
+        <h2 class="contact-big" id="contact-title">Let&rsquo;s build something <em>reliable</em>.</h2>
+        <div class="contact-list">
+          <div class="contact-row">
+            <div><small>Email</small><span>{profile.email}</span></div>
+            <button type="button" data-copy-email>Copy</button>
+          </div>
+          <a class="contact-row" href={profile.whatsapp} rel="noopener" target="_blank">
+            <div><small>WhatsApp</small><span>{profile.phone}</span></div>
+            <Icon name="arrow-up-right" />
+          </a>
+          <a class="contact-row" href={profile.linkedin} rel="noopener" target="_blank">
+            <div><small>LinkedIn</small><span>linkedin.com/in/bagasaria</span></div>
+            <Icon name="arrow-up-right" />
+          </a>
+          <a class="contact-row" href={profile.github} rel="noopener" target="_blank">
+            <div><small>GitHub</small><span>github.com/bagasaria93</span></div>
+            <Icon name="arrow-up-right" />
+          </a>
+        </div>
+      </div>
+      <form class="form reveal" style="--i:2" data-contact novalidate>
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name" />
+          <span class="error" id="e-name"></span>
+        </div>
+        <div class="field">
+          <label for="f-email">Your email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" />
+          <span class="error" id="e-email"></span>
+        </div>
+        <div class="field">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
+          <span class="error" id="e-msg"></span>
+        </div>
+        <button class="btn btn--primary" type="submit">Send message <Icon name="arrow-right" /></button>
+        <p class="form-note">This opens your email app with the message filled in. Nothing is stored on this site.</p>
+      </form>
+    </div>
+  </section>
+</Base>

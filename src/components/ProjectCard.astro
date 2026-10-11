@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+const { project, index = 0, searchable = false } = Astro.props;
+const label = project.external ? 'View live demo' : 'View demo';
+const cats = project.categories.join(' ');
+const hay = `${project.title} ${project.subtitle} ${project.description} ${project.tags.join(' ')}`.toLowerCase();
+---
+<article
+  class="card"
+  data-card
+  data-cats={cats}
+  data-search={searchable ? hay : undefined}
+  data-title={project.title}
+>
+  <div class="card-media">
+    {project.image && (
+      <img src={project.image} alt={`Preview of ${project.title}`} width="900" height="563" loading="lazy" decoding="async" />
+    )}
+  </div>
+  <div class="card-body">
+    <span class="card-index">{String(index + 1).padStart(2, '0')}</span>
+    <h3>{project.title}</h3>
+    <p class="card-sub">{project.subtitle}</p>
+    <p class="card-desc">{project.description}</p>
+    <ul class="tags" role="list">
+      {project.tags.slice(0, 5).map((t) => <li class="tag">{t}</li>)}
+    </ul>
+    <a
+      class="link-arrow card-link"
+      href={project.href}
+      target={project.external ? '_blank' : undefined}
+      rel={project.external ? 'noopener' : undefined}
+      aria-label={`${label}: ${project.title}${project.external ? ' (opens in a new tab)' : ''}`}
+    >
+      <span>{label}</span>
+      <Icon name={project.external ? 'arrow-up-right' : 'arrow-right'} size={16} />
+    </a>
+  </div>
+</article>

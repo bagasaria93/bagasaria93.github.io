@@ -1,0 +1,145 @@
+---
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { profile } from '../data/site.js';
+import projects from '../data/projects.json';
+
+const {
+  title = `${profile.name} | ${profile.role}`,
+  description = 'Full-Stack Developer in Bekasi, Indonesia. I build production business systems: ERP, HR and booking platforms, and the integrations that connect them to accounting.',
+  path = '/',
+  current = '',
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path, profile.site).href;
+const og = new URL('/assets/img/profile.png', profile.site).href;
+
+const nav = [
+  { label: 'Work', href: '/#work', id: 'work', page: 'work' },
+  { label: 'Case study', href: '/case-study/erp/', id: 'case', page: 'case' },
+  { label: 'Experience', href: '/#experience', id: 'experience' },
+  { label: 'Skills', href: '/#skills', id: 'skills' },
+  { label: 'For business', href: '/for-business/', id: 'business', page: 'business' },
+  { label: 'Contact', href: '/#contact', id: 'contact' },
+];
+
+// Data for the command palette. Built at compile time, so there is no runtime fetch.
+const palette = {
+  go: [
+    { label: 'Home', hint: '/', href: '/' },
+    { label: 'All work', hint: '/work/', href: '/work/' },
+    { label: 'ERP case study', hint: '/case-study/erp/', href: '/case-study/erp/' },
+    { label: 'For business', hint: '/for-business/', href: '/for-business/' },
+    { label: 'Experience', hint: '#experience', href: '/#experience' },
+    { label: 'Skills', hint: '#skills', href: '/#skills' },
+    { label: 'Contact', hint: '#contact', href: '/#contact' },
+  ],
+  actions: [
+    { label: 'Copy email address', hint: profile.email, action: 'copy-email' },
+    { label: 'Download CV', hint: 'PDF', href: profile.cv, download: true },
+    { label: 'Open GitHub', hint: 'github.com/bagasaria93', href: profile.github, external: true },
+    { label: 'Open LinkedIn', hint: 'linkedin.com/in/bagasaria', href: profile.linkedin, external: true },
+    { label: 'Message on WhatsApp', hint: profile.phone, href: profile.whatsapp, external: true },
+  ],
+  projects: projects.map((p) => ({ label: p.title, hint: p.subtitle, href: p.href, external: p.external })),
+};
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: profile.role,
+  email: profile.email,
+  url: profile.site,
+  image: og,
+  sameAs: [profile.github, profile.linkedin],
+  address: { '@type': 'PostalAddress', addressLocality: 'Bekasi', addressRegion: 'Jawa Barat', addressCountry: 'ID' },
+});
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <meta name="theme-color" content="#EFECE5" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bagas Aria Sativa Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body data-page={current}>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label={`${profile.name}, home`}>
+          <span class="brand-mark">B<i>.</i>A<i>.</i>S</span>
+          <span class="brand-text">Full-Stack Developer</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <span class="nav-indicator" aria-hidden="true"></span>
+          {nav.map((n) => (
+            <a href={n.href} data-nav={n.id} aria-current={n.page && n.page === current ? 'page' : undefined}>{n.label}</a>
+          ))}
+        </nav>
+        <div class="header-actions">
+          <button class="kbd-hint" type="button" data-open-palette aria-label="Open quick navigation" aria-haspopup="dialog">
+            <Icon name="search" size={16} /> <span>Quick nav</span> <kbd>Ctrl K</kbd>
+          </button>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span></button>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true"><i></i></div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/work/">All work</a>
+    </div>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; {new Date().getFullYear()} {profile.name}. Built by hand with Astro, HTML, CSS and JavaScript.</p>
+        <div class="footer-links">
+          <a href={profile.github} rel="noopener">GitHub</a>
+          <a href={profile.linkedin} rel="noopener">LinkedIn</a>
+          <a href={`mailto:${profile.email}`}>Email</a>
+          <a href="#top">Back to top</a>
+        </div>
+      </div>
+    </footer>
+
+    <dialog class="palette" id="palette" aria-label="Quick navigation">
+      <div class="palette-box">
+        <input class="palette-input" id="palette-input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list" placeholder="Search pages, projects and actions" autocomplete="off" spellcheck="false" />
+        <ul class="palette-list" id="palette-list" role="listbox" aria-label="Results"></ul>
+        <div class="palette-foot"><span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span></div>
+      </div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script id="palette-data" type="application/json" set:html={JSON.stringify(palette)} />
+    <script id="site-data" type="application/json" set:html={JSON.stringify({ email: profile.email })} />
+    <script src="../scripts/site.js"></script>
+  </body>
+</html>

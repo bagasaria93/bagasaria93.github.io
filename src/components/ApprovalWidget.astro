@@ -1,0 +1,37 @@
+---
+// Interactive demonstration of a multi-level approval chain. Generic and fictional:
+// no company data. Behaviour is implemented in src/scripts/site.js (initApproval).
+const { variant = 'band' } = Astro.props;
+const stages = [
+  { label: 'Draft created', who: 'Requester' },
+  { label: 'Submitted for approval', who: 'Requester' },
+  { label: 'Supervisor approval', who: 'Supervisor' },
+  { label: 'Manager approval', who: 'Manager' },
+  { label: 'Director approval', who: 'Director' },
+  { label: 'Sent to accounting', who: 'System' },
+];
+---
+<div class={`widget ${variant === 'light' ? 'widget--light' : ''}`} data-approval>
+  <div class="widget-title"><span>Purchase request approval</span><span data-approval-status>Draft</span></div>
+  <ol class="steps" role="list">
+    {stages.map((s, i) => (
+      <li class="step" data-step={i} data-state={i === 0 ? 'active' : 'idle'}>
+        <span>{s.label}</span><span class="who">{s.who}</span>
+      </li>
+    ))}
+  </ol>
+  <div class="widget-controls">
+    <div class="segmented" role="radiogroup" aria-label="Act as">
+      <label><input type="radio" name={`role-${variant}`} value="requester" checked /><span>Requester</span></label>
+      <label><input type="radio" name={`role-${variant}`} value="supervisor" /><span>Supervisor</span></label>
+      <label><input type="radio" name={`role-${variant}`} value="manager" /><span>Manager</span></label>
+      <label><input type="radio" name={`role-${variant}`} value="director" /><span>Director</span></label>
+    </div>
+  </div>
+  <div class="widget-controls">
+    <button class="btn btn--small btn--primary" type="button" data-approval-act>Submit request</button>
+    <button class={`btn btn--small btn--ghost ${variant === 'band' ? 'btn--on-band' : ''}`} type="button" data-approval-reject>Reject</button>
+    <button class={`btn btn--small btn--ghost ${variant === 'band' ? 'btn--on-band' : ''}`} type="button" data-approval-reset>Reset</button>
+  </div>
+  <p class="readout" data-approval-readout aria-live="polite">Pick a role and take the next action. Try acting as the wrong role to see the rule enforced.</p>
+</div>

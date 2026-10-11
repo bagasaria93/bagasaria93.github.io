@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import projects from '../data/projects.json';
+import { categories } from '../data/site.js';
+
+const counts = Object.fromEntries(categories.map((c) => [c.id, c.id === 'all' ? projects.length : projects.filter((p) => p.categories.includes(c.id)).length]));
+---
+<Base
+  title="All work | Bagas Aria Sativa"
+  description="Every demo and project by Bagas Aria Sativa: ERP, MRP, HRIS, CRM, booking, POS, data tools and mobile apps. All of them run in the browser."
+  path="/work/"
+  current="work"
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">All work</p>
+      <h1 class="page-title">{projects.length} projects you can open and use</h1>
+      <p class="page-lead">Demos that run in the browser with sample data. Filter by type or search by technology.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem" aria-label="Projects">
+    <div class="container" data-work>
+      <div class="filters">
+        <div class="chips" role="group" aria-label="Filter by type">
+          {categories.map((c, i) => (
+            <button class="chip" type="button" data-filter={c.id} aria-pressed={i === 0 ? 'true' : 'false'}>{c.label}<span>{counts[c.id]}</span></button>
+          ))}
+        </div>
+        <div class="search">
+          <Icon name="search" size={16} />
+          <label class="visually-hidden" for="work-search">Search projects</label>
+          <input id="work-search" type="search" placeholder="Search by name or technology" autocomplete="off" data-work-search />
+        </div>
+      </div>
+      <p class="result-count" data-work-count aria-live="polite">Showing {projects.length} of {projects.length}</p>
+      <div class="work-grid" data-work-grid>
+        {projects.map((p, i) => <ProjectCard project={p} index={i} searchable />)}
+      </div>
+      <p class="empty" data-work-empty hidden>No project matches that search. Try another word or clear the filter.</p>
+    </div>
+  </section>
+</Base>

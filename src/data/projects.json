@@ -1,0 +1,354 @@
+[
+ {
+  "title": "MRP Flow",
+  "subtitle": "Multi-Level BOM & MRP Explosion System",
+  "description": "Material requirements planning module for PT Sentosa Manufaktur: multi-level bill of materials, MRP explosion with stock netting, auto-generated purchase requests, and a two-tier Supervisor-to-Manager approval workflow. A real full-stack app with a live database, not a static mockup.",
+  "tags": [
+   "Next.js",
+   "TypeScript",
+   "React",
+   "Tailwind CSS",
+   "Drizzle ORM",
+   "Neon Postgres"
+  ],
+  "href": "https://bagasaria-mrp-flow.vercel.app/",
+  "external": true,
+  "image": "/demo/mrp-flow/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": true
+ },
+ {
+  "title": "ErpCore",
+  "subtitle": "Multi-Module Enterprise Resource Planning (ERP)",
+  "description": "Manufacturing ERP for PT Sentosa Manufaktur with 7 connected modules: Sales Order, Production, Warehouse, QC, Purchase, Invoice, and Dashboard.",
+  "tags": [
+   "JavaScript",
+   "jQuery",
+   "Chart.js",
+   "Tailwind CSS",
+   "localStorage"
+  ],
+  "href": "/demo/erp-system/",
+  "external": false,
+  "image": "/demo/erp-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": true
+ },
+ {
+  "title": "CG HRIS",
+  "subtitle": "Human Resource Information System",
+  "description": "12-module HRIS SPA covering employee management, attendance, leave approval, payroll with PPh21 tax, recruitment pipeline, performance KPI, training, org chart, and analytics reports. Role-based access for 4 user types.",
+  "tags": [
+   "JavaScript",
+   "Chart.js",
+   "Tailwind CSS",
+   "SPA",
+   "RBAC"
+  ],
+  "href": "/demo/hris-system/",
+  "external": false,
+  "image": "/demo/hris-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": true
+ },
+ {
+  "title": "MitraCRM",
+  "subtitle": "Customer Relationship Management System",
+  "description": "CRM with contact & lead management, Kanban sales pipeline across 5 stages, deal tracking with probability scoring, revenue analytics dashboard, and activity feed.",
+  "tags": [
+   "JavaScript",
+   "Chart.js",
+   "Tailwind CSS",
+   "SPA",
+   "localStorage"
+  ],
+  "href": "/demo/crm-system/",
+  "external": false,
+  "image": "/demo/crm-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": true
+ },
+ {
+  "title": "BookinAja",
+  "subtitle": "Spa Appointment & Booking System",
+  "description": "Beauty spa booking platform with multi-step booking flow, QR code confirmation, therapist leaderboard, branch analytics, and admin panel.",
+  "tags": [
+   "JavaScript",
+   "QRCode.js",
+   "Chart.js",
+   "Tailwind CSS"
+  ],
+  "href": "/demo/booking-system/",
+  "external": false,
+  "image": "/demo/booking-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": true
+ },
+ {
+  "title": "KasirKu",
+  "subtitle": "Point of Sale Cashier App",
+  "description": "Coffee shop cashier app with product grid, cart management, coupon discounts, tax calculation, and print-friendly receipt generation.",
+  "tags": [
+   "JavaScript",
+   "jQuery",
+   "Tailwind CSS",
+   "localStorage"
+  ],
+  "href": "/demo/pos-application/",
+  "external": false,
+  "image": "/demo/pos-application/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": true
+ },
+ {
+  "title": "Company Profile",
+  "subtitle": "Multi-Industry Landing Page Demos",
+  "description": "A growing collection of full company profile landing pages, one per industry, built to show prospective clients what their own website could look like before writing a single line of code for the real thing. Currently covers Gym and Fitness, Restaurant and Cafe, Electronics and Gadget, Beauty, Health, Contractor, Automotive, Tutoring, Manufacturing, Finance, Garment, Building Materials Retail, Printing, K-12 School Education, and Laundry Services.",
+  "tags": [
+   "HTML5",
+   "CSS3",
+   "JavaScript",
+   "Growing Library"
+  ],
+  "href": "/demo/company-profiles/",
+  "external": false,
+  "image": "/demo/company-profiles/preview.jpg",
+  "categories": [
+   "websites"
+  ],
+  "featured": false
+ },
+ {
+  "title": "APIJelajah",
+  "subtitle": "REST API Testing & Explorer Tool",
+  "description": "Public REST API exploration tool with syntax highlighting, real-time response time tracking, TypeScript-style type annotations, and request history.",
+  "tags": [
+   "JavaScript",
+   "REST API",
+   "Fetch API",
+   "Tailwind CSS"
+  ],
+  "href": "/demo/rest-api-explorer/",
+  "external": false,
+  "image": "/demo/rest-api-explorer/preview.jpg",
+  "categories": [
+   "tools"
+  ],
+  "featured": false
+ },
+ {
+  "title": "ChatCerdas",
+  "subtitle": "AI Chatbot App with Claude API",
+  "description": "AI chat interface built with React 18 and Anthropic API (claude-sonnet-4-6), featuring typewriter effect, system prompt customization, and conversation history.",
+  "tags": [
+   "React JS",
+   "Anthropic API",
+   "Tailwind CSS",
+   "Babel"
+  ],
+  "href": "/demo/react-ai-chat/",
+  "external": false,
+  "image": "/demo/react-ai-chat/preview.jpg",
+  "categories": [
+   "tools",
+   "data"
+  ],
+  "featured": false
+ },
+ {
+  "title": "TopUpKu",
+  "subtitle": "Game Voucher Top-Up & Payment Platform",
+  "description": "Game top-up platform with 5-step flow, supplier API integration simulation, multi-method payment system, real-time transaction status, and admin panel with Chart.js.",
+  "tags": [
+   "JavaScript",
+   "jQuery",
+   "Chart.js",
+   "REST API",
+   "localStorage"
+  ],
+  "href": "/demo/topup/",
+  "external": false,
+  "image": "/demo/topup/preview.jpg",
+  "categories": [
+   "tools"
+  ],
+  "featured": false
+ },
+ {
+  "title": "BlazeNotif",
+  "subtitle": "WA & Email Blast Platform",
+  "description": "WhatsApp and email blast notification platform with contact management, dynamic message templates, real-time mass sending simulation, and complete delivery history.",
+  "tags": [
+   "JavaScript",
+   "Chart.js",
+   "Bootstrap",
+   "localStorage"
+  ],
+  "href": "/demo/notifikasi/",
+  "external": false,
+  "image": "/demo/notifikasi/preview.jpg",
+  "categories": [
+   "tools"
+  ],
+  "featured": false
+ },
+ {
+  "title": "CerdasKu",
+  "subtitle": "Online IQ Test & Score Analysis Platform",
+  "description": "Online IQ test with timed multi-category questions, blurred result teaser, simulated payment flow to unlock full analysis, and score breakdown by cognitive domain.",
+  "tags": [
+   "JavaScript",
+   "Tailwind CSS",
+   "Lucide Icons",
+   "localStorage"
+  ],
+  "href": "/demo/iq-test/",
+  "external": false,
+  "image": "/demo/iq-test/preview.jpg",
+  "categories": [
+   "tools"
+  ],
+  "featured": false
+ },
+ {
+  "title": "PortalAkademik",
+  "subtitle": "E-Learning & Academic Management System",
+  "description": "Multi-role academic portal built with CodeIgniter 4. Features admin dashboard (CRUD users, courses, enrollment management, CSV export), lecturer panel (materials, assignments, grading), and student portal (submit tasks, track grades), with fully interactive demo flows for each role.",
+  "tags": [
+   "CodeIgniter 4",
+   "PHP 8.3",
+   "MySQL",
+   "Tailwind CSS",
+   "RBAC",
+   "Chart.js"
+  ],
+  "href": "/demo/portal-akademik/",
+  "external": false,
+  "image": "/demo/portal-akademik/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": false
+ },
+ {
+  "title": "DataXplorer",
+  "subtitle": "Python Data Analysis Tool",
+  "description": "Interactive data analysis tool powered by real Python running in the browser via Pyodide (WebAssembly). Upload and analyze 3 built-in datasets (Sales, Employee, Inventory) with descriptive statistics, Pearson correlation heatmap, and distribution charts.",
+  "tags": [
+   "Python",
+   "Pyodide",
+   "WebAssembly",
+   "Chart.js",
+   "Data Analysis"
+  ],
+  "href": "/demo/dataxplorer/",
+  "external": false,
+  "image": "/demo/dataxplorer/preview.jpg",
+  "categories": [
+   "data"
+  ],
+  "featured": false
+ },
+ {
+  "title": "PocketWallet",
+  "subtitle": "Installable Personal Finance Tracker (PWA)",
+  "description": "Progressive Web App for expense and budget tracking, installable to home screen and fully functional offline via service worker caching. Includes category spending charts, budget limit warnings, and dark mode.",
+  "tags": [
+   "Progressive Web App",
+   "Service Worker",
+   "Chart.js",
+   "Tailwind CSS",
+   "localStorage"
+  ],
+  "href": "/demo/pocket-wallet/",
+  "external": false,
+  "image": "/demo/pocket-wallet/preview.jpg",
+  "categories": [
+   "mobile"
+  ],
+  "featured": false
+ },
+ {
+  "title": "HabitFlow",
+  "subtitle": "React Native Habit Tracker (Mobile App)",
+  "description": "Daily habit tracker built with genuine React Native components (View, TouchableOpacity, Modal, Switch) via react-native-web, compiled to a web demo with esbuild. Full source included and portable to a native iOS/Android build via Expo without rewriting app logic.",
+  "tags": [
+   "React Native",
+   "TypeScript",
+   "React Context",
+   "esbuild"
+  ],
+  "href": "/demo/habitflow-mobile/",
+  "external": false,
+  "image": "/demo/habitflow-mobile/preview.jpg",
+  "categories": [
+   "mobile"
+  ],
+  "featured": false
+ },
+ {
+  "title": "PredikML",
+  "subtitle": "Python Sales Prediction with Linear Regression",
+  "description": "Sales forecasting demo powered by real Python running in the browser via Pyodide (WebAssembly). Fits an OLS linear regression with NumPy on 3 sample datasets (Retail, SaaS, Manufacturing), then visualizes historical data, regression line, and a 3-month forecast with R² and MAE accuracy metrics on an interactive chart.",
+  "tags": [
+   "Python",
+   "Pyodide",
+   "WebAssembly",
+   "NumPy",
+   "Linear Regression"
+  ],
+  "href": "/demo/predikml/",
+  "external": false,
+  "image": "/demo/predikml/preview.jpg",
+  "categories": [
+   "data"
+  ],
+  "featured": false
+ },
+ {
+  "title": "AbsenKu",
+  "subtitle": "Employee Attendance & Leave Management",
+  "description": "Corporate attendance app with clock in/out, late detection, leave and sick day requests with approval workflow, and an admin dashboard with department analytics.",
+  "tags": [
+   "JavaScript",
+   "Chart.js",
+   "localStorage"
+  ],
+  "href": "/demo/attendance-system/",
+  "external": false,
+  "image": "/demo/attendance-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": false
+ },
+ {
+  "title": "SekolahKu",
+  "subtitle": "School Information & Management System",
+  "description": "Academic administration system for a high school covering student and teacher records, daily attendance, grading with automatic report cards, and teaching-hour based payroll, plus a performance dashboard for the headmaster.",
+  "tags": [
+   "JavaScript",
+   "Chart.js",
+   "localStorage"
+  ],
+  "href": "/demo/school-system/",
+  "external": false,
+  "image": "/demo/school-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": false
+ }
+]

@@ -1,0 +1,116 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ApprovalWidget from '../../components/ApprovalWidget.astro';
+import SafeSendWidget from '../../components/SafeSendWidget.astro';
+
+const toc = [
+  ['scope', 'Scope'],
+  ['access', 'Access control'],
+  ['approvals', 'Approvals'],
+  ['planning', 'Material planning'],
+  ['quality', 'Quality inspection'],
+  ['accounting', 'Accounting integration'],
+  ['integrity', 'Data integrity'],
+  ['hardening', 'Hardening'],
+  ['stack', 'Stack'],
+];
+---
+<Base
+  title="Case study: manufacturing ERP | Bagas Aria Sativa"
+  description="How a manufacturing ERP for 12 departments was designed and built by one developer: access control, approvals, MRP, quality inspection and a fail-safe accounting integration."
+  path="/case-study/erp/"
+  current="case"
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Case study</p>
+      <h1 class="page-title">A manufacturing ERP for 12 departments</h1>
+      <p class="page-lead">One developer, one production system, built end to end: access control, approvals, material planning, quality inspection and a connection to an accounting system that is designed to fail safe. This page explains the problems and the decisions. Company data and screens are intentionally not shown.</p>
+      <dl class="facts" style="max-width:46rem">
+        <div><dt>Role</dt><dd>Sole developer</dd></div>
+        <div><dt>Period</dt><dd>Aug 2025 to present</dd></div>
+        <div><dt>Company</dt><dd>PT Ganzu Gisma Seiko</dd></div>
+        <div><dt>Status</dt><dd>In production, daily use</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="container doc">
+      <nav class="toc" aria-label="On this page">
+        <p>On this page</p>
+        {toc.map(([id, label]) => <a href={`#${id}`} data-toc={id}>{label}</a>)}
+      </nav>
+
+      <div class="prose">
+        <section id="scope">
+          <h2>Scope</h2>
+          <p>The system covers Sales, Procurement, Warehouse, PPC and MRP, Production, QC, Delivery, Finance, HRD, Production Engineering, Maintenance and General Affairs. Orders flow from sales order to delivery note, invoice and payment, while purchasing flows from purchase request to purchase order and goods receipt.</p>
+          <p>The database holds more than 100 tables. Every department has its own screens and its own approval chain.</p>
+        </section>
+
+        <section id="access">
+          <h2>Access control</h2>
+          <p><strong>30+ roles</strong> are organised as staff, supervisor and manager tiers per department, plus a director. Access is checked in two layers: at the route, and again inside the controller that handles the action, so a mistake in one layer does not open a door.</p>
+          <p>Sessions end after a period of inactivity, and the login screen explains why, instead of failing silently on the next click.</p>
+        </section>
+
+        <section id="approvals">
+          <h2>Approvals that cannot be skipped</h2>
+          <p>Documents such as purchase requests and purchase orders move through supervisor, manager and director in order. The order is enforced on the server in one atomic step, so a step cannot be skipped, repeated or taken out of order, and each step can only be taken by the role that owns it.</p>
+          <p>Try it below. Act as a role that does not match the next step and see what happens. This is a generic, fictional example.</p>
+          <div style="margin-top:1.5rem"><ApprovalWidget variant="light" /></div>
+        </section>
+
+        <section id="planning">
+          <h2>Material planning</h2>
+          <p>The MRP engine takes sales orders and bills of materials, nets them against current stock and calculates the raw material required. From that result it generates purchase requests that enter the same approval workflow as any other request, so planning and purchasing share one controlled path.</p>
+        </section>
+
+        <section id="quality">
+          <h2>Quality inspection</h2>
+          <p>Inspection covers three sources: incoming material from suppliers, material supplied by customers, and in-process production. Results record defects (NG) and can create rework orders, and each result stays linked to the document it came from, which makes tracing a quality issue a lookup instead of an investigation.</p>
+        </section>
+
+        <section id="accounting">
+          <h2>Accounting integration</h2>
+          <p>Items, vendors, purchase requests, purchase orders and goods receipts are sent from the ERP to the accounting system through its REST API with OAuth 2.0. Because accounting data is the one place where a mistake is expensive, the integration is designed around what happens when something goes wrong.</p>
+          <ul>
+            <li><strong>Validate first.</strong> Vendor, item, unit, tax and payment terms are checked against the accounting master data before anything is sent.</li>
+            <li><strong>Send once.</strong> A document is claimed atomically and sent in a single attempt. An uncertain result is never retried automatically, because a retry after an unclear failure is how duplicates are created.</li>
+            <li><strong>Read back.</strong> After sending, the document is read from the accounting system and the amounts are compared with the ERP.</li>
+            <li><strong>Explicit states.</strong> A document is held, failed, unknown, out of sync or sent. A person always knows which, and what to do next.</li>
+            <li><strong>Never delete.</strong> The purchasing flows close or deactivate documents in accounting, and never delete accounting data.</li>
+            <li><strong>Kill switches.</strong> Each flow has its own on and off switch, so a problem in one flow can be stopped without touching the others.</li>
+          </ul>
+          <p style="margin-top:1.5rem">Run the scenarios below to see how each failure ends up in a different, safe state.</p>
+          <div style="margin-top:1rem"><SafeSendWidget variant="light" /></div>
+        </section>
+
+        <section id="integrity">
+          <h2>Data integrity</h2>
+          <p>Records use soft delete, so documents can be restored. That creates two traps that I designed out from the start. A unique code must not stay reserved by a deleted row, and an old document must keep opening after its master record is deleted.</p>
+          <pre class="code" aria-label="SQL example"><span class="c">-- Unique code that is released when the row is soft-deleted</span>
+<span class="k">ALTER TABLE</span> items
+  <span class="k">ADD COLUMN</span> item_code_active VARCHAR(50)
+  <span class="k">GENERATED ALWAYS AS</span> (IF(deleted_at IS NULL, item_code, NULL)) STORED;
+<span class="k">ALTER TABLE</span> items <span class="k">ADD UNIQUE KEY</span> uniq_item_code_active (item_code_active);</pre>
+          <p style="margin-top:1rem">Relations to soft-deleted parents are loaded with trashed records included, so a historical document never fails to open because its customer or item was deleted later.</p>
+        </section>
+
+        <section id="hardening">
+          <h2>Hardening</h2>
+          <p>The codebase went through a structured audit that produced <strong>278 findings</strong> across access control, validation and data integrity, and all of them were resolved. Examples include role checks that were missing on some routes, an OAuth flow that needed a state parameter, and a rejection path that did not mirror the approval authority.</p>
+          <p class="callout">Not shown here on purpose: company data, screens, customer and vendor names, numbers and the internal rules of the business.</p>
+        </section>
+
+        <section id="stack">
+          <h2>Stack</h2>
+          <p>Laravel 10, PHP, MySQL, Bootstrap, jQuery, ApexCharts, the Accurate Online API, hosted on Hostinger.</p>
+          <p style="margin-top:2rem"><a class="btn btn--primary" href="/#contact">Talk about a similar project <Icon name="arrow-right" /></a></p>
+        </section>
+      </div>
+    </div>
+  </section>
+</Base>
