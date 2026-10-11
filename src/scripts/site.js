@@ -255,6 +255,42 @@ function initSpotlight() {
   }, { passive: true });
 }
 
+/* --------------------------------------------------------------- terminal */
+function initTerminal() {
+  const el = $('[data-terminal]');
+  if (!el || reduce) return;
+  const lines = JSON.parse(el.dataset.lines || '[]');
+  if (!lines.length) return;
+  const caret = document.createElement('span');
+  caret.className = 'term-caret';
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const run = async () => {
+    el.textContent = '';
+    for (const l of lines) {
+      const row = document.createElement('div');
+      el.appendChild(row);
+      if (l.k === 'cmd') {
+        const p = document.createElement('span'); p.className = 'p'; p.textContent = '$ ';
+        const k = document.createElement('span'); k.className = 'k';
+        row.append(p, k, caret);
+        for (const ch of l.t) { k.textContent += ch; await sleep(34); }
+        await sleep(260);
+      } else {
+        const o = document.createElement('span'); o.className = 'o'; o.textContent = l.t;
+        row.append(o);
+        await sleep(160);
+      }
+    }
+    const last = document.createElement('div');
+    const p = document.createElement('span'); p.className = 'p'; p.textContent = '$ ';
+    last.append(p, caret);
+    el.appendChild(last);
+  };
+  new IntersectionObserver((entries, io) => {
+    if (entries[0].isIntersecting) { io.disconnect(); run(); }
+  }, { threshold: 0.4 }).observe(el);
+}
+
 /* --------------------------------------------------------------- timeline */
 function initTimeline() {
   const tl = $('[data-timeline]');
@@ -612,6 +648,6 @@ function initToc() {
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
   ['dotgrid', initDotGrid], ['tilt', initTilt], ['magnetic', initMagnetic], ['spotlight', initSpotlight],
-  ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
+  ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));

@@ -6,6 +6,15 @@ import projects from '../data/projects.json';
 import { profile, stats, ticker, experience, skills, education, certifications, testimonials } from '../data/site.js';
 
 const featured = projects.filter((p) => p.featured);
+const termLines = [
+  { k: 'cmd', t: 'stack --layers' },
+  { k: 'out', t: 'frontend   react, next.js, tailwind' },
+  { k: 'out', t: 'backend    laravel, php, python' },
+  { k: 'out', t: 'data       mysql, postgresql' },
+  { k: 'out', t: 'integrate  rest, oauth 2.0' },
+  { k: 'cmd', t: 'projects --count' },
+  { k: 'out', t: '19 to open, 2 in production' },
+];
 const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', Integration: 'plug', Delivery: 'rocket', Practice: 'compass' };
 ---
 <Base current="home">
@@ -33,6 +42,23 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         <span class="float-tag float-tag--a">Laravel <small>/ Next.js / Python</small></span>
         <span class="float-tag float-tag--b">19 <small>/ live projects</small></span>
       </figure>
+    </div>
+    <div class="container hero-bento">
+      <div class="tile tile--stack reveal">
+        <p class="tile-label"><span>The stack, layer by layer</span><span>full-stack</span></p>
+        <div class="layers">
+          <div class="layer"><strong>Frontend</strong><span>React, Next.js, JavaScript, TypeScript, Tailwind CSS</span></div>
+          <div class="layer"><strong>Backend</strong><span>Laravel, PHP, CodeIgniter, Node.js, Python</span></div>
+          <div class="layer"><strong>Data</strong><span>MySQL, PostgreSQL, Drizzle ORM</span></div>
+          <div class="layer"><strong>Integration</strong><span>REST API, OAuth 2.0, Accurate Online, WhatsApp API</span></div>
+        </div>
+      </div>
+      <div class="tile tile--term reveal" style="--i:1">
+        <p class="tile-label"><span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>terminal</span></p>
+        <div class="term-body" data-terminal data-lines={JSON.stringify(termLines)} aria-label="Summary of the stack and project count">{termLines.map((l) => (
+          <div>{l.k === 'cmd' ? <><span class="p">$ </span><span class="k">{l.t}</span></> : <span class="o">{l.t}</span>}</div>
+        ))}</div>
+      </div>
     </div>
     <ul class="container hero-stats" role="list">
       {stats.map((s) => (
@@ -78,12 +104,18 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         <h2 class="section-title" id="work-title">Working software, not mockups</h2>
         <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Every one is built by hand.</p>
       </div>
-      <div class="work-grid work-grid--feature">
+      <div class="bento">
         {featured.map((p, i) => <div class="reveal" style={`--i:${i % 3}`}><ProjectCard project={p} index={i} /></div>)}
+        <div class="reveal" style="--i:1">
+          <div class="cta-tile">
+            <div>
+              <h3>{projects.length} projects, all open to try</h3>
+              <p>Filter by type or search by technology: business systems, web tools, data and AI, mobile and PWA, and websites.</p>
+            </div>
+            <a class="btn" href="/work/">Browse all projects <Icon name="arrow-right" /></a>
+          </div>
+        </div>
       </div>
-      <p class="reveal" style="margin-top:2.5rem">
-        <a class="btn btn--ghost" href="/work/">Browse all {projects.length} projects <Icon name="arrow-right" /></a>
-      </p>
     </div>
   </section>
 
@@ -146,10 +178,10 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         <p class="eyebrow">Toolbox</p>
         <h2 class="section-title" id="skills-title">What I work with</h2>
       </div>
-      <div class="skills-grid">
+      <div class="skills-bento">
         {skills.map((g, i) => (
           <section class="skill-card reveal" style={`--i:${i % 3}`}>
-            <h3><Icon name={skillIcons[g.group]} /> {g.group}</h3>
+            <h3><span class="ico"><Icon name={skillIcons[g.group]} /></span> {g.group}</h3>
             <ul role="list">{g.items.map((it) => <li>{it}</li>)}</ul>
           </section>
         ))}
@@ -160,9 +192,9 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <!-- Education -->
   <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0">
     <div class="container split">
-      <div class="reveal">
+      <div class="panel reveal">
         <p class="eyebrow">Education</p>
-        <h2 class="section-title" id="edu-title" style="margin-bottom:1.5rem">Studies</h2>
+        <h2 class="section-title" id="edu-title" style="margin-bottom:1rem">Studies</h2>
         {education.map((e) => (
           <div class="entry">
             <h3>{e.degree}</h3><span class="when">{e.period}</span>
@@ -171,9 +203,9 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
           </div>
         ))}
       </div>
-      <div class="reveal" style="--i:2">
+      <div class="panel reveal" style="--i:2">
         <p class="eyebrow">Credentials</p>
-        <h2 class="section-title" style="margin-bottom:1.5rem">Certifications</h2>
+        <h2 class="section-title" style="margin-bottom:1rem">Certifications</h2>
         {certifications.map((c) => (
           <div class="entry">
             <h3>{c.name}</h3><span class="when">{c.year}</span>
