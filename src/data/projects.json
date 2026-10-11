@@ -20,21 +20,21 @@
   "featured": true
  },
  {
-  "title": "ErpCore",
-  "subtitle": "Multi-Module Enterprise Resource Planning (ERP)",
-  "description": "Manufacturing ERP for PT Sentosa Manufaktur with 7 connected modules: Sales Order, Production, Warehouse, QC, Purchase, Invoice, and Dashboard.",
+  "title": "ChatCerdas",
+  "subtitle": "AI Chatbot App with Claude API",
+  "description": "AI chat interface built with React 18 and Anthropic API (claude-sonnet-4-6), featuring typewriter effect, system prompt customization, and conversation history.",
   "tags": [
-   "JavaScript",
-   "jQuery",
-   "Chart.js",
+   "React JS",
+   "Anthropic API",
    "Tailwind CSS",
-   "localStorage"
+   "Babel"
   ],
-  "href": "/demo/erp-system/",
+  "href": "/demo/react-ai-chat/",
   "external": false,
-  "image": "/demo/erp-system/preview.jpg",
+  "image": "/demo/react-ai-chat/preview.jpg",
   "categories": [
-   "business"
+   "tools",
+   "data"
   ],
   "featured": true
  },
@@ -58,21 +58,39 @@
   "featured": true
  },
  {
-  "title": "MitraCRM",
-  "subtitle": "Customer Relationship Management System",
-  "description": "CRM with contact & lead management, Kanban sales pipeline across 5 stages, deal tracking with probability scoring, revenue analytics dashboard, and activity feed.",
+  "title": "PredikML",
+  "subtitle": "Python Sales Prediction with Linear Regression",
+  "description": "Sales forecasting demo powered by real Python running in the browser via Pyodide (WebAssembly). Fits an OLS linear regression with NumPy on 3 sample datasets (Retail, SaaS, Manufacturing), then visualizes historical data, regression line, and a 3-month forecast with R² and MAE accuracy metrics on an interactive chart.",
   "tags": [
-   "JavaScript",
-   "Chart.js",
-   "Tailwind CSS",
-   "SPA",
-   "localStorage"
+   "Python",
+   "Pyodide",
+   "WebAssembly",
+   "NumPy",
+   "Linear Regression"
   ],
-  "href": "/demo/crm-system/",
+  "href": "/demo/predikml/",
   "external": false,
-  "image": "/demo/crm-system/preview.jpg",
+  "image": "/demo/predikml/preview.jpg",
   "categories": [
-   "business"
+   "data"
+  ],
+  "featured": true
+ },
+ {
+  "title": "HabitFlow",
+  "subtitle": "React Native Habit Tracker (Mobile App)",
+  "description": "Daily habit tracker built with genuine React Native components (View, TouchableOpacity, Modal, Switch) via react-native-web, compiled to a web demo with esbuild. Full source included and portable to a native iOS/Android build via Expo without rewriting app logic.",
+  "tags": [
+   "React Native",
+   "TypeScript",
+   "React Context",
+   "esbuild"
+  ],
+  "href": "/demo/habitflow-mobile/",
+  "external": false,
+  "image": "/demo/habitflow-mobile/preview.jpg",
+  "categories": [
+   "mobile"
   ],
   "featured": true
  },
@@ -95,6 +113,44 @@
   "featured": true
  },
  {
+  "title": "ErpCore",
+  "subtitle": "Multi-Module Enterprise Resource Planning (ERP)",
+  "description": "Manufacturing ERP for PT Sentosa Manufaktur with 7 connected modules: Sales Order, Production, Warehouse, QC, Purchase, Invoice, and Dashboard.",
+  "tags": [
+   "JavaScript",
+   "jQuery",
+   "Chart.js",
+   "Tailwind CSS",
+   "localStorage"
+  ],
+  "href": "/demo/erp-system/",
+  "external": false,
+  "image": "/demo/erp-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": false
+ },
+ {
+  "title": "MitraCRM",
+  "subtitle": "Customer Relationship Management System",
+  "description": "CRM with contact & lead management, Kanban sales pipeline across 5 stages, deal tracking with probability scoring, revenue analytics dashboard, and activity feed.",
+  "tags": [
+   "JavaScript",
+   "Chart.js",
+   "Tailwind CSS",
+   "SPA",
+   "localStorage"
+  ],
+  "href": "/demo/crm-system/",
+  "external": false,
+  "image": "/demo/crm-system/preview.jpg",
+  "categories": [
+   "business"
+  ],
+  "featured": false
+ },
+ {
   "title": "KasirKu",
   "subtitle": "Point of Sale Cashier App",
   "description": "Coffee shop cashier app with product grid, cart management, coupon discounts, tax calculation, and print-friendly receipt generation.",
@@ -110,7 +166,7 @@
   "categories": [
    "business"
   ],
-  "featured": true
+  "featured": false
  },
  {
   "title": "Company Profile",
@@ -145,25 +201,6 @@
   "image": "/demo/rest-api-explorer/preview.jpg",
   "categories": [
    "tools"
-  ],
-  "featured": false
- },
- {
-  "title": "ChatCerdas",
-  "subtitle": "AI Chatbot App with Claude API",
-  "description": "AI chat interface built with React 18 and Anthropic API (claude-sonnet-4-6), featuring typewriter effect, system prompt customization, and conversation history.",
-  "tags": [
-   "React JS",
-   "Anthropic API",
-   "Tailwind CSS",
-   "Babel"
-  ],
-  "href": "/demo/react-ai-chat/",
-  "external": false,
-  "image": "/demo/react-ai-chat/preview.jpg",
-  "categories": [
-   "tools",
-   "data"
   ],
   "featured": false
  },
@@ -277,43 +314,6 @@
   "image": "/demo/pocket-wallet/preview.jpg",
   "categories": [
    "mobile"
-  ],
-  "featured": false
- },
- {
-  "title": "HabitFlow",
-  "subtitle": "React Native Habit Tracker (Mobile App)",
-  "description": "Daily habit tracker built with genuine React Native components (View, TouchableOpacity, Modal, Switch) via react-native-web, compiled to a web demo with esbuild. Full source included and portable to a native iOS/Android build via Expo without rewriting app logic.",
-  "tags": [
-   "React Native",
-   "TypeScript",
-   "React Context",
-   "esbuild"
-  ],
-  "href": "/demo/habitflow-mobile/",
-  "external": false,
-  "image": "/demo/habitflow-mobile/preview.jpg",
-  "categories": [
-   "mobile"
-  ],
-  "featured": false
- },
- {
-  "title": "PredikML",
-  "subtitle": "Python Sales Prediction with Linear Regression",
-  "description": "Sales forecasting demo powered by real Python running in the browser via Pyodide (WebAssembly). Fits an OLS linear regression with NumPy on 3 sample datasets (Retail, SaaS, Manufacturing), then visualizes historical data, regression line, and a 3-month forecast with R² and MAE accuracy metrics on an interactive chart.",
-  "tags": [
-   "Python",
-   "Pyodide",
-   "WebAssembly",
-   "NumPy",
-   "Linear Regression"
-  ],
-  "href": "/demo/predikml/",
-  "external": false,
-  "image": "/demo/predikml/preview.jpg",
-  "categories": [
-   "data"
   ],
   "featured": false
  },

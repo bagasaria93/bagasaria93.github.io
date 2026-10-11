@@ -15,10 +15,10 @@ export const profile = {
 };
 
 export const stats = [
-  { value: 12, suffix: '', label: 'departments in one ERP' },
-  { value: 100, suffix: '+', label: 'database tables' },
-  { value: 30, suffix: '+', label: 'access roles' },
-  { value: 1, suffix: '+', label: 'year in production' },
+  { value: 19, suffix: '', label: 'projects you can open' },
+  { value: 4, suffix: '', label: 'programming languages' },
+  { value: 2, suffix: '', label: 'companies, systems in production' },
+  { value: 1, suffix: '+', label: 'year of professional work' },
 ];
 
 export const ticker = [
@@ -38,7 +38,6 @@ export const experience = [
       'Designed role-based access control with 30+ roles across staff, supervisor and manager tiers, with department-specific multi-level approval workflows.',
       'Integrated the ERP with Accurate Online (OAuth 2.0, REST API): documents are validated against the accounting master data, sent in a single attempt that is never retried automatically when the result is uncertain, and read back to verify amounts.',
       'Built an MRP engine that turns sales orders and bills of materials into raw material requirements and purchase requests that follow the approval workflow.',
-      'Audited the codebase and resolved 278 findings covering access control, validation and data integrity.',
     ],
   },
   {
@@ -49,8 +48,9 @@ export const experience = [
     stack: 'CodeIgniter 3, PHP, MySQL, Tailwind CSS, REST API, WhatsApp API, AJAX, Hostinger',
     points: [
       'Delivered three business applications as a two-person team with the HR Supervisor, all completed ahead of schedule.',
-      'HRIS with GPS-based attendance and server-side geofencing validation, recruitment, performance, leave and payroll.',
-      'Aftercare dashboard with automatic low-rating detection and WhatsApp outreach, and a QR-code booking system with feedback links.',
+      'HRIS covering employees, recruitment, performance, leave and payroll, with GPS-based attendance and server-side geofencing validation.',
+      'Aftercare dashboard with automatic low-rating detection, feedback flagging and WhatsApp outreach with a daily reminder job.',
+      'QR-code walk-in booking system with WhatsApp feedback links and branch comparison analytics.',
     ],
   },
   {

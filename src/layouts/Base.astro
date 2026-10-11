@@ -21,7 +21,7 @@ const og = new URL('/assets/img/profile.png', profile.site).href;
 
 const nav = [
   { label: 'Work', href: '/#work', id: 'work', page: 'work' },
-  { label: 'Case study', href: '/case-study/erp/', id: 'case', page: 'case' },
+  { label: 'Case studies', href: '/#case', id: 'case', page: 'case' },
   { label: 'Experience', href: '/#experience', id: 'experience' },
   { label: 'Skills', href: '/#skills', id: 'skills' },
   { label: 'For business', href: '/for-business/', id: 'business', page: 'business' },
@@ -34,6 +34,7 @@ const palette = {
     { label: 'Home', hint: '/', href: '/' },
     { label: 'All work', hint: '/work/', href: '/work/' },
     { label: 'ERP case study', hint: '/case-study/erp/', href: '/case-study/erp/' },
+    { label: 'HR and booking case study', hint: '/case-study/rainbrow/', href: '/case-study/rainbrow/' },
     { label: 'For business', hint: '/for-business/', href: '/for-business/' },
     { label: 'Experience', hint: '#experience', href: '/#experience' },
     { label: 'Skills', hint: '#skills', href: '/#skills' },
@@ -69,7 +70,7 @@ const jsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
-    <meta name="theme-color" content="#EFECE5" />
+    <meta name="theme-color" content="#EEF1EF" />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />

@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import ApprovalWidget from '../components/ApprovalWidget.astro';
 import projects from '../data/projects.json';
 import { profile, stats, ticker, experience, skills, education, certifications, testimonials } from '../data/site.js';
 
@@ -20,7 +19,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
           <span class="line" style="--i:0"><span>Bagas</span></span>
           <span class="line" style="--i:1"><span>Aria <em>Sativa</em></span></span>
         </h1>
-        <p class="hero-lead">I build production business systems: ERP, HR and booking platforms, and the integrations that connect them to accounting.</p>
+        <p class="hero-lead">I build web applications end to end: Laravel and PHP back ends, React and Next.js interfaces, Python data tools, and the integrations that connect them to other systems.</p>
         <div class="hero-cta">
           <a class="btn btn--primary" href="#work" data-magnetic>View selected work <Icon name="arrow-right" /></a>
           <a class="btn btn--ghost" href={profile.cv} download data-magnetic>Download CV <Icon name="download" /></a>
@@ -31,8 +30,8 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         <div class="hero-photo-frame">
           <img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" fetchpriority="high" decoding="async" />
         </div>
-        <span class="float-tag float-tag--a">Laravel <small>/ PHP / MySQL</small></span>
-        <span class="float-tag float-tag--b">ERP <small>/ 12 departments</small></span>
+        <span class="float-tag float-tag--a">Laravel <small>/ Next.js / Python</small></span>
+        <span class="float-tag float-tag--b">19 <small>/ live projects</small></span>
       </figure>
     </div>
     <ul class="container hero-stats" role="list">
@@ -58,8 +57,8 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
     <div class="container split">
       <div class="reveal">
         <p class="eyebrow">About</p>
-        <h2 class="section-title" id="about-title">Systems that people use every day</h2>
-        <p class="section-lead">Based in Bekasi, I build production-grade systems used daily by real teams. My work spans ERP and HRIS platforms, booking systems and POS applications across manufacturing and service industries.</p>
+        <h2 class="section-title" id="about-title">Software that people use every day</h2>
+        <p class="section-lead">Based in Bekasi, I build production-grade software used daily by real teams. My work spans ERP and HRIS platforms, booking systems, POS applications, data tools and mobile apps, across manufacturing and service industries.</p>
         <p class="section-lead">I work end to end: from database design and backend logic in Laravel to the interfaces people click through. Beyond writing code, I analyse business workflows and gather requirements, so that what I ship fits how people actually work.</p>
         <p class="section-lead">Currently pursuing a Master of Computer Science at Universitas Esa Unggul.</p>
       </div>
@@ -77,7 +76,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
       <div class="section-head reveal">
         <p class="eyebrow">Selected work</p>
         <h2 class="section-title" id="work-title">Working software, not mockups</h2>
-        <p class="section-lead">Six demos that run in your browser. Every one is built by hand, with a real data model behind it.</p>
+        <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Every one is built by hand.</p>
       </div>
       <div class="work-grid work-grid--feature">
         {featured.map((p, i) => <div class="reveal" style={`--i:${i % 3}`}><ProjectCard project={p} index={i} /></div>)}
@@ -88,20 +87,30 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
     </div>
   </section>
 
-  <!-- Case study band -->
+  <!-- Case studies band -->
   <section class="section band" id="case" aria-labelledby="case-title">
-    <div class="container case-grid">
-      <div class="reveal">
-        <p class="eyebrow">Case study</p>
-        <h2 class="section-title" id="case-title">A manufacturing ERP for 12 departments, built end to end</h2>
-        <ul class="case-points" role="list">
-          <li data-n="01"><span><strong>Access you can trust.</strong> 30+ roles across staff, supervisor and manager tiers, enforced on the server.</span></li>
-          <li data-n="02"><span><strong>Approvals that cannot be skipped.</strong> Each department has its own chain, and every step is checked in order.</span></li>
-          <li data-n="03"><span><strong>Accounting that fails safe.</strong> Documents are validated, sent once and read back, and the purchasing flows never delete accounting data.</span></li>
-        </ul>
-        <p style="margin-top:2rem"><a class="btn btn--on-band btn--ghost" href="/case-study/erp/">Read the case study <Icon name="arrow-right" /></a></p>
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Case studies</p>
+        <h2 class="section-title" id="case-title">Two production systems, explained</h2>
+        <p class="section-lead">What the problem was, what I decided and why. Company data is never shown.</p>
       </div>
-      <div class="reveal" style="--i:2"><ApprovalWidget variant="band" /></div>
+      <div class="case-cards">
+        <article class="case-card reveal">
+          <small>Manufacturing</small>
+          <h3>ERP for 12 departments</h3>
+          <p>Access control, multi-level approvals, material planning, quality inspection and a fail-safe connection to an accounting system. Includes an interactive approval demo.</p>
+          <ul class="tags" role="list"><li class="tag">Laravel</li><li class="tag">MySQL</li><li class="tag">REST API</li><li class="tag">OAuth 2.0</li></ul>
+          <a class="link-arrow" href="/case-study/erp/"><span>Read the ERP case study</span><Icon name="arrow-right" size={16} /></a>
+        </article>
+        <article class="case-card reveal" style="--i:1">
+          <small>HR and service</small>
+          <h3>HRIS, aftercare and booking</h3>
+          <p>Three applications delivered as a two-person team: an HR information system with GPS attendance, a rating follow-up dashboard, and a QR-code booking platform.</p>
+          <ul class="tags" role="list"><li class="tag">CodeIgniter 3</li><li class="tag">MySQL</li><li class="tag">WhatsApp API</li><li class="tag">AJAX</li></ul>
+          <a class="link-arrow" href="/case-study/rainbrow/"><span>Read the HR and booking case study</span><Icon name="arrow-right" size={16} /></a>
+        </article>
+      </div>
     </div>
   </section>
 

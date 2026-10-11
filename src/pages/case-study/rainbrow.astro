@@ -1,0 +1,98 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { testimonials } from '../../data/site.js';
+
+const quote = testimonials[0];
+const toc = [
+  ['scope', 'Scope'],
+  ['hris', 'HRIS'],
+  ['aftercare', 'Aftercare dashboard'],
+  ['booking', 'Booking system'],
+  ['shared', 'Shared foundations'],
+  ['stack', 'Stack'],
+];
+---
+<Base
+  title="Case study: HRIS, aftercare and booking | Bagas Aria Sativa"
+  description="Three business applications delivered as a two-person team for a service company: an HR information system with GPS attendance, an aftercare rating dashboard and a QR-code booking platform."
+  path="/case-study/rainbrow/"
+  current="case"
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Case study</p>
+      <h1 class="page-title">HRIS, aftercare and booking for a service company</h1>
+      <p class="page-lead">Three applications that share one API and one access model, built and delivered by a two-person team: the HR supervisor and me. This page explains what each one does and the decisions behind it. Company data is not shown.</p>
+      <dl class="facts" style="max-width:46rem">
+        <div><dt>Role</dt><dd>Full-stack developer</dd></div>
+        <div><dt>Period</dt><dd>Jan 2025 to Oct 2025</dd></div>
+        <div><dt>Company</dt><dd>Rainbrow Sulam Alis</dd></div>
+        <div><dt>Delivery</dt><dd>Three apps, ahead of schedule</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:1rem">
+    <div class="container doc">
+      <nav class="toc" aria-label="On this page">
+        <p>On this page</p>
+        {toc.map(([id, label]) => <a href={`#${id}`} data-toc={id}>{label}</a>)}
+      </nav>
+
+      <div class="prose">
+        <section id="scope">
+          <h2>Scope</h2>
+          <p>The company had no system infrastructure to build on, so the three applications were delivered together: one for people management, one for following up on customer ratings, and one for booking. They share a single REST API consumed over AJAX, so the same rules apply wherever data is read or written.</p>
+        </section>
+
+        <section id="hris">
+          <h2>HRIS</h2>
+          <p>A company-wide human resource information system covering employee management, recruitment, performance management, leave management and payroll.</p>
+          <ul>
+            <li><strong>GPS-based attendance.</strong> Location is validated on the server with geofencing, not only in the browser, so the check cannot be bypassed by editing the page.</li>
+            <li><strong>Training.</strong> Scheduling is automated and completion is tracked.</li>
+            <li><strong>Analytics.</strong> An HR dashboard summarises the people data for managers.</li>
+            <li><strong>Access.</strong> Admin, manager and staff roles see only what they should.</li>
+          </ul>
+        </section>
+
+        <section id="aftercare">
+          <h2>Aftercare dashboard</h2>
+          <p>Customers rate the service after a visit. Low ratings and unverified submissions used to go untracked, so the dashboard turns them into a follow-up list.</p>
+          <ul>
+            <li><strong>Automatic low-rating detection</strong> across service, comfort and result scores.</li>
+            <li><strong>Branch and therapist analytics</strong> to see where ratings are strong or weak.</li>
+            <li><strong>Duplicate and unverified feedback flagging</strong>, so the numbers can be trusted.</li>
+            <li><strong>WhatsApp outreach.</strong> A message link is generated for each customer to follow up, backed by a daily reminder job.</li>
+          </ul>
+        </section>
+
+        <section id="booking">
+          <h2>Booking system</h2>
+          <p>A booking platform that handles walk-in traffic and collects feedback afterwards.</p>
+          <ul>
+            <li><strong>QR-code walk-in booking</strong>, so customers book from their own phone.</li>
+            <li><strong>WhatsApp feedback links</strong> generated after the session.</li>
+            <li><strong>Leaderboard and branch comparison</strong> for artist performance and branch results.</li>
+          </ul>
+        </section>
+
+        <section id="shared">
+          <h2>Shared foundations</h2>
+          <p>All three applications use one RESTful API and one role model. Access control is enforced on the sensitive HR and financial endpoints, not only in the interface. This is the same discipline I later applied to a much larger system, described in the <a class="link-arrow" href="/case-study/erp/"><span>ERP case study</span></a>.</p>
+          <figure class="quote" style="margin-top:2rem;flex:initial">
+            <blockquote style="font-size:var(--step-1)">{quote.quote}</blockquote>
+            <figcaption><strong>{quote.name}</strong><span>{quote.role}, {quote.org}</span></figcaption>
+          </figure>
+        </section>
+
+        <section id="stack">
+          <h2>Stack</h2>
+          <p>CodeIgniter 3, PHP, MySQL, Tailwind CSS, REST API, WhatsApp API, AJAX, hosted on Hostinger.</p>
+          <p style="margin-top:2rem"><a class="btn btn--primary" href="/#contact">Talk about a similar project <Icon name="arrow-right" /></a></p>
+        </section>
+      </div>
+    </div>
+  </section>
+</Base>
