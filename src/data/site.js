@@ -98,7 +98,7 @@ export const certifications = [
 
 export const testimonials = [
   {
-    quote: 'Bagas built our HR information system and the NailShade booking system, and both were delivered ahead of schedule. He took the time to understand how HR really works, from training and recruitment to attendance and leave, and turned it into a system our team could use right away. Communication was professional throughout, and the results exceeded expectations.',
+    quote: 'Bagas built all three of our systems: the aftercare platform, the NailShade booking system and our HR information system, and each was delivered ahead of schedule. He took the time to understand how we really work, from following up on customer ratings to training and recruitment, and turned it into systems our team could use right away. Communication was professional throughout, and the results exceeded expectations.',
     name: 'Dian Rahmawati',
     role: 'HR Supervisor',
     org: 'Rainbrow Sulam Alis',
