@@ -160,8 +160,8 @@ function initDotGrid() {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   const styles = getComputedStyle(document.documentElement);
-  const ink = styles.getPropertyValue('--ink').trim() || '#14171C';
-  const accent = styles.getPropertyValue('--accent').trim() || '#2F49A8';
+  const ink = styles.getPropertyValue('--ink').trim() || '#08181B';
+  const accent = styles.getPropertyValue('--accent').trim() || '#006D77';
   const gap = 30;
   const pointer = { x: -9999, y: -9999 };
   let w = 0, h = 0, running = false, visible = true, t = 0;

@@ -9,7 +9,7 @@ import projects from '../data/projects.json';
 
 const {
   title = `${profile.name} | ${profile.role}`,
-  description = 'Full-Stack Developer in Bekasi, Indonesia. I build production business systems: ERP, HR and booking platforms, and the integrations that connect them to accounting.',
+  description = 'Full-Stack Developer in Bekasi, Indonesia. I build production business systems: ERP, aftercare, booking and HR platforms, and the integrations that connect them to accounting.',
   path = '/',
   current = '',
   noindex = false,
@@ -33,7 +33,7 @@ const palette = {
     { label: 'Home', hint: '/', href: '/' },
     { label: 'All work', hint: '/work/', href: '/work/' },
     { label: 'ERP case study', hint: '/case-study/erp/', href: '/case-study/erp/' },
-    { label: 'HR and booking case study', hint: '/case-study/rainbrow/', href: '/case-study/rainbrow/' },
+    { label: 'Rainbrow case study', hint: '/case-study/rainbrow/', href: '/case-study/rainbrow/' },
     { label: 'For business', hint: '/for-business/', href: '/for-business/' },
     { label: 'Experience', hint: '#experience', href: '/#experience' },
     { label: 'Skills', hint: '#skills', href: '/#skills' },
@@ -69,7 +69,7 @@ const jsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
-    <meta name="theme-color" content="#EEF1F6" />
+    <meta name="theme-color" content="#EDF4F5" />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />

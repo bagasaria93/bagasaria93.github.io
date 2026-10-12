@@ -43,14 +43,14 @@ export const experience = [
   {
     title: 'Full-Stack Developer (Project-Based)',
     org: 'Rainbrow Sulam Alis',
-    meta: 'HR, aftercare and booking systems',
+    meta: 'Aftercare, booking and HR systems',
     period: 'Jan 2025 to Oct 2025',
-    stack: 'CodeIgniter 3, PHP, MySQL, Tailwind CSS, REST API, WhatsApp API, AJAX, Hostinger',
+    stack: 'CodeIgniter 3, PHP, MySQL, Bootstrap, Tailwind CSS, jQuery, Chart.js, WhatsApp click-to-chat, Hostinger',
     points: [
-      'Delivered three business applications as a two-person team with the HR Supervisor, all completed ahead of schedule.',
-      'HRIS covering employees, recruitment, performance, leave and payroll, with GPS-based attendance and server-side geofencing validation.',
-      'Aftercare dashboard with automatic low-rating detection, feedback flagging and WhatsApp outreach with a daily reminder job.',
-      'QR-code walk-in booking system with WhatsApp feedback links and branch comparison analytics.',
+      'Built three business applications end to end as the only developer, in parallel, all completed ahead of schedule, with the HR Supervisor guiding the business processes.',
+      'Aftercare, the largest: customer ratings with tokenised links, low-rating follow-up with vouchers and proof, Google rating tracking, a daily reminder job, retouch and reschedule handling, and an inventory chain from purchasing to branch delivery, with nine user roles.',
+      'NailShade: QR booking and walk-in registration, a customer points program with tiers, vouchers and redemption, barcode scanning for nail artists, and a nail artist leaderboard used for monthly commission.',
+      'Rainbrow Career Path: an HRIS with employee management, GPS-based attendance, leave, payroll and performance, built around training and recruitment.',
     ],
   },
   {
@@ -70,7 +70,7 @@ export const skills = [
   { group: 'Backend', items: ['PHP', 'Laravel (v9 to v12)', 'CodeIgniter 3 and 4', 'Node.js', 'Python'] },
   { group: 'Frontend', items: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'jQuery'] },
   { group: 'Data', items: ['MySQL', 'PostgreSQL', 'Neon PostgreSQL', 'Drizzle ORM', 'ApexCharts', 'Chart.js'] },
-  { group: 'Integration', items: ['REST API', 'OAuth 2.0', 'Accurate Online API', 'WhatsApp API', 'AJAX', 'Anthropic API'] },
+  { group: 'Integration', items: ['REST API', 'OAuth 2.0', 'Accurate Online API', 'WhatsApp click-to-chat', 'AJAX', 'Anthropic API'] },
   { group: 'Delivery', items: ['Git', 'GitHub', 'GitHub Actions', 'Hostinger', 'Vercel', 'Railway'] },
   { group: 'Practice', items: ['ERP development', 'System analysis', 'Requirements gathering', 'Role-based access control', 'Admin dashboards', 'POS applications', 'Figma'] },
 ];
