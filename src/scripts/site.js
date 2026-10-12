@@ -50,6 +50,8 @@ function initHeader() {
   if (!header) return;
   const update = raf(() => {
     header.classList.toggle('is-scrolled', scrollY > 8);
+    const top = $('.to-top');
+    if (top) top.classList.toggle('is-visible', scrollY > innerHeight * 0.9);
     const max = document.documentElement.scrollHeight - innerHeight;
     if (bar) bar.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0);
   });
@@ -337,6 +339,13 @@ function initCarousel() {
 }
 
 /* -------------------------------------------------------- command palette */
+const svgIcon = (d) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false">${d}</svg>`;
+const PALETTE_ICONS = {
+  'Go to': svgIcon('<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>'),
+  Actions: svgIcon('<path d="m13 2-10 12h9l-1 8 10-12h-9z"/>'),
+  Projects: svgIcon('<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>'),
+};
+
 function initPalette() {
   const dialog = $('#palette');
   const dataEl = $('#palette-data');
@@ -375,7 +384,11 @@ function initPalette() {
         li.id = `pal-${flat.length}`;
         li.setAttribute('role', 'option');
         li.setAttribute('aria-selected', 'false');
-        const a = document.createElement('span'); a.textContent = it.label;
+        const a = document.createElement('span'); a.className = 'palette-label';
+        const ico = document.createElement('i'); ico.className = 'palette-ico'; ico.setAttribute('aria-hidden', 'true');
+        ico.innerHTML = PALETTE_ICONS[name] || '';
+        const t = document.createElement('span'); t.textContent = it.label;
+        a.append(ico, t);
         const b = document.createElement('small'); b.textContent = it.hint || '';
         li.append(a, b);
         li.addEventListener('pointermove', () => { const i = flat.findIndex((f) => f.el === li); if (i !== selected) setSelected(i); });

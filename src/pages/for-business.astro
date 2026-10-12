@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import projects from '../data/projects.json';
 import { profile, testimonials } from '../data/site.js';
 
+const kindIcons = { 'Cashier / POS': 'zap', 'Booking / reservation': 'calendar', 'HR and payroll': 'users', 'Manufacturing / ERP': 'building', 'Manufacturing / planning': 'chart', 'Customer management': 'user', 'WhatsApp and email blast': 'send' };
 const byTitle = Object.fromEntries(projects.map((p) => [p.title, p]));
 const systems = [
   { kind: 'Cashier / POS', title: 'KasirKu', best: 'Best for shops, cafes, restaurants', text: 'Ring up items, apply discounts, calculate tax and print a receipt, all from one simple screen.' },
@@ -28,12 +29,12 @@ const industries = [
 >
   <section class="page-head">
     <div class="container">
-      <p class="eyebrow">For business owners</p>
+      <p class="eyebrow"><Icon name="building" /> For business owners</p>
       <h1 class="page-title" style="max-width:16ch">A website and system built around how your business actually works.</h1>
       <p class="page-lead">I am Bagas, a software developer based in Bekasi. I build company profile websites and custom business applications for small and medium businesses: cashier systems, booking systems, HR tools and more. No confusing tech talk, just something that works and helps you save time or bring in more customers.</p>
       <div class="hero-cta">
-        <a class="btn btn--primary" href={profile.whatsapp} target="_blank" rel="noopener">Chat on WhatsApp <Icon name="arrow-right" /></a>
-        <a class="btn btn--ghost" href="#systems">See live demos</a>
+        <a class="btn btn--primary" href={profile.whatsapp} target="_blank" rel="noopener"><Icon name="whatsapp" /> Chat on WhatsApp</a>
+        <a class="btn btn--ghost" href="#systems"><Icon name="rocket" /> See live demos</a>
       </div>
     </div>
   </section>
@@ -41,13 +42,13 @@ const industries = [
   <section class="section" id="services" style="padding-top:2rem" aria-labelledby="services-title">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Services</p>
+        <p class="eyebrow"><Icon name="tool" /> Services</p>
         <h2 class="section-title" id="services-title">Two ways I can help</h2>
         <p class="section-lead">Whether you need an online presence or you are tired of running your business on WhatsApp groups and spreadsheets, here is what I offer.</p>
       </div>
       <div class="biz-grid">
         <article class="biz-card reveal">
-          <h3>Company profile website</h3>
+          <h3><Icon name="globe" /> Company profile website</h3>
           <p>A professional website for your business. It shows who you are and what you offer, and makes it easy for people to reach you. Ideal if you do not have a website yet, or your current one looks outdated and is not bringing in new customers.</p>
           <ul role="list">
             <li>Home, about, and services or product pages built around your business, not a generic template</li>
@@ -57,7 +58,7 @@ const industries = [
           <a class="link-arrow" href="/demo/company-profiles/"><span>See website demos by industry</span><Icon name="arrow-right" size={16} /></a>
         </article>
         <article class="biz-card reveal" style="--i:1">
-          <h3>Custom application or system</h3>
+          <h3><Icon name="server" /> Custom application or system</h3>
           <p>If managing your business by WhatsApp, Excel or paper is starting to slow you down, I can build a system made for how you operate. A few common examples:</p>
           <ul role="list">
             <li>Cashier and POS for shops, cafes and restaurants</li>
@@ -77,7 +78,7 @@ const industries = [
   <section class="section" id="systems" style="padding-top:0" aria-labelledby="systems-title">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Live demos</p>
+        <p class="eyebrow"><Icon name="rocket" /> Live demos</p>
         <h2 class="section-title" id="systems-title">See it before you decide</h2>
         <p class="section-lead">Fully working demos that you can click through yourself, with no sign-up needed.</p>
       </div>
@@ -86,7 +87,7 @@ const industries = [
           const p = byTitle[s.title];
           return (
             <a class="system reveal" style={`--i:${i % 3}`} href={p.href} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener' : undefined}>
-              <small>{s.kind}</small>
+              <small><Icon name={kindIcons[s.kind]} />{s.kind}</small>
               <h3>{s.title}</h3>
               <p class="best">{s.best}</p>
               <p>{s.text}</p>
@@ -99,14 +100,14 @@ const industries = [
       <ul class="tags reveal" role="list" style="margin-top:1.5rem">
         {industries.map((n) => <li class="tag">{n}</li>)}
       </ul>
-      <p class="reveal" style="margin-top:2rem"><a class="btn btn--ghost" href="/demo/company-profiles/">Browse all 15 industry demos <Icon name="arrow-right" /></a></p>
+      <p class="reveal" style="margin-top:2rem"><a class="btn btn--ghost" href="/demo/company-profiles/"><Icon name="globe" /> Browse all 15 industry demos</a></p>
     </div>
   </section>
 
   <section class="section" id="proof" style="padding-top:0" aria-labelledby="proof-title">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Proof of work</p>
+        <p class="eyebrow"><Icon name="quote" /> Proof of work</p>
         <h2 class="section-title" id="proof-title">In their words</h2>
         <p class="section-lead">Quotes from the people I have built systems for at Rainbrow Sulam Alis and PT Ganzu Gisma Seiko.</p>
       </div>
@@ -124,21 +125,21 @@ const industries = [
   <section class="section band" id="contact" aria-labelledby="biz-contact-title">
     <div class="container contact-grid">
       <div class="reveal">
-        <p class="eyebrow">Contact</p>
+        <p class="eyebrow"><Icon name="send" /> Contact</p>
         <h2 class="contact-big" id="biz-contact-title">Let&rsquo;s talk about your <em>business</em>.</h2>
         <p class="section-lead">Open for new website and system projects. Not sure yet whether you need a website, a system, or both? Send a message describing your business and how you currently manage it. I will give you an honest answer on what would actually help, along with a price and timeline, before you decide anything.</p>
       </div>
       <div class="contact-list reveal" style="--i:2;margin-top:0">
         <a class="contact-row" href={profile.whatsapp} rel="noopener" target="_blank">
-          <div><small>WhatsApp</small><span>{profile.phone}</span></div>
+          <div class="lead"><Icon name="whatsapp" /><div><small>WhatsApp</small><span>{profile.phone}</span></div></div>
           <Icon name="arrow-up-right" />
         </a>
         <div class="contact-row">
-          <div><small>Email</small><span>{profile.email}</span></div>
+          <div class="lead"><Icon name="mail" /><div><small>Email</small><span>{profile.email}</span></div></div>
           <button type="button" data-copy-email>Copy</button>
         </div>
         <a class="contact-row" href="/">
-          <div><small>Portfolio</small><span>Back to the full portfolio</span></div>
+          <div class="lead"><Icon name="home" /><div><small>Portfolio</small><span>Back to the full portfolio</span></div></div>
           <Icon name="arrow-right" />
         </a>
       </div>

@@ -21,14 +21,14 @@ const toc = [
 >
   <section class="page-head">
     <div class="container">
-      <p class="eyebrow">Case study</p>
+      <p class="eyebrow"><Icon name="layers" /> Case study</p>
       <h1 class="page-title">Aftercare, booking and HR for a service company</h1>
       <p class="page-lead">Three applications for a beauty service company with several branches, developed in parallel by one developer while the HR Supervisor guided the business processes. This page explains what each one does and the decisions behind it. Company data is not shown.</p>
       <dl class="facts" style="max-width:46rem">
-        <div><dt>Role</dt><dd>Full-stack developer, sole builder</dd></div>
-        <div><dt>Period</dt><dd>Jan 2025 to Oct 2025</dd></div>
-        <div><dt>Company</dt><dd>Rainbrow Sulam Alis</dd></div>
-        <div><dt>Delivery</dt><dd>Three apps, ahead of schedule</dd></div>
+        <div><dt><Icon name="user" size={14} />Role</dt><dd>Full-stack developer, sole builder</dd></div>
+        <div><dt><Icon name="calendar" size={14} />Period</dt><dd>Jan 2025 to Oct 2025</dd></div>
+        <div><dt><Icon name="building" size={14} />Company</dt><dd>Rainbrow Sulam Alis</dd></div>
+        <div><dt><Icon name="check" size={14} />Delivery</dt><dd>Three apps, ahead of schedule</dd></div>
       </dl>
     </div>
   </section>
@@ -42,12 +42,12 @@ const toc = [
 
       <div class="prose">
         <section id="scope">
-          <h2>Scope</h2>
+          <h2><Icon name="compass" /> Scope</h2>
           <p>The company needed three separate tools: one to follow up on what customers say after a visit, one to take bookings and reward loyal customers, and one to manage its people. They were built as independent applications, side by side, from the day I joined until each was finished. I wrote all three; the HR Supervisor directed and supervised the work across all of them, explaining how it really happens and reviewing the results.</p>
         </section>
 
         <section id="aftercare">
-          <h2>Aftercare</h2>
+          <h2><Icon name="star" /> Aftercare</h2>
           <p>The largest of the three: the working tool of the aftercare team for collecting and following up on customer ratings, with nine user roles.</p>
           <ul>
             <li><strong>Ratings you can trust.</strong> Customers rate through a tokenised link, scores are validated, and duplicate or unverified feedback is flagged so the numbers hold up.</li>
@@ -61,7 +61,7 @@ const toc = [
         </section>
 
         <section id="nailshade">
-          <h2>NailShade</h2>
+          <h2><Icon name="phone2" /> NailShade</h2>
           <p>A booking and loyalty platform for nail studios, used by customers on their phones, by nail artists at the studio, and by customer service and admin.</p>
           <ul>
             <li><strong>QR booking.</strong> Customers book from their own phone, and walk-in customers register through a QR code at the studio.</li>
@@ -74,7 +74,7 @@ const toc = [
         </section>
 
         <section id="career">
-          <h2>Rainbrow Career Path</h2>
+          <h2><Icon name="users" /> Rainbrow Career Path</h2>
           <p>A human resource information system for the whole company. Its core is training and recruitment, alongside the usual HR modules.</p>
           <ul>
             <li><strong>People.</strong> Employee management with admin, manager and staff roles.</li>
@@ -85,7 +85,7 @@ const toc = [
         </section>
 
         <section id="foundations">
-          <h2>Engineering notes</h2>
+          <h2><Icon name="shield" /> Engineering notes</h2>
           <p>The aftercare application went through a security pass: CSRF protection on every form and AJAX call, rating links based on tokens instead of guessable numbers, password hashes upgraded to bcrypt on login, and consistent login checks. The same discipline carried into the much larger <a class="link-arrow" href="/case-study/erp/"><span>ERP case study</span></a>.</p>
           <figure class="quote" style="margin-top:2rem;flex:initial">
             <blockquote style="font-size:var(--step-1)">{quote.quote}</blockquote>
@@ -94,7 +94,7 @@ const toc = [
         </section>
 
         <section id="stack">
-          <h2>Stack</h2>
+          <h2><Icon name="code" /> Stack</h2>
           <p>Aftercare and NailShade: CodeIgniter 3, PHP and MySQL, with Bootstrap for the admin screens and Tailwind CSS for the mobile screens of NailShade, plus jQuery, Chart.js, QR code scanning and WhatsApp click-to-chat links. Career Path: PHP and MySQL. Hosted on Hostinger.</p>
           <p style="margin-top:2rem"><a class="btn btn--primary" href="/#contact">Talk about a similar project <Icon name="arrow-right" /></a></p>
         </section>

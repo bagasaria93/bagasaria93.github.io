@@ -19,12 +19,12 @@ const canonical = new URL(path, profile.site).href;
 const og = new URL('/assets/img/profile.png', profile.site).href;
 
 const nav = [
-  { label: 'Work', href: '/#work', id: 'work', page: 'work' },
-  { label: 'Case studies', href: '/#case', id: 'case', page: 'case' },
-  { label: 'Experience', href: '/#experience', id: 'experience' },
-  { label: 'Skills', href: '/#skills', id: 'skills' },
-  { label: 'For business', href: '/for-business/', id: 'business', page: 'business' },
-  { label: 'Contact', href: '/#contact', id: 'contact' },
+  { label: 'Work', href: '/#work', id: 'work', page: 'work', icon: 'folder' },
+  { label: 'Case studies', href: '/#case', id: 'case', page: 'case', icon: 'layers' },
+  { label: 'Experience', href: '/#experience', id: 'experience', icon: 'briefcase' },
+  { label: 'Skills', href: '/#skills', id: 'skills', icon: 'tool' },
+  { label: 'For business', href: '/for-business/', id: 'business', page: 'business', icon: 'building' },
+  { label: 'Contact', href: '/#contact', id: 'contact', icon: 'send' },
 ];
 
 // Data for the command palette. Built at compile time, so there is no runtime fetch.
@@ -95,7 +95,7 @@ const jsonLd = JSON.stringify({
         <nav class="nav" aria-label="Primary">
           <span class="nav-indicator" aria-hidden="true"></span>
           {nav.map((n) => (
-            <a href={n.href} data-nav={n.id} aria-current={n.page && n.page === current ? 'page' : undefined}>{n.label}</a>
+            <a href={n.href} data-nav={n.id} aria-current={n.page && n.page === current ? 'page' : undefined}><Icon name={n.icon} />{n.label}</a>
           ))}
         </nav>
         <div class="header-actions">
@@ -109,8 +109,8 @@ const jsonLd = JSON.stringify({
     </header>
 
     <div class="mobile-menu" id="mobile-menu">
-      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
-      <a href="/work/">All work</a>
+      {nav.map((n) => <a href={n.href}><Icon name={n.icon} />{n.label}</a>)}
+      <a href="/work/"><Icon name="layers" />All work</a>
     </div>
 
     <main id="main" tabindex="-1">
@@ -121,10 +121,10 @@ const jsonLd = JSON.stringify({
       <div class="container footer-inner">
         <p>&copy; {new Date().getFullYear()} {profile.name}. Built by hand with Astro, HTML, CSS and JavaScript.</p>
         <div class="footer-links">
-          <a href={profile.github} rel="noopener">GitHub</a>
-          <a href={profile.linkedin} rel="noopener">LinkedIn</a>
-          <a href={`mailto:${profile.email}`}>Email</a>
-          <a href="#top">Back to top</a>
+          <a href={profile.github} rel="noopener"><Icon name="github" />GitHub</a>
+          <a href={profile.linkedin} rel="noopener"><Icon name="linkedin" />LinkedIn</a>
+          <a href={`mailto:${profile.email}`}><Icon name="mail" />Email</a>
+          <a href="#top"><Icon name="arrow-up" />Back to top</a>
         </div>
       </div>
     </footer>
@@ -136,6 +136,7 @@ const jsonLd = JSON.stringify({
         <div class="palette-foot"><span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span></div>
       </div>
     </dialog>
+    <a class="to-top" href="#top" aria-label="Back to top"><Icon name="arrow-up" /></a>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script id="palette-data" type="application/json" set:html={JSON.stringify(palette)} />

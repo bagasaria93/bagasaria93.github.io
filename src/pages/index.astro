@@ -16,6 +16,19 @@ const termLines = [
   { k: 'out', t: '19 to open, 2 in production' },
 ];
 const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', Integration: 'plug', Delivery: 'rocket', Practice: 'compass' };
+const statIcons = ['folder', 'code', 'building', 'clock'];
+const layers = [
+  { icon: 'layout', name: 'Frontend', text: 'React, Next.js, JavaScript, TypeScript, Tailwind CSS' },
+  { icon: 'server', name: 'Backend', text: 'Laravel, PHP, CodeIgniter, Node.js, Python' },
+  { icon: 'database', name: 'Data', text: 'MySQL, PostgreSQL, Drizzle ORM' },
+  { icon: 'plug', name: 'Integration', text: 'REST API, OAuth 2.0, Accurate Online, WhatsApp links' },
+];
+const social = [
+  { icon: 'github', label: 'GitHub', href: profile.github },
+  { icon: 'linkedin', label: 'LinkedIn', href: profile.linkedin },
+  { icon: 'whatsapp', label: 'WhatsApp', href: profile.whatsapp },
+  { icon: 'mail', label: 'Email', href: `mailto:${profile.email}` },
+];
 ---
 <Base current="home">
   <!-- Hero -->
@@ -23,7 +36,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
     <canvas class="hero-grid" aria-hidden="true" data-dotgrid></canvas>
     <div class="container hero-inner">
       <div>
-        <p class="eyebrow">Full-Stack Developer / Bekasi, Indonesia</p>
+        <p class="eyebrow"><Icon name="map-pin" /> Full-Stack Developer / Bekasi, Indonesia</p>
         <h1 class="hero-title" id="hero-title">
           <span class="line" style="--i:0"><span>Bagas</span></span>
           <span class="line" style="--i:1"><span>Aria <em>Sativa</em></span></span>
@@ -31,7 +44,12 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         <p class="hero-lead">I build web applications end to end: Laravel and PHP back ends, React and Next.js interfaces, Python data tools, and the integrations that connect them to other systems.</p>
         <div class="hero-cta">
           <a class="btn btn--primary" href="#work" data-magnetic>View selected work <Icon name="arrow-right" /></a>
-          <a class="btn btn--ghost" href={profile.cv} download data-magnetic>Download CV <Icon name="download" /></a>
+          <a class="btn btn--ghost" href={profile.cv} download data-magnetic><Icon name="download" /> Download CV</a>
+        </div>
+        <div class="social">
+          {social.map((s) => (
+            <a href={s.href} aria-label={s.label} title={s.label} target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener' : undefined}><Icon name={s.icon} /></a>
+          ))}
         </div>
         <p class="status"><span class="dot" aria-hidden="true"></span>Open to remote and onsite roles</p>
       </div>
@@ -43,14 +61,17 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         <span class="float-tag float-tag--b">19 <small>/ live projects</small></span>
       </figure>
     </div>
+  </section>
+
+  <!-- At a glance -->
+  <section class="glance" aria-label="At a glance">
     <div class="container hero-bento">
       <div class="tile tile--stack reveal">
         <p class="tile-label"><span>The stack, layer by layer</span><span>full-stack</span></p>
         <div class="layers">
-          <div class="layer"><strong>Frontend</strong><span>React, Next.js, JavaScript, TypeScript, Tailwind CSS</span></div>
-          <div class="layer"><strong>Backend</strong><span>Laravel, PHP, CodeIgniter, Node.js, Python</span></div>
-          <div class="layer"><strong>Data</strong><span>MySQL, PostgreSQL, Drizzle ORM</span></div>
-          <div class="layer"><strong>Integration</strong><span>REST API, OAuth 2.0, Accurate Online, WhatsApp links</span></div>
+          {layers.map((l) => (
+            <div class="layer"><strong><Icon name={l.icon} /> {l.name}</strong><span>{l.text}</span></div>
+          ))}
         </div>
       </div>
       <div class="tile tile--term reveal" style="--i:1">
@@ -61,10 +82,13 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
       </div>
     </div>
     <ul class="container hero-stats" role="list">
-      {stats.map((s) => (
+      {stats.map((s, i) => (
         <li>
-          <strong data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</strong>
-          <span>{s.label}</span>
+          <span class="stat-ico"><Icon name={statIcons[i]} /></span>
+          <div>
+            <strong data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</strong>
+            <span>{s.label}</span>
+          </div>
         </li>
       ))}
     </ul>
@@ -82,14 +106,14 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section" id="about" aria-labelledby="about-title">
     <div class="container split">
       <div class="reveal">
-        <p class="eyebrow">About</p>
+        <p class="eyebrow"><Icon name="user" /> About</p>
         <h2 class="section-title" id="about-title">Software that people use every day</h2>
         <p class="section-lead">Based in Bekasi, I build production-grade software used daily by real teams. My work spans ERP and HRIS platforms, booking systems, POS applications, data tools and mobile apps, across manufacturing and service industries.</p>
         <p class="section-lead">I work end to end: from database design and backend logic in Laravel to the interfaces people click through. Beyond writing code, I analyse business workflows and gather requirements, so that what I ship fits how people actually work.</p>
-        <p class="section-lead">Currently pursuing a Master of Computer Science at Universitas Esa Unggul.</p>
+        <p class="section-lead"><Icon name="graduation" size={18} /> Currently pursuing a Master of Computer Science at Universitas Esa Unggul.</p>
       </div>
       <div class="reveal" style="--i:2">
-        <div class="hero-photo-frame" style="aspect-ratio:1/1;background:var(--accent-soft)">
+        <div class="hero-photo-frame about-photo" style="aspect-ratio:1/1;background:var(--accent-soft)">
           <img src="/assets/img/profile2.webp" alt="Bagas Aria Sativa playing golf" width="1080" height="1080" loading="lazy" decoding="async" style="object-fit:contain" />
         </div>
       </div>
@@ -100,7 +124,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Selected work</p>
+        <p class="eyebrow"><Icon name="folder" /> Selected work</p>
         <h2 class="section-title" id="work-title">Working software, not mockups</h2>
         <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Every one is built by hand.</p>
       </div>
@@ -123,21 +147,21 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section band" id="case" aria-labelledby="case-title">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Case studies</p>
+        <p class="eyebrow"><Icon name="layers" /> Case studies</p>
         <h2 class="section-title" id="case-title">Two production systems, explained</h2>
         <p class="section-lead">What the problem was, what I decided and why. Company data is never shown.</p>
       </div>
       <div class="case-cards">
         <article class="case-card reveal">
           <small>Manufacturing</small>
-          <h3>ERP for 12 departments</h3>
+          <h3><Icon name="building" /> ERP for 12 departments</h3>
           <p>Access control, multi-level approvals, material planning, quality inspection and a fail-safe connection to an accounting system. Includes an interactive approval demo.</p>
           <ul class="tags" role="list"><li class="tag">Laravel</li><li class="tag">MySQL</li><li class="tag">REST API</li><li class="tag">OAuth 2.0</li></ul>
           <a class="link-arrow" href="/case-study/erp/"><span>Read the ERP case study</span><Icon name="arrow-right" size={16} /></a>
         </article>
         <article class="case-card reveal" style="--i:1">
           <small>HR and service</small>
-          <h3>Aftercare, booking and HRIS</h3>
+          <h3><Icon name="users" /> Aftercare, booking and HRIS</h3>
           <p>Three applications built end to end for a service company: an aftercare platform for ratings and follow-up, a QR booking platform with a customer points program, and an HR information system.</p>
           <ul class="tags" role="list"><li class="tag">CodeIgniter 3</li><li class="tag">MySQL</li><li class="tag">Bootstrap</li><li class="tag">Tailwind CSS</li></ul>
           <a class="link-arrow" href="/case-study/rainbrow/"><span>Read the Rainbrow case study</span><Icon name="arrow-right" size={16} /></a>
@@ -150,7 +174,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section" id="experience" aria-labelledby="exp-title">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Experience</p>
+        <p class="eyebrow"><Icon name="briefcase" /> Experience</p>
         <h2 class="section-title" id="exp-title">Where I have built things</h2>
       </div>
       <div class="timeline" data-timeline>
@@ -158,10 +182,10 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
         {experience.map((j, i) => (
           <article class="job reveal" data-job>
             <div>
-              <p class="job-period">{j.period}</p>
+              <p class="job-period"><Icon name="calendar" /> {j.period}</p>
               <h3>{j.title}</h3>
-              <p class="job-org">{j.org}</p>
-              <p class="job-meta">{j.meta}</p>
+              <p class="job-org"><Icon name="building" /> {j.org}</p>
+              <p class="job-meta"><Icon name="map-pin" /> {j.meta}</p>
               <p class="job-stack">{j.stack}</p>
             </div>
             <ul role="list">{j.points.map((p) => <li>{p}</li>)}</ul>
@@ -175,7 +199,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section" id="skills" aria-labelledby="skills-title" style="padding-top:0">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Toolbox</p>
+        <p class="eyebrow"><Icon name="tool" /> Toolbox</p>
         <h2 class="section-title" id="skills-title">What I work with</h2>
       </div>
       <div class="skills-bento">
@@ -193,22 +217,22 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0">
     <div class="container split">
       <div class="panel reveal">
-        <p class="eyebrow">Education</p>
-        <h2 class="section-title" id="edu-title" style="margin-bottom:1rem">Studies</h2>
+        <p class="eyebrow"><Icon name="graduation" /> Education</p>
+        <h2 class="section-title" id="edu-title" style="margin-bottom:0.75rem">Studies</h2>
         {education.map((e) => (
           <div class="entry">
-            <h3>{e.degree}</h3><span class="when">{e.period}</span>
+            <h3><Icon name="graduation" /> {e.degree}</h3><span class="when">{e.period}</span>
             <span class="school">{e.school}</span>
             <p>{e.note}</p>
           </div>
         ))}
       </div>
       <div class="panel reveal" style="--i:2">
-        <p class="eyebrow">Credentials</p>
-        <h2 class="section-title" style="margin-bottom:1rem">Certifications</h2>
+        <p class="eyebrow"><Icon name="award" /> Credentials</p>
+        <h2 class="section-title" style="margin-bottom:0.75rem">Certifications</h2>
         {certifications.map((c) => (
           <div class="entry">
-            <h3>{c.name}</h3><span class="when">{c.year}</span>
+            <h3><Icon name="award" /> {c.name}</h3><span class="when">{c.year}</span>
             <span class="school">{c.issuer}</span>
           </div>
         ))}
@@ -220,7 +244,7 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section" id="testimonials" aria-labelledby="quotes-title" style="padding-top:0">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Testimonials</p>
+        <p class="eyebrow"><Icon name="quote" /> Testimonials</p>
         <h2 class="section-title" id="quotes-title">What colleagues say</h2>
       </div>
       <div class="reveal" data-carousel aria-roledescription="carousel" aria-label="Testimonials">
@@ -245,44 +269,46 @@ const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', In
   <section class="section band" id="contact" aria-labelledby="contact-title">
     <div class="container contact-grid">
       <div class="reveal">
-        <p class="eyebrow">Contact</p>
+        <p class="eyebrow"><Icon name="send" /> Contact</p>
         <h2 class="contact-big" id="contact-title">Let&rsquo;s build something <em>reliable</em>.</h2>
         <div class="contact-list">
           <div class="contact-row">
-            <div><small>Email</small><span>{profile.email}</span></div>
+            <div class="lead"><Icon name="mail" /><div><small>Email</small><span>{profile.email}</span></div></div>
             <button type="button" data-copy-email>Copy</button>
           </div>
           <a class="contact-row" href={profile.whatsapp} rel="noopener" target="_blank">
-            <div><small>WhatsApp</small><span>{profile.phone}</span></div>
+            <div class="lead"><Icon name="whatsapp" /><div><small>WhatsApp</small><span>{profile.phone}</span></div></div>
             <Icon name="arrow-up-right" />
           </a>
           <a class="contact-row" href={profile.linkedin} rel="noopener" target="_blank">
-            <div><small>LinkedIn</small><span>linkedin.com/in/bagasaria</span></div>
+            <div class="lead"><Icon name="linkedin" /><div><small>LinkedIn</small><span>linkedin.com/in/bagasaria</span></div></div>
             <Icon name="arrow-up-right" />
           </a>
           <a class="contact-row" href={profile.github} rel="noopener" target="_blank">
-            <div><small>GitHub</small><span>github.com/bagasaria93</span></div>
+            <div class="lead"><Icon name="github" /><div><small>GitHub</small><span>github.com/bagasaria93</span></div></div>
             <Icon name="arrow-up-right" />
           </a>
         </div>
       </div>
       <form class="form reveal" style="--i:2" data-contact novalidate>
-        <div class="field">
-          <label for="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name" />
-          <span class="error" id="e-name"></span>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name"><Icon name="user" /> Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name" />
+            <span class="error" id="e-name"></span>
+          </div>
+          <div class="field">
+            <label for="f-email"><Icon name="mail" /> Your email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" />
+            <span class="error" id="e-email"></span>
+          </div>
         </div>
         <div class="field">
-          <label for="f-email">Your email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" />
-          <span class="error" id="e-email"></span>
-        </div>
-        <div class="field">
-          <label for="f-msg">Message</label>
+          <label for="f-msg"><Icon name="quote" /> Message</label>
           <textarea id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
           <span class="error" id="e-msg"></span>
         </div>
-        <button class="btn btn--primary" type="submit">Send message <Icon name="arrow-right" /></button>
+        <button class="btn btn--primary" type="submit"><Icon name="send" /> Send message</button>
         <p class="form-note">This opens your email app with the message filled in. Nothing is stored on this site.</p>
       </form>
     </div>
