@@ -72,7 +72,7 @@ export const skills = [
   { group: 'Data', items: ['MySQL', 'PostgreSQL', 'Neon PostgreSQL', 'Drizzle ORM', 'ApexCharts', 'Chart.js'] },
   { group: 'Integration', items: ['REST API', 'OAuth 2.0', 'Accurate Online API', 'WhatsApp click-to-chat', 'AJAX', 'Anthropic API'] },
   { group: 'Delivery', items: ['Git', 'GitHub', 'GitHub Actions', 'Hostinger', 'Vercel', 'Railway'] },
-  { group: 'Practice', items: ['ERP development', 'System analysis', 'Requirements gathering', 'Role-based access control', 'Admin dashboards', 'POS applications', 'Figma'] },
+  { group: 'Practice', items: ['ERP development', 'System analysis', 'Requirements gathering', 'Role-based access control', 'Admin dashboards', 'POS applications', 'AI-assisted development (Claude Code)', 'Figma'] },
 ];
 
 export const education = [
