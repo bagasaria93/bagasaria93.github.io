@@ -46,7 +46,7 @@ const industries = [
         <h2 class="section-title" id="services-title">Two ways I can help</h2>
         <p class="section-lead">Whether you need an online presence or you are tired of running your business on WhatsApp groups and spreadsheets, here is what I offer.</p>
       </div>
-      <div class="biz-grid">
+      <div class="biz-grid cycle">
         <article class="biz-card reveal">
           <h3><Icon name="globe" /> Company profile website</h3>
           <p>A professional website for your business. It shows who you are and what you offer, and makes it easy for people to reach you. Ideal if you do not have a website yet, or your current one looks outdated and is not bringing in new customers.</p>
@@ -82,7 +82,7 @@ const industries = [
         <h2 class="section-title" id="systems-title">See it before you decide</h2>
         <p class="section-lead">Fully working demos that you can click through yourself, with no sign-up needed.</p>
       </div>
-      <div class="systems">
+      <div class="systems cycle">
         {systems.map((s, i) => {
           const p = byTitle[s.title];
           return (
@@ -111,7 +111,7 @@ const industries = [
         <h2 class="section-title" id="proof-title">In their words</h2>
         <p class="section-lead">Quotes from the people I have built systems for at Rainbrow Sulam Alis and PT Ganzu Gisma Seiko.</p>
       </div>
-      <div class="biz-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
+      <div class="biz-grid cycle" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
         {testimonials.map((t, i) => (
           <figure class="quote reveal" style={`--i:${i}; flex: initial`}>
             <blockquote style="font-size:var(--step-1)">{t.quote}</blockquote>
@@ -122,7 +122,7 @@ const industries = [
     </div>
   </section>
 
-  <section class="section band" id="contact" aria-labelledby="biz-contact-title">
+  <section class="section band" id="contact" aria-labelledby="biz-contact-title" data-c="yellow">
     <div class="container contact-grid">
       <div class="reveal">
         <p class="eyebrow"><Icon name="send" /> Contact</p>
@@ -134,10 +134,10 @@ const industries = [
           <div class="lead"><Icon name="whatsapp" /><div><small>WhatsApp</small><span>{profile.phone}</span></div></div>
           <Icon name="arrow-up-right" />
         </a>
-        <div class="contact-row">
+        <a class="contact-row" href={`mailto:${profile.email}`} target="_blank" rel="noopener">
           <div class="lead"><Icon name="mail" /><div><small>Email</small><span>{profile.email}</span></div></div>
-          <button type="button" data-copy-email>Copy</button>
-        </div>
+          <Icon name="arrow-up-right" />
+        </a>
         <a class="contact-row" href="/">
           <div class="lead"><Icon name="home" /><div><small>Portfolio</small><span>Back to the full portfolio</span></div></div>
           <Icon name="arrow-right" />

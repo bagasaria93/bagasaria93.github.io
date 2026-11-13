@@ -1,7 +1,8 @@
 ---
-import '@fontsource-variable/bricolage-grotesque';
-import '@fontsource-variable/instrument-sans';
-import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource/space-mono/400.css';
+import '@fontsource/space-mono/700.css';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import { profile } from '../data/site.js';
@@ -27,6 +28,8 @@ const nav = [
   { label: 'Contact', href: '/#contact', id: 'contact', icon: 'send' },
 ];
 
+const accents = [['blue', 'Blue'], ['yellow', 'Yellow'], ['green', 'Green'], ['orange', 'Orange'], ['purple', 'Purple']];
+
 // Data for the command palette. Built at compile time, so there is no runtime fetch.
 const palette = {
   go: [
@@ -40,8 +43,9 @@ const palette = {
     { label: 'Contact', hint: '#contact', href: '/#contact' },
   ],
   actions: [
-    { label: 'Copy email address', hint: profile.email, action: 'copy-email' },
+    { label: 'Send an email', hint: profile.email, href: `mailto:${profile.email}`, external: true },
     { label: 'Download CV', hint: 'PDF', href: profile.cv, download: true },
+    { label: 'Calm mode: less motion', hint: 'toggle', action: 'toggle-calm' },
     { label: 'Open GitHub', hint: 'github.com/bagasaria93', href: profile.github, external: true },
     { label: 'Open LinkedIn', hint: 'linkedin.com/in/bagasaria', href: profile.linkedin, external: true },
     { label: 'Message on WhatsApp', hint: profile.phone, href: profile.whatsapp, external: true },
@@ -69,7 +73,8 @@ const jsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
-    <meta name="theme-color" content="#EDF4F5" />
+    <meta name="theme-color" content="#FBF8F0" />
+    <meta name="color-scheme" content="light" />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
@@ -80,7 +85,7 @@ const jsonLd = JSON.stringify({
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>document.documentElement.classList.add('js');try{var a=localStorage.getItem('accent');if(a)document.documentElement.dataset.accent=a;if(localStorage.getItem('calm')==='1')document.documentElement.dataset.calm='';}catch(e){}</script>
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body data-page={current}>
@@ -99,6 +104,11 @@ const jsonLd = JSON.stringify({
           ))}
         </nav>
         <div class="header-actions">
+          <div class="accents" role="group" aria-label="Accent colour">
+            {accents.map(([id, label]) => (
+              <button type="button" data-accent-set={id} aria-pressed={id === 'blue' ? 'true' : 'false'} aria-label={`${label} accent`} title={`${label} accent`}></button>
+            ))}
+          </div>
           <button class="kbd-hint" type="button" data-open-palette aria-label="Open quick navigation" aria-haspopup="dialog">
             <Icon name="search" size={16} /> <span>Quick nav</span> <kbd>Ctrl K</kbd>
           </button>
@@ -111,6 +121,11 @@ const jsonLd = JSON.stringify({
     <div class="mobile-menu" id="mobile-menu">
       {nav.map((n) => <a href={n.href}><Icon name={n.icon} />{n.label}</a>)}
       <a href="/work/"><Icon name="layers" />All work</a>
+      <div class="accents" role="group" aria-label="Accent colour">
+        {accents.map(([id, label]) => (
+          <button type="button" data-accent-set={id} aria-pressed={id === 'blue' ? 'true' : 'false'} aria-label={`${label} accent`}></button>
+        ))}
+      </div>
     </div>
 
     <main id="main" tabindex="-1">
@@ -119,13 +134,8 @@ const jsonLd = JSON.stringify({
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>&copy; {new Date().getFullYear()} {profile.name}. Built with Astro, HTML, CSS and JavaScript.</p>
-        <div class="footer-links">
-          <a href={profile.github} rel="noopener"><Icon name="github" />GitHub</a>
-          <a href={profile.linkedin} rel="noopener"><Icon name="linkedin" />LinkedIn</a>
-          <a href={`mailto:${profile.email}`}><Icon name="mail" />Email</a>
-          <a href="#top"><Icon name="arrow-up" />Back to top</a>
-        </div>
+        <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+        <a class="footer-top" href="#top"><Icon name="arrow-up" />Back to top</a>
       </div>
     </footer>
 

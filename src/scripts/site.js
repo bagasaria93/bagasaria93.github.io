@@ -1,4 +1,6 @@
-/* Portfolio interactions. Vanilla JavaScript, no dependencies.
+/* Portfolio interactions. Vanilla JavaScript, no dependencies. Most of the motion on the site is plain CSS;
+   this file only handles what CSS cannot: pointer input, the command palette, forms and the demos. */
+/* (original note follows)
    Every feature starts in isolation: one failure never stops the others.
    Everything respects prefers-reduced-motion, and the page still reads fully without any of this. */
 
@@ -23,24 +25,47 @@ function toast(message) {
   toastTimer = setTimeout(() => el.classList.remove('is-visible'), 2200);
 }
 
-async function copyEmail() {
-  const dataEl = $('#site-data');
-  const { email } = dataEl ? JSON.parse(dataEl.textContent) : { email: '' };
-  if (!email) return;
-  try {
-    await navigator.clipboard.writeText(email);
-    toast('Email address copied');
-  } catch {
-    const ta = document.createElement('textarea');
-    ta.value = email;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); toast('Email address copied'); } catch { toast(email); }
-    ta.remove();
-  }
+/* ---------------------------------------- accent colour + calm mode */
+function initAccent() {
+  const buttons = $$('[data-accent-set]');
+  if (!buttons.length) return;
+  const root = document.documentElement;
+  const sync = () => {
+    const cur = root.dataset.accent || 'blue';
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.accentSet === cur)));
+  };
+  const apply = (v) => {
+    if (v === 'blue') delete root.dataset.accent; else root.dataset.accent = v;
+    sync();
+  };
+  buttons.forEach((b) => b.addEventListener('click', (e) => {
+    const v = b.dataset.accentSet;
+    try { localStorage.setItem('accent', v); } catch { /* private mode: the choice just will not persist */ }
+    const calm = reduce || root.hasAttribute('data-calm');
+    if (!document.startViewTransition || calm) { apply(v); return; }
+    // The new colour spreads out from the swatch as a growing circle (View Transitions + clip-path).
+    const r = b.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    root.classList.add('vt-accent');
+    const vt = document.startViewTransition(() => apply(v));
+    vt.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 700, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
+      );
+    }).catch(() => {});
+    vt.finished.finally(() => root.classList.remove('vt-accent'));
+  }));
+  sync();
+}
+
+function toggleCalm() {
+  const root = document.documentElement;
+  const on = !root.hasAttribute('data-calm');
+  if (on) root.setAttribute('data-calm', ''); else root.removeAttribute('data-calm');
+  try { localStorage.setItem('calm', on ? '1' : '0'); } catch { /* ignore */ }
+  toast(on ? 'Calm mode on: less motion' : 'Calm mode off');
 }
 
 /* ------------------------------------------------- header, progress, nav */
@@ -155,82 +180,86 @@ function initCount() {
   els.forEach((e) => io.observe(e));
 }
 
-/* ----------------------------------------------------- hero dot grid canvas */
-function initDotGrid() {
-  const canvas = $('[data-dotgrid]');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  const styles = getComputedStyle(document.documentElement);
-  const ink = styles.getPropertyValue('--ink').trim() || '#08181B';
-  const accent = styles.getPropertyValue('--accent').trim() || '#006D77';
-  const gap = 30;
-  const pointer = { x: -9999, y: -9999 };
-  let w = 0, h = 0, running = false, visible = true, t = 0;
+/* ---------------------------------- isometric diorama: parallax + drag to rotate */
+function initIso() {
+  const iso = $('[data-iso]');
+  const scene = iso && $('.scene', iso);
+  if (!scene) return;
+  const s = { tx: 0, ty: 0, x: 0, y: 0, drag: 0, vel: 0, down: false, dragging: false, startX: 0, lastX: 0, pid: 0, suppress: false };
+  let running = false;
 
-  const draw = () => {
-    ctx.clearRect(0, 0, w, h);
-    const cols = Math.ceil(w / gap) + 1, rows = Math.ceil(h / gap) + 1;
-    for (let j = 0; j < rows; j++) {
-      for (let i = 0; i < cols; i++) {
-        const x = i * gap, y = j * gap;
-        const near = Math.max(0, 1 - Math.hypot(x - pointer.x, y - pointer.y) / 170);
-        const wave = (Math.sin((x + y) * 0.018 + t) * 0.5 + 0.5);
-        const r = 1.1 + near * 2.8 + wave * 0.55;
-        ctx.globalAlpha = Math.min(0.9, 0.12 + wave * 0.1 + near * 0.75);
-        ctx.fillStyle = near > 0.04 ? accent : ink;
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, 6.2832);
-        ctx.fill();
-      }
+  const paint = () => {
+    scene.style.setProperty('--px', s.x.toFixed(3));
+    scene.style.setProperty('--py', s.y.toFixed(3));
+    scene.style.setProperty('--drag', `${s.drag.toFixed(2)}deg`);
+  };
+  const step = () => {
+    s.x += (s.tx - s.x) * 0.09;
+    s.y += (s.ty - s.y) * 0.09;
+    if (!s.dragging && Math.abs(s.vel) > 0.02) { s.drag += s.vel; s.vel *= 0.94; } else if (!s.dragging) { s.vel = 0; }
+    paint();
+    const settled = Math.abs(s.tx - s.x) < 0.002 && Math.abs(s.ty - s.y) < 0.002 && Math.abs(s.vel) <= 0.02;
+    if (settled && !s.dragging) { running = false; return; }
+    requestAnimationFrame(step);
+  };
+  const kick = () => { if (!running) { running = true; requestAnimationFrame(step); } };
+
+  if (finePointer && !reduce) {
+    iso.addEventListener('pointermove', (e) => {
+      if (s.down) return;
+      const r = iso.getBoundingClientRect();
+      s.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      s.ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      kick();
+    });
+    iso.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; kick(); });
+  }
+
+  iso.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    s.down = true; s.dragging = false; s.startX = s.lastX = e.clientX; s.pid = e.pointerId; s.vel = 0; s.suppress = false;
+  });
+  addEventListener('pointermove', (e) => {
+    if (!s.down || e.pointerId !== s.pid) return;
+    if (!s.dragging && Math.abs(e.clientX - s.startX) > 5) {
+      s.dragging = true;
+      iso.classList.add('is-dragging');
+      try { iso.setPointerCapture(s.pid); } catch { /* ignore */ }
     }
-    ctx.globalAlpha = 1;
-  };
-  const loop = () => {
-    if (!running) return;
-    t += 0.012;
-    draw();
-    requestAnimationFrame(loop);
-  };
-  const start = () => { if (reduce || running || !visible || document.hidden) return; running = true; requestAnimationFrame(loop); };
-  const stop = () => { running = false; };
-  const resize = () => {
-    const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(2, devicePixelRatio || 1);
-    w = rect.width; h = rect.height;
-    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    draw();
-  };
-  const hero = canvas.parentElement;
-  hero.addEventListener('pointermove', (e) => {
-    const r = canvas.getBoundingClientRect();
-    pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top;
-    if (reduce) draw();
+    if (s.dragging) {
+      const dx = e.clientX - s.lastX;
+      s.lastX = e.clientX;
+      s.drag += dx * 0.4;
+      s.vel = reduce ? 0 : dx * 0.4;
+      kick();
+    }
   }, { passive: true });
-  hero.addEventListener('pointerleave', () => { pointer.x = pointer.y = -9999; if (reduce) draw(); });
-  new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; visible ? start() : stop(); }).observe(hero);
-  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
-  addEventListener('resize', resize, { passive: true });
-  resize();
-  start();
+  const end = (e) => {
+    if (!s.down || (e && e.pointerId !== s.pid)) return;
+    s.down = false;
+    if (s.dragging) { s.dragging = false; s.suppress = true; iso.classList.remove('is-dragging'); kick(); }
+  };
+  addEventListener('pointerup', end);
+  addEventListener('pointercancel', end);
+  // A drag that ends on a label must not also follow the label's link.
+  iso.addEventListener('click', (e) => { if (s.suppress) { e.preventDefault(); e.stopPropagation(); s.suppress = false; } }, true);
+  iso.addEventListener('dragstart', (e) => e.preventDefault());
+  paint();
 }
 
-/* ---------------------------------------------- tilt, magnetic, spotlight */
+/* ---------------------------------------------- card tilt and magnetic buttons */
 function initTilt() {
   if (!finePointer || reduce) return;
-  $$('[data-tilt]').forEach((el) => {
-    const frame = $('.hero-photo-frame', el);
-    if (!frame) return;
-    el.addEventListener('pointermove', (e) => {
-      const r = el.getBoundingClientRect();
+  $$('.card').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-      frame.style.setProperty('--ry', `${((px - 0.5) * 10).toFixed(2)}deg`);
-      frame.style.setProperty('--rx', `${((0.5 - py) * 8).toFixed(2)}deg`);
-      frame.style.setProperty('--gx', `${(px * 100).toFixed(1)}%`);
-      frame.style.setProperty('--gy', `${(py * 100).toFixed(1)}%`);
-    });
-    el.addEventListener('pointerleave', () => { frame.style.setProperty('--rx', '0deg'); frame.style.setProperty('--ry', '0deg'); });
+      card.style.setProperty('--ry', `${((px - 0.5) * 7).toFixed(2)}deg`);
+      card.style.setProperty('--rx', `${((0.5 - py) * 6).toFixed(2)}deg`);
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }, { passive: true });
+    card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
   });
 }
 
@@ -244,17 +273,6 @@ function initMagnetic() {
     });
     b.addEventListener('pointerleave', () => { b.style.transform = ''; });
   });
-}
-
-function initSpotlight() {
-  if (!finePointer) return;
-  document.addEventListener('pointermove', (e) => {
-    const card = e.target.closest ? e.target.closest('.card') : null;
-    if (!card) return;
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    card.style.setProperty('--my', `${e.clientY - r.top}px`);
-  }, { passive: true });
 }
 
 /* --------------------------------------------------------------- terminal */
@@ -334,6 +352,51 @@ function initCarousel() {
       if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
     });
     addEventListener('resize', raf(sync), { passive: true });
+
+    // Drag with a mouse or pen. Touch already scrolls natively, so it is left alone.
+    const d = { down: false, dragging: false, startX: 0, startLeft: 0, lastX: 0, lastT: 0, vel: 0, pid: 0, suppress: false };
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch' || e.button !== 0) return;
+      d.down = true; d.dragging = false; d.suppress = false;
+      d.startX = d.lastX = e.clientX; d.startLeft = track.scrollLeft; d.lastT = performance.now(); d.vel = 0; d.pid = e.pointerId;
+    });
+    track.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault(); // no text selection while dragging
+      track.focus({ preventScroll: true });
+    });
+    addEventListener('pointermove', (e) => {
+      if (!d.down || e.pointerId !== d.pid) return;
+      const dx = e.clientX - d.startX;
+      if (!d.dragging && Math.abs(dx) > 5) {
+        d.dragging = true;
+        track.classList.add('is-dragging');
+        try { track.setPointerCapture(d.pid); } catch { /* ignore */ }
+      }
+      if (!d.dragging) return;
+      const now = performance.now();
+      const dt = Math.max(1, now - d.lastT);
+      d.vel = (d.lastX - e.clientX) / dt; // px per ms, positive means moving forward
+      d.lastX = e.clientX; d.lastT = now;
+      track.scrollLeft = d.startLeft - dx;
+    }, { passive: true });
+    const release = (e) => {
+      if (!d.down || (e && e.pointerId !== d.pid)) return;
+      d.down = false;
+      if (!d.dragging) return;
+      d.dragging = false; d.suppress = true;
+      track.classList.remove('is-dragging');
+      // Land on the slide the drag was heading for: position plus a little of the throw.
+      const s = step();
+      const last = slides.length - 1;
+      const from = track.scrollLeft;
+      const idx = Math.min(last, Math.max(0, Math.round((from + d.vel * 220) / s)));
+      track.scrollTo({ left: idx * s, behavior: reduce ? 'auto' : 'smooth' });
+    };
+    addEventListener('pointerup', release);
+    addEventListener('pointercancel', release);
+    track.addEventListener('click', (e) => { if (d.suppress) { e.preventDefault(); e.stopPropagation(); d.suppress = false; } }, true);
+    track.addEventListener('dragstart', (e) => e.preventDefault());
     sync();
   });
 }
@@ -415,7 +478,7 @@ function initPalette() {
   const close = () => { if (dialog.open) dialog.close(); };
   const run = (it) => {
     close();
-    if (it.action === 'copy-email') { copyEmail(); return; }
+    if (it.action === 'toggle-calm') { toggleCalm(); return; }
     if (!it.href) return;
     if (it.download) {
       const a = document.createElement('a');
@@ -442,7 +505,6 @@ function initPalette() {
 
 /* --------------------------------------------------------- contact + form */
 function initContact() {
-  $$('[data-copy-email]').forEach((b) => b.addEventListener('click', copyEmail));
   const form = $('[data-contact]');
   if (!form) return;
   const dataEl = $('#site-data');
@@ -470,8 +532,8 @@ function initContact() {
     const msg = document.getElementById('f-msg').value.trim();
     const subject = encodeURIComponent(`Portfolio message from ${name}`);
     const body = encodeURIComponent(`${msg}\n\n${name}\n${from}`);
-    toast('Opening your email app');
-    location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    toast('Opening your email app in a new tab');
+    window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank', 'noopener');
   });
 }
 
@@ -660,7 +722,7 @@ function initToc() {
 
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
-  ['dotgrid', initDotGrid], ['tilt', initTilt], ['magnetic', initMagnetic], ['spotlight', initSpotlight],
+  ['accent', initAccent], ['iso', initIso], ['tilt', initTilt], ['magnetic', initMagnetic],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));

@@ -29,17 +29,57 @@ const social = [
   { icon: 'whatsapp', label: 'WhatsApp', href: profile.whatsapp },
   { icon: 'mail', label: 'Email', href: `mailto:${profile.email}` },
 ];
+
+/* The diorama. Units are tiles on a 12 x 12 ground plate; h is height, z is the base height.
+   Each building stands for something I actually built, and links to where it is explained. */
+const blocks = [
+  { cls: 'blk--ground', x: 0, y: 0, w: 12, d: 12, h: 0.45, z: -0.45 },
+  // tower: HR information system
+  { c: 'purple', cls: 'wins wins--tall', x: 1, y: 1, w: 1.8, d: 1.8, h: 5 },
+  { c: 'green', x: 1.5, y: 1.5, w: 0.8, d: 0.8, h: 0.9, z: 5 },
+  // aftercare building
+  { c: 'orange', cls: 'wins', x: 7.4, y: 1.2, w: 2.6, d: 2.6, h: 2.4 },
+  { c: 'yellow', x: 8, y: 1.8, w: 1.4, d: 1.4, h: 0.5, z: 2.4 },
+  { c: 'purple', x: 7.4, y: 3.8, w: 2.6, d: 0.5, h: 0.22, z: 1.1 },
+  // QR booking kiosk
+  { c: 'green', cls: 'wins qr', x: 4.2, y: 2.6, w: 1.8, d: 1.8, h: 2 },
+  // ERP factory
+  { c: 'blue', cls: 'wins', x: 1.2, y: 5.5, w: 4.6, d: 3.2, h: 1.8 },
+  { c: 'purple', x: 1.6, y: 5.9, w: 0.6, d: 0.6, h: 1.6, z: 1.8 },
+  { c: 'yellow', x: 2.7, y: 5.9, w: 1.1, d: 2.4, h: 0.45, z: 1.8 },
+  { c: 'yellow', x: 4.2, y: 5.9, w: 1.1, d: 2.4, h: 0.45, z: 1.8 },
+  { cls: 'puff', x: 1.7, y: 6, w: 0.45, d: 0.45, h: 0.45, z: 3.4, n: 0 },
+  { cls: 'puff', x: 1.7, y: 6, w: 0.45, d: 0.45, h: 0.45, z: 3.4, n: 1 },
+  { cls: 'puff', x: 1.7, y: 6, w: 0.45, d: 0.45, h: 0.45, z: 3.4, n: 2 },
+  // warehouse: material planning
+  { c: 'yellow', cls: 'stripes', x: 6.4, y: 6.4, w: 4.2, d: 2.8, h: 1.3 },
+  { c: 'orange', x: 7.2, y: 9.2, w: 1.1, d: 0.2, h: 0.9, z: 0 },
+  // trees
+  ...[[0.5, 3.6], [10.7, 4.4], [0.6, 10.3], [10.9, 10.6], [3.3, 0.7], [6.5, 0.6], [6.1, 10.4]].flatMap(([x, y]) => [
+    { cls: 'trunk', x: x + 0.32, y: y + 0.32, w: 0.26, d: 0.26, h: 0.55 },
+    { c: 'green', cls: 'tree', x, y, w: 0.9, d: 0.9, h: 0.85, z: 0.55 },
+  ]),
+];
+const pins = [
+  { c: 'blue', t: 'ERP', s: '12 departments', href: '/case-study/erp/', x: 3.5, y: 7.1, z: 2.9 },
+  { c: 'orange', t: 'Aftercare', s: 'ratings + follow-up', href: '/case-study/rainbrow/', x: 9.5, y: 1.5, z: 3.9 },
+  { c: 'purple', t: 'HRIS', s: 'attendance + payroll', href: '/case-study/rainbrow/', x: 1.9, y: 1.9, z: 6.5 },
+  { c: 'green', t: 'Booking', s: 'QR + points', href: '/case-study/rainbrow/', x: 4.7, y: 4.3, z: 2.6 },
+  { c: 'yellow', t: 'MRP', s: 'material planning', href: '/case-study/erp/#planning', x: 8.5, y: 7.8, z: 2.4 },
+];
+const ring = 'Open to remote and onsite roles • ';
+const ringChars = Array.from(ring);
 ---
 <Base current="home">
   <!-- Hero -->
   <section class="hero" aria-labelledby="hero-title">
-    <canvas class="hero-grid" aria-hidden="true" data-dotgrid></canvas>
     <div class="container hero-inner">
       <div>
-        <p class="eyebrow"><Icon name="map-pin" /> Full-Stack Developer / Bekasi, Indonesia</p>
+        <p class="eyebrow" data-c="orange"><Icon name="map-pin" /> Full-Stack Developer / Bekasi, Indonesia</p>
         <h1 class="hero-title" id="hero-title">
-          <span class="line" style="--i:0"><span>Bagas</span></span>
-          <span class="line" style="--i:1"><span>Aria <em>Sativa</em></span></span>
+          <span class="line"><span class="w" style="--i:0">Bagas</span></span>
+          <span class="line"><span class="w w--yellow" style="--i:1">Aria</span></span>
+          <span class="line"><span class="w w--blue" style="--i:2">Sativa</span></span>
         </h1>
         <p class="hero-lead">I build web applications end to end: Laravel and PHP back ends, React and Next.js interfaces, Python data tools, and the integrations that connect them to other systems.</p>
         <div class="hero-cta">
@@ -48,18 +88,31 @@ const social = [
         </div>
         <div class="social">
           {social.map((s) => (
-            <a href={s.href} aria-label={s.label} title={s.label} target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener' : undefined}><Icon name={s.icon} /></a>
+            <a href={s.href} aria-label={s.label} title={s.label} target={s.href.startsWith('http') || s.href.startsWith('mailto:') ? '_blank' : undefined} rel={s.href.startsWith('http') || s.href.startsWith('mailto:') ? 'noopener' : undefined}><Icon name={s.icon} /></a>
           ))}
         </div>
         <p class="status"><span class="dot" aria-hidden="true"></span>Open to remote and onsite roles</p>
       </div>
-      <figure class="hero-photo" data-tilt>
-        <div class="hero-photo-frame">
-          <img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" fetchpriority="high" decoding="async" />
+
+      <div class="iso" data-iso role="group" aria-label="A small city of the systems I built. Each label opens its explanation.">
+        <div class="scene">
+          {blocks.map((b, i) => (
+            <div class={`blk ${b.cls ?? ''}`} data-c={b.c} style={`--x:${b.x};--y:${b.y};--w:${b.w};--d:${b.d};--h:${b.h};--z:${b.z ?? 0};--n:${b.n ?? i}`}>
+              <i class="f top"></i><i class="f fr"></i><i class="f rt"></i>
+            </div>
+          ))}
+          {pins.map((p, i) => (
+            <a class="pin" data-c={p.c} href={p.href} style={`--x:${p.x};--y:${p.y};--pz:${p.z};--n:${i}`}><b>{p.t}<small>{p.s}</small></b></a>
+          ))}
         </div>
-        <span class="float-tag float-tag--a">Laravel <small>/ Next.js / Python</small></span>
-        <span class="float-tag float-tag--b">19 <small>/ live projects</small></span>
-      </figure>
+        <div class="badge-spin" aria-hidden="true">
+          <div class="ring" style={`--n:${ringChars.length}`}>
+            {ringChars.map((ch, i) => <span style={`--i:${i}`}>{ch}</span>)}
+          </div>
+          <span class="core"><Icon name="zap" /></span>
+        </div>
+        <p class="iso-hint" aria-hidden="true"><Icon name="compass" /> Drag to rotate</p>
+      </div>
     </div>
   </section>
 
@@ -68,7 +121,7 @@ const social = [
     <div class="container hero-bento">
       <div class="tile tile--stack reveal">
         <p class="tile-label"><span>The stack, layer by layer</span><span>full-stack</span></p>
-        <div class="layers">
+        <div class="layers cycle">
           {layers.map((l) => (
             <div class="layer"><strong><Icon name={l.icon} /> {l.name}</strong><span>{l.text}</span></div>
           ))}
@@ -81,9 +134,9 @@ const social = [
         ))}</div>
       </div>
     </div>
-    <ul class="container hero-stats" role="list">
+    <ul class="container hero-stats cycle" role="list">
       {stats.map((s, i) => (
-        <li>
+        <li class="reveal" style={`--i:${i}`}>
           <span class="stat-ico"><Icon name={statIcons[i]} /></span>
           <div>
             <strong data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</strong>
@@ -103,32 +156,41 @@ const social = [
   </div>
 
   <!-- About -->
-  <section class="section" id="about" aria-labelledby="about-title">
-    <div class="container split">
+  <section class="section" id="about" aria-labelledby="about-title" data-c="orange">
+    <div class="container about-grid">
       <div class="reveal">
         <p class="eyebrow"><Icon name="user" /> About</p>
-        <h2 class="section-title" id="about-title">Software that people use every day</h2>
+        <h2 class="section-title" id="about-title">Software that people use <mark>every day</mark></h2>
         <p class="section-lead">Based in Bekasi, I build production-grade software used daily by real teams. My work spans ERP and HRIS platforms, booking systems, POS applications, data tools and mobile apps, across manufacturing and service industries.</p>
         <p class="section-lead">I work end to end: from database design and backend logic in Laravel to the interfaces people click through. Beyond writing code, I analyse business workflows and gather requirements, so that what I ship fits how people actually work.</p>
-        <p class="section-lead"><Icon name="graduation" size={18} /> Currently pursuing a Master of Computer Science at Universitas Esa Unggul.</p>
+        <ul class="about-facts cycle" role="list">
+          <li><Icon name="map-pin" /> Bekasi, Indonesia</li>
+          <li><Icon name="graduation" /> Master of Computer Science, in progress</li>
+          <li><Icon name="layers" /> Database to interface, end to end</li>
+        </ul>
       </div>
-      <div class="reveal" style="--i:2">
-        <div class="hero-photo-frame about-photo" style="aspect-ratio:1/1;background:var(--accent-soft)">
-          <img src="/assets/img/profile2.webp" alt="Bagas Aria Sativa playing golf" width="1080" height="1080" loading="lazy" decoding="async" style="object-fit:contain" />
-        </div>
+      <div class="polaroids reveal" style="--i:2">
+        <figure class="polaroid polaroid--a" data-tilt>
+          <img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" loading="lazy" decoding="async" />
+          <figcaption>Bagas</figcaption>
+        </figure>
+        <figure class="polaroid polaroid--b" data-tilt>
+          <img src="/assets/img/profile2.webp" alt="Bagas Aria Sativa playing golf" width="1080" height="1080" loading="lazy" decoding="async" />
+          <figcaption>Off duty: golf</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
   <!-- Selected work -->
-  <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0">
+  <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0" data-c="blue">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="folder" /> Selected work</p>
-        <h2 class="section-title" id="work-title">Working software, not mockups</h2>
+        <h2 class="section-title" id="work-title">Working software, <mark>not mockups</mark></h2>
         <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Each one is designed, built and shipped by me.</p>
       </div>
-      <div class="bento">
+      <div class="bento cycle">
         {featured.map((p, i) => <div class="reveal" style={`--i:${i % 3}`}><ProjectCard project={p} index={i} /></div>)}
         <div class="reveal" style="--i:1">
           <div class="cta-tile">
@@ -144,22 +206,24 @@ const social = [
   </section>
 
   <!-- Case studies band -->
-  <section class="section band" id="case" aria-labelledby="case-title">
+  <section class="section band" id="case" aria-labelledby="case-title" data-c="purple">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="layers" /> Case studies</p>
-        <h2 class="section-title" id="case-title">Two production systems, explained</h2>
+        <h2 class="section-title" id="case-title">Two production systems, <mark>explained</mark></h2>
         <p class="section-lead">What the problem was, what I decided and why. Company data is never shown.</p>
       </div>
       <div class="case-cards">
-        <article class="case-card reveal">
+        <article class="case-card reveal" data-c="yellow">
+          <span class="big" aria-hidden="true">12</span>
           <small>Manufacturing</small>
           <h3><Icon name="building" /> ERP for 12 departments</h3>
           <p>Access control, multi-level approvals, material planning, quality inspection and a fail-safe connection to an accounting system. Includes an interactive approval demo.</p>
           <ul class="tags" role="list"><li class="tag">Laravel</li><li class="tag">MySQL</li><li class="tag">REST API</li><li class="tag">OAuth 2.0</li></ul>
           <a class="link-arrow" href="/case-study/erp/"><span>Read the ERP case study</span><Icon name="arrow-right" size={16} /></a>
         </article>
-        <article class="case-card reveal" style="--i:1">
+        <article class="case-card reveal" style="--i:1" data-c="green">
+          <span class="big" aria-hidden="true">3</span>
           <small>HR and service</small>
           <h3><Icon name="users" /> Aftercare, booking and HRIS</h3>
           <p>Three applications built end to end for a service company: an aftercare platform for ratings and follow-up, a QR booking platform with a customer points program, and an HR information system.</p>
@@ -171,13 +235,13 @@ const social = [
   </section>
 
   <!-- Experience -->
-  <section class="section" id="experience" aria-labelledby="exp-title">
+  <section class="section" id="experience" aria-labelledby="exp-title" data-c="green">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="briefcase" /> Experience</p>
-        <h2 class="section-title" id="exp-title">Where I have built things</h2>
+        <h2 class="section-title" id="exp-title">Where I have <mark>built things</mark></h2>
       </div>
-      <div class="timeline" data-timeline>
+      <div class="timeline cycle" data-timeline>
         <span class="timeline-fill" aria-hidden="true"></span>
         {experience.map((j, i) => (
           <article class="job reveal" data-job>
@@ -196,13 +260,13 @@ const social = [
   </section>
 
   <!-- Skills -->
-  <section class="section" id="skills" aria-labelledby="skills-title" style="padding-top:0">
+  <section class="section" id="skills" aria-labelledby="skills-title" style="padding-top:0" data-c="purple">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="tool" /> Toolbox</p>
-        <h2 class="section-title" id="skills-title">What I work with</h2>
+        <h2 class="section-title" id="skills-title">What I <mark>work with</mark></h2>
       </div>
-      <div class="skills-bento">
+      <div class="skills-bento cycle">
         {skills.map((g, i) => (
           <section class="skill-card reveal" style={`--i:${i % 3}`}>
             <h3><span class="ico"><Icon name={skillIcons[g.group]} /></span> {g.group}</h3>
@@ -214,11 +278,11 @@ const social = [
   </section>
 
   <!-- Education -->
-  <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0">
-    <div class="container split">
+  <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0" data-c="orange">
+    <div class="container split cycle">
       <div class="panel reveal">
         <p class="eyebrow"><Icon name="graduation" /> Education</p>
-        <h2 class="section-title" id="edu-title" style="margin-bottom:0.75rem">Studies</h2>
+        <h2 class="section-title" id="edu-title" style="margin-bottom:0.75rem;font-size:var(--step-3)">Studies</h2>
         {education.map((e) => (
           <div class="entry">
             <h3><Icon name="graduation" /> {e.degree}</h3><span class="when">{e.period}</span>
@@ -229,7 +293,7 @@ const social = [
       </div>
       <div class="panel reveal" style="--i:2">
         <p class="eyebrow"><Icon name="award" /> Credentials</p>
-        <h2 class="section-title" style="margin-bottom:0.75rem">Certifications</h2>
+        <h2 class="section-title" style="margin-bottom:0.75rem;font-size:var(--step-3)">Certifications</h2>
         {certifications.map((c) => (
           <div class="entry">
             <h3><Icon name="award" /> {c.name}</h3><span class="when">{c.year}</span>
@@ -241,14 +305,14 @@ const social = [
   </section>
 
   <!-- Testimonials -->
-  <section class="section" id="testimonials" aria-labelledby="quotes-title" style="padding-top:0">
+  <section class="section" id="testimonials" aria-labelledby="quotes-title" style="padding-top:0" data-c="blue">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="quote" /> Testimonials</p>
-        <h2 class="section-title" id="quotes-title">What colleagues say</h2>
+        <h2 class="section-title" id="quotes-title">What <mark>colleagues</mark> say</h2>
       </div>
       <div class="reveal" data-carousel aria-roledescription="carousel" aria-label="Testimonials">
-        <div class="quotes" data-track tabindex="0" aria-label="Testimonials, scroll horizontally">
+        <div class="quotes cycle" data-track tabindex="0" aria-label="Testimonials, drag or scroll horizontally">
           {testimonials.map((t, i) => (
             <figure class="quote" data-slide aria-roledescription="slide" aria-label={`${i + 1} of ${testimonials.length}`}>
               <blockquote>{t.quote}</blockquote>
@@ -259,6 +323,7 @@ const social = [
         <div class="carousel-controls">
           <button class="icon-btn" type="button" data-prev aria-label="Previous testimonial"><Icon name="arrow-left" /></button>
           <button class="icon-btn" type="button" data-next aria-label="Next testimonial"><Icon name="arrow-right" /></button>
+          <span class="drag-hint" aria-hidden="true">Drag to browse</span>
           <span class="carousel-count" data-count-label aria-hidden="true">1 / {testimonials.length}</span>
         </div>
       </div>
@@ -266,16 +331,16 @@ const social = [
   </section>
 
   <!-- Contact -->
-  <section class="section band" id="contact" aria-labelledby="contact-title">
+  <section class="section band" id="contact" aria-labelledby="contact-title" data-c="yellow">
     <div class="container contact-grid">
       <div class="reveal">
         <p class="eyebrow"><Icon name="send" /> Contact</p>
         <h2 class="contact-big" id="contact-title">Let&rsquo;s build something <em>reliable</em>.</h2>
         <div class="contact-list">
-          <div class="contact-row">
+          <a class="contact-row" href={`mailto:${profile.email}`} target="_blank" rel="noopener">
             <div class="lead"><Icon name="mail" /><div><small>Email</small><span>{profile.email}</span></div></div>
-            <button type="button" data-copy-email>Copy</button>
-          </div>
+            <Icon name="arrow-up-right" />
+          </a>
           <a class="contact-row" href={profile.whatsapp} rel="noopener" target="_blank">
             <div class="lead"><Icon name="whatsapp" /><div><small>WhatsApp</small><span>{profile.phone}</span></div></div>
             <Icon name="arrow-up-right" />
@@ -309,7 +374,7 @@ const social = [
           <span class="error" id="e-msg"></span>
         </div>
         <button class="btn btn--primary" type="submit"><Icon name="send" /> Send message</button>
-        <p class="form-note">This opens your email app with the message filled in. Nothing is stored on this site.</p>
+        <p class="form-note">This opens your email app in a new tab with the message filled in. Nothing is stored on this site.</p>
       </form>
     </div>
   </section>
