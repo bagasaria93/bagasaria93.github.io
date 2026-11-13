@@ -746,8 +746,11 @@
   .system small { display: flex; align-items: center; gap: 0.4rem; }
   .system small svg { width: 15px; height: 15px; }
   .mobile-menu a svg { width: 24px; height: 24px; flex: none; }
+  /* The header holds a lot, so it gets a wider track than the page and sheds the optional parts in steps. */
+  .site-header .container { width: min(100% - var(--gutter) * 2, 1340px); }
+  @media (max-width: 1600px) { .brand-text { display: none; } }
   @media (max-width: 1320px) { .nav a svg { display: none; } }
-  @media (max-width: 1240px) { .brand-text, .kbd-hint span { display: none; } }
+  @media (max-width: 1240px) { .kbd-hint span { display: none; } }
   @media (min-width: 861px) and (max-width: 1000px) { .nav a { padding: 0.5rem 0.6rem; font-size: 0.875rem; } .accents { display: none; } }
 }
 
