@@ -33,15 +33,11 @@ const briefKinds = ['Company profile website', 'Cashier and POS', 'Booking and r
 const briefWhen = ['As soon as possible', 'Within a month', 'In 2 to 3 months', 'Just exploring'];
 const beltA = sites;
 const beltB = [...sites].reverse();
-/* Five plates, back (0) to front (4). Each is a link to the part of the page it stands for. */
-const plates = [
-  { i: 0, layer: 'contact', name: 'data', go: 'Contact', href: '#contact' },
-  { i: 1, layer: 'skills', name: 'backend', go: 'Skills', href: '#skills' },
-  { i: 2, layer: 'experience', name: 'integration', go: 'Experience', href: '#experience' },
-  { i: 3, layer: 'case', name: 'logic', go: 'Case studies', href: '#case' },
-  { i: 4, layer: 'work', name: 'interface', go: 'Work', href: '#work' },
-  { i: 5, layer: 'about', name: 'identity', go: 'About', href: '#about' },
-];
+const proj = (t) => projects.find((p) => p.title === t);
+const mrp = proj('MRP Flow');
+const hris = proj('CG HRIS');
+const erpDemo = proj('ErpCore');
+const miniSites = sites.slice(0, 4);
 ---
 <Base current="home">
   <!-- Shown only when the page is printed: the header of a one-page CV. -->
@@ -82,24 +78,33 @@ const plates = [
         </ul>
       </div>
 
-      <div class="deck" data-deck role="group" aria-label="Five layers of a system. Each layer links to a part of this page.">
-        <div class="deck-in" data-css="perspective transform-style animation-timeline">
-          <div class="stack" data-css="transform transform-style">
-            {plates.map((p) => (
-              <a class="plate" data-css="transform transition-property border-top-color" href={p.href} data-layer={p.layer} style={`--i:${p.i}`} aria-label={`${p.go}: ${p.name} layer`}>
-                <span class="plate-h"><span>0{p.i + 1} / {p.name}</span><span>{p.i === 5 ? 'front' : p.i === 0 ? 'base' : ''}</span></span>
-                {p.i === 0 && <><i></i><i style="width:92%"></i><i></i><i style="width:70%"></i><i></i><i style="width:84%"></i><i></i><i style="width:58%"></i><i></i></>}
-                {p.i === 1 && <><i class="c" style="width:48%"></i><i style="width:82%"></i><i style="width:64%"></i><i class="c" style="width:38%"></i><i style="width:90%"></i><i style="width:56%"></i><i class="c" style="width:70%"></i></>}
-                {p.i === 2 && <><i class="l" style="width:34%"></i><i style="width:72%"></i><i style="width:54%"></i><i class="l" style="width:62%"></i><i style="width:80%"></i><i style="width:44%"></i></>}
-                {p.i === 3 && <div class="steps"><i class="d"></i><i class="d"></i><i class="d"></i><i></i><i></i></div>}
-                {p.i === 5 && <><div class="id-photo"><img src="/assets/img/profile.webp" width="399" height="600" alt="Portrait of Bagas Aria Sativa" decoding="async" fetchpriority="low" /></div><div class="id-name"><b>Bagas Aria Sativa</b><small>Full-Stack Developer</small></div></>}
-                {p.i === 4 && <><i style="width:100%;height:9cqw;background:rgba(200,245,60,.16)"></i><div class="bars"><i style="height:38%"></i><i style="height:72%"></i><i style="height:54%"></i><i style="height:92%"></i><i style="height:66%"></i></div><i class="l" style="width:58%;height:5cqw"></i></>}
-                <span class="plate-f"><span>{p.go}</span><span>&rarr;</span></span>
-              </a>
-            ))}
+      <div class="idscene" data-card role="group" aria-label="Identity card of Bagas Aria Sativa, front and back. Drag to turn it over.">
+        <div class="idstage">
+          <div class="idcard" data-idcard data-css="transform-style backface-visibility perspective conic-gradient">
+            <div class="idclip" aria-hidden="true"></div>
+            <div class="idface front" data-face="front">
+              <div class="idtop"><b>B.A.S</b><span>Portfolio 2026</span></div>
+              <div class="idphoto"><img src="/assets/img/profile.webp" width="399" height="600" alt="Portrait of Bagas Aria Sativa" decoding="async" fetchpriority="high" /></div>
+              <p class="idname">Bagas Aria Sativa</p>
+              <p class="idrole">Full-Stack Developer / Bekasi</p>
+              <div class="idbar" aria-hidden="true"></div>
+              <div class="idsheen" aria-hidden="true"></div>
+            </div>
+            <div class="idface back" data-face="back" inert>
+              <div class="idback">
+                <p class="k">The stack</p>
+                <h2>Systems, layer by layer.</h2>
+                <dl>
+                  {layers.map((l) => (<div><dt>{l.name}</dt><dd>{l.text.replace(', WhatsApp links', '')}</dd></div>))}
+                  <div><dt>Contact</dt><dd><a href={`mailto:${profile.email}`} target="_blank" rel="noopener">{profile.email}</a></dd></div>
+                </dl>
+              </div>
+            </div>
+            <div class="idedge l" aria-hidden="true"></div>
+            <div class="idedge r" aria-hidden="true"></div>
           </div>
         </div>
-        <p class="deck-hint">Hover a layer to lift it, click to jump to that part of the page</p>
+        <button class="idflip" type="button" data-flip aria-label="Turn the card over">Turn the card over</button>
       </div>
     </div>
   </section>
@@ -114,6 +119,37 @@ const plates = [
 
   <!-- At a glance -->
   <section class="glance" aria-label="At a glance" style="padding-top:var(--sp)">
+    <div class="container">
+      <div class="depth-head reveal">
+        <p class="eyebrow"><Icon name="layers" /> Highlights</p>
+        <a class="link-arrow" href="#work"><span>All selected work</span><Icon name="arrow-right" size={16} /></a>
+      </div>
+      <div class="depth" data-tiles>
+        <a class="dtile" data-tilt href={mrp.href} target="_blank" rel="noopener" aria-label="MRP Flow: view live demo (opens in a new tab)" data-css="transform-style translate perspective">
+          <span class="shd"></span>
+          <span class="base"><img src={mrp.image} width="1100" height="688" alt="" loading="lazy" decoding="async" /></span>
+          <span class="z lbl">MRP Flow</span><span class="z chip">Live demo</span><span class="glare"></span>
+        </a>
+        <a class="dtile" data-tilt href="/case-study/erp/" aria-label="ERP case study: twelve departments in one system">
+          <span class="shd"></span>
+          <span class="base"><img src={erpDemo.image} width="1100" height="688" alt="" loading="lazy" decoding="async" /></span>
+          <span class="z num">12<small>departments</small></span><span class="z lbl">ERP case study</span><span class="z chip">Case study</span><span class="glare"></span>
+        </a>
+        <a class="dtile" data-tilt href={hris.href} aria-label="CG HRIS: view demo">
+          <span class="shd"></span>
+          <span class="base"><img src={hris.image} width="1100" height="688" alt="" loading="lazy" decoding="async" /></span>
+          <span class="z lbl">CG HRIS</span><span class="z chip">Live demo</span><span class="glare"></span>
+        </a>
+        <a class="dtile" data-tilt href="/websites/" aria-label="Company profile websites: all fifteen demos">
+          <span class="shd"></span>
+          <span class="base" style="background:var(--paper-3)"></span>
+          {miniSites.map((m, i) => (
+            <span class="z mini" style={`left:${6 + (i % 2) * 47}%;top:${8 + Math.floor(i / 2) * 29}%;transform:translateZ(${28 + i * 24}px)`}><img src={m.image} width="1100" height="688" alt="" loading="lazy" decoding="async" /></span>
+          ))}
+          <span class="z lbl">{sites.length} websites</span><span class="z chip">{sites.length} industries</span><span class="glare"></span>
+        </a>
+      </div>
+    </div>
     <div class="container hero-bento">
       <div class="tile tile--stack reveal">
         <p class="tile-label"><span>The stack, layer by layer</span><span>full-stack</span></p>

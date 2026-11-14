@@ -63,7 +63,7 @@ function initToTop() {
   }));
 }
 
-/* One scroll spy drives the nav underline, the rail and the plate deck, so they always agree. */
+/* One scroll spy drives the nav underline and the rail, so they always agree. */
 function initNav() {
   const nav = $('.nav');
   if (!nav) return;
@@ -136,31 +136,88 @@ function initCount() {
   els.forEach((e) => io.observe(e));
 }
 
-/* ------------------------------------------- plate deck: the layers follow the pointer */
-function initDeck() {
-  const deck = $('[data-deck]');
-  const stack = deck && $('.stack', deck);
-  if (!stack || !finePointer) return;
-  const s = { tx: 0, ty: 0, x: 0, y: 0 };
-  const amp = reduce ? 0.6 : 1; // Pointer-driven tilt is the visitor's own movement, so it stays, gentler, under reduced motion.
-  let running = false;
-  const step = () => {
-    s.x += (s.tx - s.x) * 0.1;
-    s.y += (s.ty - s.y) * 0.1;
-    stack.style.setProperty('--px', s.x.toFixed(3));
-    stack.style.setProperty('--py', s.y.toFixed(3));
-    if (Math.abs(s.tx - s.x) < 0.002 && Math.abs(s.ty - s.y) < 0.002) { running = false; return; }
-    requestAnimationFrame(step);
+/* ------------------------------------------------------------ identity card
+   A slab with a front, a back and real thickness. The pointer tilts it, a drag turns it over, a button does the same
+   for keyboard users, and the hidden face is made inert so its link never takes focus while it cannot be seen. */
+function initCard() {
+  const scene = $('[data-card]');
+  const card = scene && $('[data-idcard]', scene);
+  if (!card) return;
+  const sheen = $('.idsheen', card);
+  const faces = { front: $('[data-face="front"]', card), back: $('[data-face="back"]', card) };
+  const amp = reduce ? 0.5 : 1; // Tilt answers the visitor's own movement, so it stays, gentler, under reduced motion.
+  const s = { base: 0, spin: 0, tx: 0, ty: 0, x: 0, y: 0, hover: false, drag: false, lx: 0, moved: 0 };
+  const syncFaces = () => {
+    const front = Math.cos(s.base * Math.PI / 180) > 0;
+    faces.front.inert = !front;
+    faces.back.inert = front;
   };
-  const kick = () => { if (!running) { running = true; requestAnimationFrame(step); } };
-  const hero = deck.closest('.hero') || deck;
-  hero.addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
-    s.tx = ((e.clientX - r.left) / r.width - 0.5) * 2 * amp;
-    s.ty = ((e.clientY - r.top) / r.height - 0.5) * 2 * amp;
-    kick();
-  }, { passive: true });
-  hero.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; kick(); });
+  const flip = () => { s.base += 180; s.spin = 0; syncFaces(); };
+  $('[data-flip]', scene)?.addEventListener('click', flip);
+  scene.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('a, button')) return;
+    s.drag = true; s.lx = e.clientX; s.moved = 0;
+    scene.setPointerCapture(e.pointerId);
+  });
+  const release = () => {
+    if (!s.drag) return;
+    s.drag = false;
+    const total = s.base + s.spin;
+    s.base = Math.round(total / 180) * 180; s.spin = 0;
+    syncFaces();
+  };
+  scene.addEventListener('pointerup', release);
+  scene.addEventListener('pointercancel', release);
+  scene.addEventListener('pointermove', (e) => {
+    const r = scene.getBoundingClientRect();
+    if (finePointer || s.drag) {
+      s.hover = true;
+      s.tx = ((e.clientX - r.left) / r.width - 0.5) * 30 * amp;
+      s.ty = -((e.clientY - r.top) / r.height - 0.5) * 20 * amp;
+    }
+    if (s.drag) { s.spin += (e.clientX - s.lx) * 0.6; s.moved += Math.abs(e.clientX - s.lx); s.lx = e.clientX; }
+  });
+  scene.addEventListener('pointerleave', () => { s.hover = false; s.tx = 0; s.ty = 0; });
+  let ry = 0, rx = 0, visible = true;
+  new IntersectionObserver((en) => { visible = en[0].isIntersecting; }, { threshold: 0 }).observe(scene);
+  const tick = (t) => {
+    if (visible) {
+      const idle = (s.hover || s.drag || reduce) ? 0 : Math.sin(t / 1800) * 6;
+      const ty = s.base + s.spin + s.tx + idle;
+      const tx = s.ty + ((s.hover || s.drag || reduce) ? 0 : Math.sin(t / 2400) * 2.5);
+      ry += (ty - ry) * 0.12; rx += (tx - rx) * 0.12;
+      card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      const side = Math.sin(ry * Math.PI / 180);
+      sheen.style.setProperty('--gx', (50 + side * 55).toFixed(1) + '%');
+      sheen.style.setProperty('--gy', (30 - rx * 2).toFixed(1) + '%');
+      sheen.style.setProperty('--ga', (ry * 1.4).toFixed(1) + 'deg');
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/* ------------------------------------------------ depth tiles: each layer sits at its own distance */
+function initTiles() {
+  const tiles = $$('[data-tilt]');
+  if (!tiles.length || !finePointer) return;
+  const amp = reduce ? 0.5 : 1;
+  tiles.forEach((t) => {
+    t.addEventListener('pointermove', (e) => {
+      const r = t.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      t.classList.add('is-hover');
+      t.style.setProperty('--ry', ((px - 0.5) * 22 * amp).toFixed(2) + 'deg');
+      t.style.setProperty('--rx', (-(py - 0.5) * 22 * amp).toFixed(2) + 'deg');
+      t.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+      t.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+    });
+    t.addEventListener('pointerleave', () => {
+      t.classList.remove('is-hover');
+      t.style.setProperty('--ry', '0deg'); t.style.setProperty('--rx', '0deg');
+    });
+  });
 }
 
 /* ------------------------------------ project rows: the preview follows the pointer */
@@ -832,7 +889,7 @@ function initToc() {
 
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
-  ['totop', initToTop], ['deck', initDeck], ['peek', initPeek], ['xp', initXp], ['sites', initSites], ['lab', initLab], ['xray', initXray], ['keys', initKeys],
+  ['totop', initToTop], ['card', initCard], ['tiles', initTiles], ['peek', initPeek], ['xp', initXp], ['sites', initSites], ['lab', initLab], ['xray', initXray], ['keys', initKeys],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));
