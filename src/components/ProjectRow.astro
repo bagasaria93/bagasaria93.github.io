@@ -6,7 +6,7 @@ const label = project.external ? 'View live demo' : 'View demo';
 const cats = project.categories.join(' ');
 const hay = `${project.title} ${project.subtitle} ${project.description} ${project.tags.join(' ')}`.toLowerCase();
 ---
-<article class="row" data-card data-cats={cats} data-search={searchable ? hay : undefined} data-title={project.title}>
+<article class="row" data-css="background-size transition-property" data-card data-cats={cats} data-search={searchable ? hay : undefined} data-title={project.title}>
   <a
     class="row-link"
     href={project.href}

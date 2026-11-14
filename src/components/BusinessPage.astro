@@ -1,0 +1,121 @@
+---
+// The "For business" page, rendered from src/data/business.js in either language.
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import projects from '../data/projects.json';
+import { profile, testimonials } from '../data/site.js';
+import { business, systemKeys } from '../data/business.js';
+
+const { locale = 'en' } = Astro.props;
+const t = business[locale];
+const isId = locale === 'id';
+const byTitle = Object.fromEntries(projects.map((p) => [p.title, p]));
+const path = isId ? '/id/untuk-bisnis/' : '/for-business/';
+const alt = isId ? { lang: 'en', label: 'EN', href: '/for-business/' } : { lang: 'id', label: 'ID', href: '/id/untuk-bisnis/' };
+---
+<Base title={t.title} description={t.description} path={path} current="business" locale={locale} alt={alt}>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow"><Icon name="building" /> {t.head.eyebrow}</p>
+      <h1 class="page-title" style="max-width:16ch">{t.head.title}</h1>
+      <p class="page-lead">{t.head.lead}</p>
+      <div class="hero-cta">
+        <a class="btn btn--primary" href={profile.whatsapp} target="_blank" rel="noopener"><Icon name="whatsapp" /> {t.head.whatsapp}</a>
+        <a class="btn btn--ghost" href="#systems"><Icon name="rocket" /> {t.head.demos}</a>
+      </div>
+      {isId && <p class="lang-note">Halaman lain di situs ini masih berbahasa Inggris.</p>}
+    </div>
+  </section>
+
+  <section class="section" id="services" style="padding-top:2rem" aria-labelledby="services-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow"><Icon name="tool" /> {t.services.eyebrow}</p>
+        <h2 class="section-title" id="services-title">{t.services.title}</h2>
+        <p class="section-lead">{t.services.lead}</p>
+      </div>
+      <div class="biz-grid">
+        {t.services.cards.map((c, i) => (
+          <article class="biz-card reveal" style={`--i:${i}`}>
+            <h3><Icon name={c.icon} /> {c.title}</h3>
+            <p>{c.text}</p>
+            <ul role="list">{c.items.map((it) => <li>{it}</li>)}</ul>
+            <a class="link-arrow" href={c.link.href}><span>{c.link.label}</span><Icon name="arrow-right" size={16} /></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="systems" style="padding-top:0" aria-labelledby="systems-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow"><Icon name="rocket" /> {t.systems.eyebrow}</p>
+        <h2 class="section-title" id="systems-title">{t.systems.title}</h2>
+        <p class="section-lead">{t.systems.lead}</p>
+      </div>
+      <div class="systems">
+        {t.systems.items.map((s, i) => {
+          const meta = systemKeys[i];
+          const p = byTitle[meta.key];
+          return (
+            <a class="system reveal" style={`--i:${i % 3}`} href={p.href} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener' : undefined}>
+              <small><Icon name={meta.icon} />{s.kind}</small>
+              <h3>{meta.key}</h3>
+              <p class="best">{s.best}</p>
+              <p>{s.text}</p>
+            </a>
+          );
+        })}
+      </div>
+      <h3 class="section-title reveal" style="font-size:var(--step-3);margin-top:clamp(3rem,6vw,5rem)">{t.systems.websitesTitle}</h3>
+      <p class="section-lead reveal">{t.systems.websitesLead}</p>
+      <ul class="tags reveal" role="list" style="margin-top:1.5rem">
+        {t.systems.industries.map((n) => <li class="tag">{n}</li>)}
+      </ul>
+      <p class="reveal" style="margin-top:2rem"><a class="btn btn--ghost" href="/websites/"><Icon name="globe" /> {t.systems.browse}</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="proof" style="padding-top:0" aria-labelledby="proof-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow"><Icon name="quote" /> {t.proof.eyebrow}</p>
+        <h2 class="section-title" id="proof-title">{t.proof.title}</h2>
+        <p class="section-lead">{t.proof.lead}</p>
+      </div>
+      <div class="biz-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
+        {testimonials.map((q, i) => (
+          <figure class="quote reveal" style={`--i:${i}`} lang="en">
+            <blockquote style="font-size:var(--step-1)">{q.quote}</blockquote>
+            <figcaption><strong>{q.name}</strong><span>{q.role}, {q.org}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="contact" aria-labelledby="biz-contact-title">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <p class="eyebrow"><Icon name="send" /> {t.contact.eyebrow}</p>
+        <h2 class="contact-big" id="biz-contact-title">{t.contact.before}<em>{t.contact.em}</em>{t.contact.after}</h2>
+        <p class="section-lead">{t.contact.lead}</p>
+      </div>
+      <div class="contact-list reveal" style="--i:2;margin-top:0">
+        <a class="contact-row" href={profile.whatsapp} rel="noopener" target="_blank">
+          <div class="lead"><Icon name="whatsapp" /><div><small>{t.contact.whatsapp}</small><span>{profile.phone}</span></div></div>
+          <Icon name="arrow-up-right" />
+        </a>
+        <a class="contact-row" href={`mailto:${profile.email}`} target="_blank" rel="noopener">
+          <div class="lead"><Icon name="mail" /><div><small>{t.contact.email}</small><span>{profile.email}</span></div></div>
+          <Icon name="arrow-up-right" />
+        </a>
+        <a class="contact-row" href="/">
+          <div class="lead"><Icon name="home" /><div><small>{t.contact.portfolio}</small><span>{t.contact.portfolioText}</span></div></div>
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

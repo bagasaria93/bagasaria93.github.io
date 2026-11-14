@@ -1,0 +1,181 @@
+// Copy for the "For business" page, in English and Indonesian. Both versions render through
+// src/components/BusinessPage.astro, so the structure can never drift apart.
+// `key` links a system to its demo in projects.json and to its icon; the display text may be translated.
+
+export const systemKeys = [
+  { key: 'KasirKu', icon: 'zap' },
+  { key: 'BookinAja', icon: 'calendar' },
+  { key: 'CG HRIS', icon: 'users' },
+  { key: 'ErpCore', icon: 'building' },
+  { key: 'MRP Flow', icon: 'chart' },
+  { key: 'MitraCRM', icon: 'user' },
+  { key: 'BlazeNotif', icon: 'send' },
+];
+
+export const business = {
+  en: {
+    title: 'Websites and custom systems for businesses | Bagas Aria Sativa',
+    description: 'Company profile websites and custom business systems for small and medium businesses in Indonesia: cashier, booking, HR, ERP and CRM. Built around how your business actually works.',
+    head: {
+      eyebrow: 'For business owners',
+      title: 'A website and system built around how your business actually works.',
+      lead: 'I am Bagas, a software developer based in Bekasi. I build company profile websites and custom business applications for small and medium businesses: cashier systems, booking systems, HR tools and more. No confusing tech talk, just something that works and helps you save time or bring in more customers.',
+      whatsapp: 'Chat on WhatsApp',
+      demos: 'See live demos',
+    },
+    services: {
+      eyebrow: 'Services',
+      title: 'Two ways I can help',
+      lead: 'Whether you need an online presence or you are tired of running your business on WhatsApp groups and spreadsheets, here is what I offer.',
+      cards: [
+        {
+          icon: 'globe',
+          title: 'Company profile website',
+          text: 'A professional website for your business. It shows who you are and what you offer, and makes it easy for people to reach you. Ideal if you do not have a website yet, or your current one looks outdated and is not bringing in new customers.',
+          items: [
+            'Home, about, and services or product pages built around your business, not a generic template',
+            'Photo gallery, pricing section and a contact form or a direct WhatsApp button',
+            'Looks good and works properly on phones, since that is how most customers will find you',
+          ],
+          link: { href: '/websites/', label: 'See website demos by industry' },
+        },
+        {
+          icon: 'server',
+          title: 'Custom application or system',
+          text: 'If managing your business by WhatsApp, Excel or paper is starting to slow you down, I can build a system made for how you operate. A few common examples:',
+          items: [
+            'Cashier and POS for shops, cafes and restaurants',
+            'Booking and reservation, so customers can pick their own schedule',
+            'HR and payroll for attendance, leave and salary calculation',
+            'Manufacturing and production (ERP) to track orders, stock and production in one place',
+            'Customer management (CRM) so no lead or follow-up gets forgotten',
+            'WhatsApp and email blast to reach many customers at once',
+            'Other systems, depending on what your business needs',
+          ],
+          link: { href: '#systems', label: 'See system demos by type' },
+        },
+      ],
+    },
+    systems: {
+      eyebrow: 'Live demos',
+      title: 'See it before you decide',
+      lead: 'Fully working demos that you can click through yourself, with no sign-up needed.',
+      items: [
+        { kind: 'Cashier / POS', best: 'Best for shops, cafes, restaurants', text: 'Ring up items, apply discounts, calculate tax and print a receipt, all from one simple screen.' },
+        { kind: 'Booking / reservation', best: 'Best for salons, spas, clinics, workshops', text: 'Let customers pick their own appointment time and get instant confirmation, with no more juggling bookings over chat.' },
+        { kind: 'HR and payroll', best: 'Best for businesses with employees to manage', text: 'Attendance, leave requests, payroll and employee records in one place instead of scattered across spreadsheets.' },
+        { kind: 'Manufacturing / ERP', best: 'Best for factories and production businesses', text: 'Track sales orders, production, warehouse stock and quality checks in one connected system.' },
+        { kind: 'Manufacturing / planning', best: 'Best for factories that need better material planning', text: 'Know what raw materials to buy and when, based on real orders and current stock, instead of guesswork.' },
+        { kind: 'Customer management', best: 'Best for sales-driven businesses', text: 'Track every lead and customer, see who is close to buying, and make sure no follow-up is forgotten.' },
+        { kind: 'WhatsApp and email blast', best: 'Best for promotions, reminders, announcements', text: 'Send a message to many customers at once by WhatsApp or email, with a record of what was sent and to whom.' },
+      ],
+      websitesTitle: 'Website demos, by industry',
+      websitesLead: 'Pick the field closest to your business and see what a real website for it could look like, before we build the actual one together.',
+      industries: [
+        'Gym and fitness', 'Restaurant and cafe', 'Electronics and gadgets', 'Beauty and skincare', 'Clinic and healthcare',
+        'Contractor and construction', 'Automotive and workshop', 'Tutoring and courses', 'Manufacturing', 'Fintech and financing',
+        'Garment and apparel', 'Building materials retail', 'Printing and publishing', 'Education and schools', 'Laundry and dry cleaning',
+      ],
+      browse: 'Browse all 15 industry demos',
+    },
+    proof: {
+      eyebrow: 'Proof of work',
+      title: 'In their words',
+      lead: 'Quotes from the people I have built systems for at Rainbrow Sulam Alis and PT Ganzu Gisma Seiko.',
+    },
+    contact: {
+      eyebrow: 'Contact',
+      before: 'Let’s talk about your ',
+      em: 'business',
+      after: '.',
+      lead: 'Open for new website and system projects. Not sure yet whether you need a website, a system, or both? Send a message describing your business and how you currently manage it. I will give you an honest answer on what would actually help, along with a price and timeline, before you decide anything.',
+      whatsapp: 'WhatsApp',
+      email: 'Email',
+      portfolio: 'Portfolio',
+      portfolioText: 'Back to the full portfolio',
+    },
+  },
+
+  id: {
+    title: 'Website dan sistem kustom untuk bisnis | Bagas Aria Sativa',
+    description: 'Website company profile dan sistem bisnis kustom untuk usaha kecil dan menengah di Indonesia: kasir, booking, HR, ERP, dan CRM. Dibuat sesuai cara kerja bisnis Anda yang sebenarnya.',
+    head: {
+      eyebrow: 'Untuk pemilik bisnis',
+      title: 'Website dan sistem yang dibuat sesuai cara kerja bisnis Anda yang sebenarnya.',
+      lead: 'Saya Bagas, software developer di Bekasi. Saya membuat website company profile dan aplikasi bisnis kustom untuk usaha kecil dan menengah: sistem kasir, sistem booking, aplikasi HR, dan lainnya. Tanpa istilah teknis yang membingungkan, hanya sesuatu yang berfungsi dan membantu Anda menghemat waktu atau mendatangkan lebih banyak pelanggan.',
+      whatsapp: 'Chat lewat WhatsApp',
+      demos: 'Lihat demo langsung',
+    },
+    services: {
+      eyebrow: 'Layanan',
+      title: 'Dua cara saya bisa membantu',
+      lead: 'Entah Anda butuh kehadiran online, atau sudah lelah mengelola bisnis lewat grup WhatsApp dan spreadsheet, inilah yang saya tawarkan.',
+      cards: [
+        {
+          icon: 'globe',
+          title: 'Website company profile',
+          text: 'Website profesional untuk bisnis Anda. Menampilkan siapa Anda dan apa yang Anda tawarkan, serta memudahkan orang menghubungi Anda. Cocok jika Anda belum punya website, atau website Anda saat ini terlihat usang dan tidak mendatangkan pelanggan baru.',
+          items: [
+            'Halaman beranda, tentang, serta layanan atau produk yang dibuat sesuai bisnis Anda, bukan template umum',
+            'Galeri foto, bagian harga, dan formulir kontak atau tombol WhatsApp langsung',
+            'Tampil bagus dan berfungsi baik di ponsel, karena di situlah sebagian besar pelanggan akan menemukan Anda',
+          ],
+          link: { href: '/websites/', label: 'Lihat demo website per industri' },
+        },
+        {
+          icon: 'server',
+          title: 'Aplikasi atau sistem kustom',
+          text: 'Jika mengelola bisnis lewat WhatsApp, Excel, atau kertas mulai memperlambat Anda, saya bisa membuat sistem yang sesuai cara Anda beroperasi. Beberapa contoh umum:',
+          items: [
+            'Kasir dan POS untuk toko, kafe, dan restoran',
+            'Booking dan reservasi, agar pelanggan bisa memilih jadwal sendiri',
+            'HR dan penggajian untuk absensi, cuti, dan perhitungan gaji',
+            'Manufaktur dan produksi (ERP) untuk memantau pesanan, stok, dan produksi di satu tempat',
+            'Manajemen pelanggan (CRM) agar tidak ada prospek atau tindak lanjut yang terlupa',
+            'Blast WhatsApp dan email untuk menjangkau banyak pelanggan sekaligus',
+            'Sistem lain, sesuai kebutuhan bisnis Anda',
+          ],
+          link: { href: '#systems', label: 'Lihat demo sistem per jenis' },
+        },
+      ],
+    },
+    systems: {
+      eyebrow: 'Demo langsung',
+      title: 'Lihat dulu sebelum memutuskan',
+      lead: 'Demo yang berfungsi penuh dan bisa Anda coba sendiri, tanpa perlu mendaftar.',
+      items: [
+        { kind: 'Kasir / POS', best: 'Cocok untuk toko, kafe, restoran', text: 'Catat item, terapkan diskon, hitung pajak, dan cetak struk, semuanya dari satu layar sederhana.' },
+        { kind: 'Booking / reservasi', best: 'Cocok untuk salon, spa, klinik, bengkel', text: 'Biarkan pelanggan memilih sendiri jadwal janji temu dan langsung mendapat konfirmasi, tanpa repot mengatur booking lewat chat.' },
+        { kind: 'HR dan penggajian', best: 'Cocok untuk bisnis yang punya karyawan', text: 'Absensi, pengajuan cuti, penggajian, dan data karyawan di satu tempat, bukan tersebar di banyak spreadsheet.' },
+        { kind: 'Manufaktur / ERP', best: 'Cocok untuk pabrik dan bisnis produksi', text: 'Pantau pesanan penjualan, produksi, stok gudang, dan pemeriksaan kualitas dalam satu sistem yang terhubung.' },
+        { kind: 'Manufaktur / perencanaan', best: 'Cocok untuk pabrik yang butuh perencanaan material lebih baik', text: 'Ketahui bahan baku apa yang harus dibeli dan kapan, berdasarkan pesanan nyata dan stok saat ini, bukan perkiraan.' },
+        { kind: 'Manajemen pelanggan', best: 'Cocok untuk bisnis berbasis penjualan', text: 'Catat setiap prospek dan pelanggan, lihat siapa yang hampir membeli, dan pastikan tidak ada tindak lanjut yang terlupa.' },
+        { kind: 'Blast WhatsApp dan email', best: 'Cocok untuk promo, pengingat, pengumuman', text: 'Kirim pesan ke banyak pelanggan sekaligus lewat WhatsApp atau email, lengkap dengan catatan apa yang dikirim dan ke siapa.' },
+      ],
+      websitesTitle: 'Demo website, per industri',
+      websitesLead: 'Pilih bidang yang paling dekat dengan bisnis Anda dan lihat seperti apa website untuknya, sebelum kita membuat yang sebenarnya bersama.',
+      industries: [
+        'Gym dan kebugaran', 'Restoran dan kafe', 'Elektronik dan gadget', 'Kecantikan dan skincare', 'Klinik dan kesehatan',
+        'Kontraktor dan konstruksi', 'Otomotif dan bengkel', 'Bimbel dan kursus', 'Manufaktur', 'Fintech dan pembiayaan',
+        'Garmen dan apparel', 'Toko bahan bangunan', 'Percetakan dan penerbitan', 'Pendidikan dan sekolah', 'Laundry dan dry cleaning',
+      ],
+      browse: 'Jelajahi semua 15 demo industri',
+    },
+    proof: {
+      eyebrow: 'Bukti kerja',
+      title: 'Kata mereka',
+      lead: 'Kutipan dari orang-orang yang pernah saya buatkan sistem di Rainbrow Sulam Alis dan PT Ganzu Gisma Seiko. Kutipan ditampilkan dalam bahasa aslinya, Inggris.',
+    },
+    contact: {
+      eyebrow: 'Kontak',
+      before: 'Mari bicarakan ',
+      em: 'bisnis',
+      after: ' Anda.',
+      lead: 'Terbuka untuk proyek website dan sistem baru. Belum yakin butuh website, sistem, atau keduanya? Kirim pesan yang menjelaskan bisnis Anda dan cara Anda mengelolanya saat ini. Saya akan memberi jawaban jujur tentang apa yang benar-benar membantu, lengkap dengan harga dan jangka waktu, sebelum Anda memutuskan apa pun.',
+      whatsapp: 'WhatsApp',
+      email: 'Email',
+      portfolio: 'Portofolio',
+      portfolioText: 'Kembali ke portofolio lengkap',
+    },
+  },
+};

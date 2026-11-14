@@ -41,7 +41,7 @@ const toc = [
     <div class="container doc">
       <nav class="toc" aria-label="On this page">
         <p>On this page</p>
-        {toc.map(([id, label]) => <a href={`#${id}`} data-toc={id}>{label}</a>)}
+        {toc.map(([id, label]) => <a href={`#${id}`} data-css="transform transition-property" data-toc={id}>{label}</a>)}
       </nav>
 
       <div class="prose">
@@ -49,8 +49,8 @@ const toc = [
           <h2><Icon name="compass" /> Scope</h2>
           <p>The system covers Sales, Procurement, Warehouse, PPC and MRP, Production, QC, Delivery, Finance, HRD, Production Engineering, Maintenance and General Affairs. Orders flow from sales order to delivery note, invoice and payment, while purchasing flows from purchase request to purchase order and goods receipt.</p>
           <p>The database holds more than 100 tables. Every department has its own screens and its own approval chain.</p>
-          <ul class="dept" role="list" aria-label="The twelve departments the system covers">
-            {departments.map((d, i) => <li style={`--i:${i}`}><span>{String(i + 1).padStart(2, '0')}</span>{d}</li>)}
+          <ul class="dept" data-css="view-timeline-name view-timeline-axis" role="list" aria-label="The twelve departments the system covers">
+            {departments.map((d, i) => <li data-css="animation-name animation-timeline animation-range" style={`--i:${i}`}><span>{String(i + 1).padStart(2, '0')}</span>{d}</li>)}
           </ul>
         </section>
 

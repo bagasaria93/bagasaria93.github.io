@@ -5,6 +5,7 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import { profile } from '../data/site.js';
+import { ui } from '../data/i18n.js';
 import projects from '../data/projects.json';
 
 const {
@@ -13,7 +14,11 @@ const {
   path = '/',
   current = '',
   noindex = false,
+  locale = 'en',
+  alt = null, // { lang, label, href } for the same page in another language
 } = Astro.props;
+const t = ui[locale];
+const altUrl = alt ? new URL(alt.href, profile.site).href : '';
 
 const canonical = new URL(path, profile.site).href;
 const og = new URL('/assets/img/profile.png', profile.site).href;
@@ -44,6 +49,7 @@ const palette = {
     { label: 'ERP case study', hint: '/case-study/erp/', href: '/case-study/erp/' },
     { label: 'Rainbrow case study', hint: '/case-study/rainbrow/', href: '/case-study/rainbrow/' },
     { label: 'For business', hint: '/for-business/', href: '/for-business/' },
+    { label: 'Untuk bisnis (Bahasa Indonesia)', hint: '/id/untuk-bisnis/', href: '/id/untuk-bisnis/' },
     { label: 'Experience', hint: '#experience', href: '/#experience' },
     { label: 'Skills', hint: '#skills', href: '/#skills' },
     { label: 'Contact', hint: '#contact', href: '/#contact' },
@@ -51,6 +57,9 @@ const palette = {
   actions: [
     { label: 'Send an email', hint: profile.email, href: `mailto:${profile.email}`, external: true },
     { label: 'Download CV', hint: 'PDF', href: profile.cv, download: true },
+    { label: 'Show the CSS', hint: 'x', action: 'xray' },
+    { label: 'Theme lab', hint: 'l', action: 'lab' },
+    { label: 'Print this page as a CV', hint: 'Ctrl P', action: 'print' },
     { label: 'Calm mode: less motion', hint: 'toggle', action: 'toggle-calm' },
     { label: 'Open GitHub', hint: 'github.com/bagasaria93', href: profile.github, external: true },
     { label: 'Open LinkedIn', hint: 'linkedin.com/in/bagasaria', href: profile.linkedin, external: true },
@@ -72,7 +81,7 @@ const jsonLd = JSON.stringify({
 });
 ---
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -81,6 +90,8 @@ const jsonLd = JSON.stringify({
     <meta name="author" content={profile.name} />
     <meta name="theme-color" content="#090B10" />
     <link rel="canonical" href={canonical} />
+    {alt && <link rel="alternate" hreflang={locale} href={canonical} />}
+    {alt && <link rel="alternate" hreflang={alt.lang} href={altUrl} />}
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/assets/img/favicon.svg?v=3" type="image/svg+xml" />
     <meta property="og:type" content="website" />
@@ -90,13 +101,13 @@ const jsonLd = JSON.stringify({
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary" />
-    <script is:inline>document.documentElement.classList.add('js');try{if(localStorage.getItem('calm')==='1')document.documentElement.dataset.calm='';}catch(e){}</script>
+    <script is:inline>document.documentElement.classList.add('js');try{var r=document.documentElement;if(localStorage.getItem('calm')==='1')r.dataset.calm='';var l=JSON.parse(localStorage.getItem('lab')||'null');if(l){if(l.hue!=null){r.setAttribute('data-hue','');r.style.setProperty('--hue',l.hue)}if(l.wd)r.style.setProperty('--wd',l.wd+'%');if(l.round)r.style.setProperty('--round',l.round+'px')}}catch(e){}</script>
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body id="top" data-page={current}>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{t.skip}</a>
 
-    <header class="site-header">
+    <header class="site-header" data-css="position mix-blend-mode view-transition-name">
       <div class="container header-inner">
         <a class="brand" href="/" aria-label={`${profile.name}, home`}>
           <span class="brand-mark">B.A.S</span>
@@ -104,26 +115,27 @@ const jsonLd = JSON.stringify({
         </a>
         <nav class="nav" aria-label="Primary">
           {nav.map((n) => (
-            <a href={n.href} data-nav={n.id} data-idx={n.idx} aria-current={n.page && n.page === current ? 'page' : undefined}>{n.label}</a>
+            <a href={n.href} data-nav={n.id} data-idx={n.idx} aria-current={n.page && n.page === current ? 'page' : undefined}>{t.nav[n.id]}</a>
           ))}
         </nav>
         <div class="header-actions">
+          {alt && <a class="lang" href={alt.href} hreflang={alt.lang} lang={alt.lang}>{alt.label}</a>}
           <button class="kbd-hint" type="button" data-open-palette aria-label="Open quick navigation" aria-haspopup="dialog">
-            <Icon name="search" size={15} /> <span>Quick nav</span> <kbd>Ctrl K</kbd>
+            <Icon name="search" size={15} /> <span>{t.quick}</span> <kbd>Ctrl K</kbd>
           </button>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span></button>
         </div>
       </div>
-      <div class="progress" aria-hidden="true"><i></i></div>
+      <div class="progress" aria-hidden="true"><i data-css="animation-timeline transform-origin"></i></div>
     </header>
 
     <div class="mobile-menu" id="mobile-menu">
-      {nav.map((n) => <a href={n.href}><Icon name={n.icon} />{n.label}</a>)}
-      <a href="/work/"><Icon name="layers" />All work</a>
+      {nav.map((n) => <a href={n.href}><Icon name={n.icon} />{t.nav[n.id]}</a>)}
+      {locale === 'en' && <a href="/work/"><Icon name="layers" />All work</a>}
     </div>
 
     {current === 'home' && (
-      <nav class="rail" aria-label="Page sections" data-rail>
+      <nav class="rail" aria-label="Page sections" data-rail data-css="position perspective opacity">
         {rail.map((r) => <a href={`/#${r.id}`} data-layer={r.id} data-label={r.label} aria-label={r.label}></a>)}
       </nav>
     )}
@@ -134,8 +146,8 @@ const jsonLd = JSON.stringify({
 
     <footer class="site-footer dark">
       <div class="container footer-inner">
-        <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
-        <a class="footer-top" href="#top" data-to-top><Icon name="arrow-up" />Back to top</a>
+        <p>&copy; {new Date().getFullYear()} {profile.name}. {t.rights}</p>
+        <a class="footer-top" href="#top" data-to-top><Icon name="arrow-up" />{t.top}</a>
       </div>
     </footer>
 
@@ -146,8 +158,51 @@ const jsonLd = JSON.stringify({
         <div class="palette-foot"><span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span></div>
       </div>
     </dialog>
-    <a class="to-top" href="#top" data-to-top aria-label="Back to top"><Icon name="arrow-up" /></a>
+    <a class="to-top" href="#top" data-to-top aria-label={t.top}><Icon name="arrow-up" /></a>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="dock" role="group" aria-label="Tools">
+      <button class="dock-btn" type="button" data-xray-toggle aria-pressed="false" title="Outline the elements and read their CSS (X)"><Icon name="code" /><b>{t.tools.css}</b></button>
+      <button class="dock-btn" type="button" popovertarget="lab" title="Change the accent hue, width axis and corners (L)"><Icon name="tool" /><b>{t.tools.lab}</b></button>
+      <button class="dock-btn" type="button" data-keys-open aria-haspopup="dialog" title="Keyboard shortcuts (?)"><kbd>?</kbd><b>{t.tools.keys}</b></button>
+    </div>
+
+    <div class="xray-tip" data-xray-tip hidden></div>
+    <aside class="xray-panel" data-xray-panel aria-label="CSS of the selected element" hidden>
+      <div class="xray-head"><span data-xray-title></span><button type="button" data-xray-close>Close</button></div>
+      <pre class="xray-code" data-xray-code></pre>
+      <div class="xray-foot"><button class="btn btn--small" type="button" data-xray-copy>Copy CSS</button></div>
+    </aside>
+
+    <aside class="lab" id="lab" popover aria-label="Theme lab">
+      <h2>Theme lab</h2>
+      <label><span>Accent hue <output data-lab-out="hue">125</output></span><input type="range" min="0" max="360" step="1" value="125" data-lab="hue" /></label>
+      <label><span>Width axis <output data-lab-out="wd">0</output></span><input type="range" min="-30" max="17" step="1" value="0" data-lab="wd" /></label>
+      <label><span>Corners <output data-lab-out="round">0</output></span><input type="range" min="0" max="24" step="1" value="0" data-lab="round" /></label>
+      <label class="lab-check"><input type="checkbox" data-lab="calm" /> <span>Calm mode, less motion</span></label>
+      <div class="lab-actions"><button class="btn btn--small" type="button" data-lab-reset>Reset</button></div>
+    </aside>
+
+    <dialog class="keys" id="keys" aria-label="Keyboard shortcuts">
+      <div class="keys-box">
+        <h2>Keyboard shortcuts</h2>
+        <dl>
+          <dt><kbd>g</kbd> <kbd>h</kbd></dt><dd>Home</dd>
+          <dt><kbd>g</kbd> <kbd>w</kbd></dt><dd>Work</dd>
+          <dt><kbd>g</kbd> <kbd>c</kbd></dt><dd>Case studies</dd>
+          <dt><kbd>g</kbd> <kbd>e</kbd></dt><dd>Experience</dd>
+          <dt><kbd>g</kbd> <kbd>s</kbd></dt><dd>Skills</dd>
+          <dt><kbd>g</kbd> <kbd>d</kbd></dt><dd>Websites (demos)</dd>
+          <dt><kbd>g</kbd> <kbd>b</kbd></dt><dd>For business</dd>
+          <dt><kbd>g</kbd> <kbd>t</kbd></dt><dd>Contact (talk)</dd>
+          <dt><kbd>/</kbd></dt><dd>Quick navigation</dd>
+          <dt><kbd>x</kbd></dt><dd>Show the CSS</dd>
+          <dt><kbd>l</kbd></dt><dd>Theme lab</dd>
+          <dt><kbd>?</kbd></dt><dd>This list</dd>
+        </dl>
+        <p class="keys-note">Shortcuts pause while you are typing in a field. Press Esc to close.</p>
+      </div>
+    </dialog>
 
     <script id="palette-data" type="application/json" set:html={JSON.stringify(palette)} />
     <script id="site-data" type="application/json" set:html={JSON.stringify({ email: profile.email })} />

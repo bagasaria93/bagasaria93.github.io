@@ -43,13 +43,20 @@ const plates = [
 ];
 ---
 <Base current="home">
+  <!-- Shown only when the page is printed: the header of a one-page CV. -->
+  <section class="print-cv">
+    <h1>{profile.name}</h1>
+    <p>{profile.role}, {profile.location}</p>
+    <p>{profile.email} / {profile.phone} / linkedin.com/in/bagasaria / github.com/bagasaria93</p>
+  </section>
+
   <!-- Hero: dark console -->
   <section class="hero dark" aria-labelledby="hero-title">
-    <span class="wordmark" aria-hidden="true">BAGAS ARIA SATIVA</span>
+    <span class="wordmark" data-css="-webkit-text-stroke mask-image font-stretch" aria-hidden="true">BAGAS ARIA SATIVA</span>
     <div class="container hero-inner">
       <div>
         <p class="hero-id"><b>Bagas Aria Sativa</b><span>Full-Stack Developer</span><span>Bekasi, Indonesia</span></p>
-        <h1 class="hero-title" id="hero-title"><span class="vh">Bagas Aria Sativa. </span>Systems,<em>layer by layer.</em></h1>
+        <h1 class="hero-title" id="hero-title" data-css="font-stretch letter-spacing text-wrap"><span class="vh">Bagas Aria Sativa. </span>Systems,<em>layer by layer.</em></h1>
         <p class="hero-lead">I build web applications end to end: Laravel and PHP back ends, React and Next.js interfaces, Python data tools, and the integrations that connect them to other systems.</p>
         <div class="hero-cta">
           <a class="btn btn--primary" href="#work">View selected work <Icon name="arrow-right" /></a>
@@ -74,10 +81,10 @@ const plates = [
       </div>
 
       <div class="deck" data-deck role="group" aria-label="Five layers of a system. Each layer links to a part of this page.">
-        <div class="deck-in">
-          <div class="stack">
+        <div class="deck-in" data-css="perspective transform-style animation-timeline">
+          <div class="stack" data-css="transform transform-style">
             {plates.map((p) => (
-              <a class="plate" href={p.href} data-layer={p.layer} style={`--i:${p.i}`} aria-label={`${p.go}: ${p.name} layer`}>
+              <a class="plate" data-css="transform transition-property border-top-color" href={p.href} data-layer={p.layer} style={`--i:${p.i}`} aria-label={`${p.go}: ${p.name} layer`}>
                 <span class="plate-h"><span>0{p.i + 1} / {p.name}</span><span>{p.i === 4 ? 'front' : p.i === 0 ? 'base' : ''}</span></span>
                 {p.i === 0 && <><i></i><i style="width:92%"></i><i></i><i style="width:70%"></i><i></i><i style="width:84%"></i><i></i><i style="width:58%"></i><i></i></>}
                 {p.i === 1 && <><i class="c" style="width:48%"></i><i style="width:82%"></i><i style="width:64%"></i><i class="c" style="width:38%"></i><i style="width:90%"></i><i style="width:56%"></i><i class="c" style="width:70%"></i></>}
@@ -96,7 +103,7 @@ const plates = [
 
   <!-- Ticker -->
   <div class="ticker" aria-label="Core technologies">
-    <div class="ticker-track">
+    <div class="ticker-track" data-css="animation-name animation-duration animation-timing-function">
       <ul class="ticker-group" role="list">{ticker.map((t) => <li>{t}</li>)}</ul>
       <ul class="ticker-group" role="list" aria-hidden="true">{ticker.map((t) => <li>{t}</li>)}</ul>
     </div>
@@ -137,8 +144,8 @@ const plates = [
         </ul>
       </div>
       <div class="portraits reveal" style="--i:2">
-        <figure class="portrait portrait--a">
-          <div class="ph"><img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" loading="lazy" decoding="async" /></div>
+        <figure class="portrait portrait--a" data-css="border-top-width box-shadow">
+          <div class="ph"><img data-css="filter mix-blend-mode" src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" loading="lazy" decoding="async" /></div>
           <figcaption><span>Bagas</span><span>01</span></figcaption>
         </figure>
         <figure class="portrait portrait--b">
@@ -158,7 +165,7 @@ const plates = [
           <h2 class="section-title" id="work-title">Working software, <mark>not mockups</mark></h2>
           <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Each one is designed, built and shipped by me. Point at a row to preview it.</p>
         </div>
-        <p class="work-count" aria-hidden="true">{projects.length}<small>projects you can open</small></p>
+        <p class="work-count" data-css="font-stretch letter-spacing" aria-hidden="true">{projects.length}<small>projects you can open</small></p>
       </div>
       <div class="rows reveal" data-rows>
         {featured.map((p, i) => <ProjectRow project={p} index={i} />)}
@@ -190,9 +197,9 @@ const plates = [
         <p class="work-count" aria-hidden="true">{sites.length}<small>industries, one demo each</small></p>
       </div>
     </div>
-    <div class="belts" aria-label="Website demos by industry">
+    <div class="belts" data-css="display gap" aria-label="Website demos by industry">
       {[beltA, beltB].map((list, row) => (
-        <div class={`belt ${row ? 'belt--rev' : ''}`}>
+        <div class={`belt ${row ? 'belt--rev' : ''}`} data-css="mask-image overflow">
           <div class="belt-track">
             {[0, 1].map((copy) => (
               <ul class="belt-group" role="list" aria-hidden={copy ? 'true' : undefined}>
@@ -226,7 +233,7 @@ const plates = [
       </div>
       <div class="case-cards">
         <article class="case-card reveal">
-          <span class="big" aria-hidden="true">12</span>
+          <span class="big" data-css="-webkit-text-stroke font-stretch color" aria-hidden="true">12</span>
           <small>Manufacturing</small>
           <h3 style="view-transition-name: case-erp">ERP for 12 departments</h3>
           <p>Access control, multi-level approvals, material planning, quality inspection and a fail-safe connection to an accounting system. Includes an interactive approval demo.</p>
@@ -254,7 +261,7 @@ const plates = [
       </div>
       <div class="xp" data-timeline data-xp>
         <nav class="xp-nav" aria-label="Jobs">
-          <span class="timeline-fill" aria-hidden="true"></span>
+          <span class="timeline-fill" data-css="transform-origin transform" aria-hidden="true"></span>
           <ol role="list">
             {experience.map((j, i) => (
               <li><a href={`#job-${i}`} data-xp-link><small>{j.period}</small><b>{j.org}</b></a></li>
@@ -286,7 +293,7 @@ const plates = [
         <p class="eyebrow"><Icon name="tool" /> Toolbox</p>
         <h2 class="section-title" id="skills-title">What I <mark>work with</mark></h2>
       </div>
-      <div class="skills-bento reveal">
+      <div class="skills-bento reveal" data-css="display grid-template-columns gap">
         {skills.map((g) => (
           <section class="skill-card">
             <h3><span class="ico"><Icon name={skillIcons[g.group]} /></span> {g.group}</h3>
@@ -332,9 +339,9 @@ const plates = [
         <h2 class="section-title" id="quotes-title">What <mark>colleagues</mark> say</h2>
       </div>
       <div class="reveal" data-carousel aria-roledescription="carousel" aria-label="Testimonials">
-        <div class="quotes" data-track tabindex="0" aria-label="Testimonials, drag or scroll horizontally">
+        <div class="quotes" data-css="perspective scroll-snap-type overflow-x" data-track tabindex="0" aria-label="Testimonials, drag or scroll horizontally">
           {testimonials.map((t, i) => (
-            <figure class="quote" data-slide aria-roledescription="slide" aria-label={`${i + 1} of ${testimonials.length}`}>
+            <figure class="quote" data-css="animation-name animation-timeline transform" data-slide aria-roledescription="slide" aria-label={`${i + 1} of ${testimonials.length}`}>
               <blockquote>{t.quote}</blockquote>
               <figcaption><strong>{t.name}</strong><span>{t.role}, {t.org}</span></figcaption>
             </figure>
@@ -355,7 +362,7 @@ const plates = [
     <div class="container contact-grid">
       <div class="reveal">
         <p class="eyebrow"><Icon name="send" /> Contact</p>
-        <h2 class="contact-big" id="contact-title">Let&rsquo;s build something <em>reliable</em>.</h2>
+        <h2 class="contact-big" id="contact-title" data-css="font-stretch text-wrap">Let&rsquo;s build something <em>reliable</em>.</h2>
         <div class="contact-list">
           <a class="contact-row" href={`mailto:${profile.email}`} target="_blank" rel="noopener">
             <div class="lead"><Icon name="mail" /><div><small>Email</small><span>{profile.email}</span></div></div>
@@ -406,7 +413,7 @@ const plates = [
         </fieldset>
         <div class="field">
           <label for="f-msg"><Icon name="quote" /> Message</label>
-          <textarea id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
+          <textarea data-css="field-sizing resize" id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
           <span class="error" id="e-msg"></span>
         </div>
         <button class="btn btn--primary" type="submit"><Icon name="send" /> Send message</button>

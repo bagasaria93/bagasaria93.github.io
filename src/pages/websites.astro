@@ -37,13 +37,13 @@ import { profile } from '../data/site.js';
         </div>
         <p class="result-count" data-sites-count aria-live="polite">Showing {sites.length} of {sites.length}</p>
       </div>
-      <div class="wall" data-wall>
+      <div class="wall" data-css="display grid-template-columns" data-wall>
         {sites.map((s, i) => (
-          <article class="site" data-site data-search={`${s.industry} ${s.name} ${s.features}`.toLowerCase()}>
+          <article class="site" data-css="animation-name animation-timeline translate" data-site data-search={`${s.industry} ${s.name} ${s.features}`.toLowerCase()}>
             <a class="site-link" href={s.href} aria-label={`Open the ${s.industry} demo: ${s.name}`}>
               <div class="site-frame">
                 <div class="site-bar" aria-hidden="true"><i></i><i></i><i></i><span>{s.href}</span></div>
-                <img src={s.image} width={s.width} height={s.height} alt={`Preview of ${s.name}, ${s.industry} company profile`} loading="lazy" decoding="async" />
+                <img data-css="object-position transition-duration" src={s.image} width={s.width} height={s.height} alt={`Preview of ${s.name}, ${s.industry} company profile`} loading="lazy" decoding="async" />
               </div>
               <div class="site-meta">
                 <span class="site-n">{String(i + 1).padStart(2, '0')} / {s.industry}</span>

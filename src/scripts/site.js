@@ -283,6 +283,122 @@ function initXp() {
   spy();
 }
 
+/* ------------------------------------------------------------- theme lab */
+function initLab() {
+  const root = document.documentElement;
+  if (!$('[data-lab]')) return;
+  const el = (k) => $(`[data-lab="${k}"]`);
+  const out = (k, v) => { const o = $(`[data-lab-out="${k}"]`); if (o) o.textContent = v; };
+  const defaults = { hue: 125, wd: 0, round: 0 };
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem('lab') || 'null') || {}; } catch { state = {}; }
+  const apply = (k, v) => {
+    if (k === 'hue') { root.setAttribute('data-hue', ''); root.style.setProperty('--hue', v); }
+    if (k === 'wd') root.style.setProperty('--wd', `${v}%`);
+    if (k === 'round') root.style.setProperty('--round', `${v}px`);
+    out(k, v);
+  };
+  const save = () => { try { localStorage.setItem('lab', JSON.stringify(state)); } catch { /* ignore */ } };
+  Object.keys(defaults).forEach((k) => {
+    if (state[k] != null) { el(k).value = state[k]; apply(k, state[k]); }
+    el(k).addEventListener('input', (e) => { state[k] = Number(e.target.value); apply(k, state[k]); save(); });
+  });
+  const calm = el('calm');
+  const syncCalm = () => { calm.checked = root.hasAttribute('data-calm'); };
+  syncCalm();
+  calm.addEventListener('change', () => { if (calm.checked !== root.hasAttribute('data-calm')) toggleCalm(); });
+  $('#lab').addEventListener('toggle', syncCalm);
+  $('[data-lab-reset]').addEventListener('click', () => {
+    state = {};
+    root.removeAttribute('data-hue');
+    ['--hue', '--wd', '--round'].forEach((p) => root.style.removeProperty(p));
+    Object.entries(defaults).forEach(([k, v]) => { el(k).value = v; out(k, v); });
+    if (root.hasAttribute('data-calm')) toggleCalm();
+    syncCalm();
+    try { localStorage.removeItem('lab'); } catch { /* ignore */ }
+  });
+}
+
+/* ---------------------------------------------------------- show the CSS */
+function initXray() {
+  const toggle = $('[data-xray-toggle]'), tip = $('[data-xray-tip]'), panel = $('[data-xray-panel]');
+  if (!toggle || !tip || !panel) return;
+  const root = document.documentElement;
+  const title = $('[data-xray-title]'), code = $('[data-xray-code]');
+  let text = '';
+  const isOn = () => root.hasAttribute('data-xray');
+  const set = (v) => {
+    root.toggleAttribute('data-xray', v);
+    toggle.setAttribute('aria-pressed', String(v));
+    if (!v) { tip.hidden = true; panel.hidden = true; } else toast('Show the CSS: point at a dashed outline, click to read it');
+  };
+  toggle.addEventListener('click', () => set(!isOn()));
+  const label = (e) => e.tagName.toLowerCase() + (e.classList.length ? `.${e.classList[0]}` : '');
+  document.addEventListener('pointerover', (e) => {
+    if (!isOn()) return;
+    const target = e.target.closest ? e.target.closest('[data-css]') : null;
+    if (!target) { tip.hidden = true; return; }
+    tip.textContent = `${label(target)}  /  ${target.dataset.css.split(/\s+/).join('  /  ')}`;
+    tip.hidden = false;
+    const r = target.getBoundingClientRect();
+    tip.style.left = `${Math.max(6, Math.min(innerWidth - tip.offsetWidth - 6, r.left))}px`;
+    tip.style.top = `${Math.max(6, r.top - tip.offsetHeight - 6)}px`;
+  });
+  addEventListener('scroll', () => { tip.hidden = true; }, { passive: true });
+  // Capture phase: while the mode is on, clicking an annotated element reads it instead of using it.
+  document.addEventListener('click', (e) => {
+    if (!isOn() || e.target.closest('.dock, .xray-panel, .lab, .keys, #palette')) return;
+    const target = e.target.closest('[data-css]');
+    if (!target) return;
+    e.preventDefault(); e.stopPropagation();
+    const cs = getComputedStyle(target);
+    const rows = target.dataset.css.split(/\s+/).filter(Boolean).map((p) => [p, cs.getPropertyValue(p).trim() || 'initial']);
+    const sel = label(target);
+    title.textContent = sel;
+    code.textContent = '';
+    const line = (parts) => { const d = document.createElement('div'); parts.forEach((x) => d.append(x)); code.appendChild(d); };
+    const span = (cls, t) => { const s = document.createElement('span'); s.className = cls; s.textContent = t; return s; };
+    line([`${sel} {`]);
+    rows.forEach(([p, v]) => line(['  ', span('p', p), ': ', span('v', v), ';']));
+    line(['}']);
+    text = `${sel} {\n${rows.map(([p, v]) => `  ${p}: ${v};`).join('\n')}\n}`;
+    panel.hidden = false;
+  }, true);
+  $('[data-xray-close]').addEventListener('click', () => { panel.hidden = true; });
+  $('[data-xray-copy]').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(text); toast('CSS copied'); } catch { toast('Could not copy'); }
+  });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') panel.hidden = true; });
+}
+
+/* ------------------------------------------------------- keyboard shortcuts */
+function initKeys() {
+  const dlg = $('#keys');
+  const map = { h: '/', w: '/#work', c: '/#case', e: '/#experience', s: '/#skills', d: '/websites/', b: '/for-business/', t: '/#contact' };
+  let pending = 0;
+  const openKeys = () => { if (dlg && typeof dlg.showModal === 'function' && !dlg.open) dlg.showModal(); };
+  const btn = $('[data-keys-open]');
+  if (btn) btn.addEventListener('click', openKeys);
+  addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    const tag = ((t && t.tagName) || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || (t && t.isContentEditable)) return;
+    if (pending) {
+      clearTimeout(pending); pending = 0;
+      const to = map[e.key.toLowerCase()];
+      if (to) { e.preventDefault(); location.href = to; }
+      return;
+    }
+    if (document.querySelector('dialog[open]')) return;
+    if (e.key === 'g') { pending = setTimeout(() => { pending = 0; }, 1400); toast('g, then h w c e s d b t'); }
+    else if (e.key === '?') { e.preventDefault(); openKeys(); }
+    else if (e.key === '/') { e.preventDefault(); const b = $('[data-open-palette]'); if (b) b.click(); }
+    else if (e.key === 'x') { const b = $('[data-xray-toggle]'); if (b) b.click(); }
+    else if (e.key === 'l') { const lab = $('#lab'); if (lab && lab.togglePopover) lab.togglePopover(); }
+  });
+}
+
 /* --------------------------------------------------------------- carousel */
 function initCarousel() {
   $$('[data-carousel]').forEach((root) => {
@@ -434,6 +550,9 @@ function initPalette() {
   const run = (it) => {
     close();
     if (it.action === 'toggle-calm') { toggleCalm(); return; }
+    if (it.action === 'print') { setTimeout(() => print(), 120); return; }
+    if (it.action === 'xray') { const b = $('[data-xray-toggle]'); if (b) b.click(); return; }
+    if (it.action === 'lab') { const lab = $('#lab'); if (lab && lab.togglePopover) lab.togglePopover(); return; }
     if (!it.href) return;
     if (it.download) {
       const a = document.createElement('a');
@@ -712,7 +831,7 @@ function initToc() {
 
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
-  ['totop', initToTop], ['deck', initDeck], ['peek', initPeek], ['xp', initXp], ['sites', initSites],
+  ['totop', initToTop], ['deck', initDeck], ['peek', initPeek], ['xp', initXp], ['sites', initSites], ['lab', initLab], ['xray', initXray], ['keys', initKeys],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));
