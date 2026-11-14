@@ -162,32 +162,52 @@ function initDeck() {
   hero.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; kick(); });
 }
 
-/* ---------------------------------------------- card tilt and magnetic buttons */
-function initTilt() {
-  if (!finePointer || reduce) return;
-  $$('.card').forEach((card) => {
-    card.addEventListener('pointermove', (e) => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-      card.style.setProperty('--ry', `${((px - 0.5) * 7).toFixed(2)}deg`);
-      card.style.setProperty('--rx', `${((0.5 - py) * 6).toFixed(2)}deg`);
-      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      card.style.setProperty('--my', `${e.clientY - r.top}px`);
-    }, { passive: true });
-    card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
-  });
-}
-
-function initMagnetic() {
-  if (!finePointer || reduce) return;
-  $$('[data-magnetic]').forEach((b) => {
-    b.addEventListener('pointermove', (e) => {
-      const r = b.getBoundingClientRect();
-      const x = e.clientX - (r.left + r.width / 2), y = e.clientY - (r.top + r.height / 2);
-      b.style.transform = `translate(${(x * 0.12).toFixed(1)}px, ${(y * 0.2).toFixed(1)}px)`;
+/* ------------------------------------ project rows: the preview follows the pointer */
+function initPeek() {
+  const peek = $('[data-peek-el]');
+  if (!peek || !finePointer) return;
+  const img = $('img', peek), cap = $('.peek-cap', peek);
+  const links = $$('.row-link[data-img]');
+  const s = { tx: 0, ty: 0, x: 0, y: 0, r: 0, running: false, first: true };
+  const size = () => ({ w: peek.offsetWidth, h: peek.offsetHeight });
+  const place = (cx, cy) => {
+    const { w, h } = size();
+    let tx = cx + 28;
+    if (tx + w > innerWidth - 12) tx = cx - w - 28;
+    s.tx = Math.max(12, tx);
+    s.ty = Math.min(innerHeight - h - 12, Math.max(12, cy - h / 2));
+  };
+  const step = () => {
+    const k = reduce ? 1 : 0.2;
+    const dx = s.tx - s.x;
+    s.x += dx * k; s.y += (s.ty - s.y) * k;
+    s.r += ((Math.max(-7, Math.min(7, dx * 0.12))) - s.r) * 0.25;
+    peek.style.setProperty('--x', `${s.x.toFixed(1)}px`);
+    peek.style.setProperty('--y', `${s.y.toFixed(1)}px`);
+    peek.style.setProperty('--r', `${s.r.toFixed(2)}deg`);
+    if (peek.classList.contains('on') || Math.abs(dx) > 0.3) requestAnimationFrame(step); else s.running = false;
+  };
+  const kick = () => { if (!s.running) { s.running = true; requestAnimationFrame(step); } };
+  const show = (a, cx, cy) => {
+    const src = a.dataset.img;
+    if (src && img.getAttribute('src') !== src) img.setAttribute('src', src);
+    cap.textContent = a.dataset.cap || '';
+    place(cx, cy);
+    if (s.first) { s.x = s.tx; s.y = s.ty; s.first = false; }
+    peek.classList.add('on');
+    kick();
+  };
+  links.forEach((a) => {
+    a.addEventListener('pointerenter', (e) => show(a, e.clientX, e.clientY));
+    a.addEventListener('pointermove', (e) => { place(e.clientX, e.clientY); kick(); }, { passive: true });
+    a.addEventListener('pointerleave', () => peek.classList.remove('on'));
+    a.addEventListener('focus', () => {
+      const r = a.getBoundingClientRect();
+      show(a, r.right - size().w - 80, r.top + r.height / 2);
     });
-    b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+    a.addEventListener('blur', () => peek.classList.remove('on'));
   });
+  addEventListener('scroll', () => peek.classList.remove('on'), { passive: true });
 }
 
 /* --------------------------------------------------------------- terminal */
@@ -241,6 +261,26 @@ function initTimeline() {
   addEventListener('scroll', update, { passive: true });
   addEventListener('resize', update, { passive: true });
   update();
+}
+
+/* Experience: the side list follows the job being read. */
+function initXp() {
+  const root = $('[data-xp]');
+  if (!root) return;
+  const links = $$('[data-xp-link]', root);
+  const jobs = links.map((a) => document.getElementById(a.getAttribute('href').slice(1)));
+  const spy = raf(() => {
+    let cur = 0;
+    const line = innerHeight * 0.45;
+    jobs.forEach((j, i) => { if (j && j.getBoundingClientRect().top <= line) cur = i; });
+    links.forEach((a, i) => {
+      if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+      a.parentElement.classList.toggle('is-active', i <= cur);
+    });
+  });
+  addEventListener('scroll', spy, { passive: true });
+  addEventListener('resize', spy, { passive: true });
+  spy();
 }
 
 /* --------------------------------------------------------------- carousel */
@@ -637,7 +677,7 @@ function initToc() {
 
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
-  ['totop', initToTop], ['deck', initDeck], ['tilt', initTilt], ['magnetic', initMagnetic],
+  ['totop', initToTop], ['deck', initDeck], ['peek', initPeek], ['xp', initXp],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ProjectRow from '../components/ProjectRow.astro';
 import projects from '../data/projects.json';
 import { categories } from '../data/site.js';
 
@@ -37,10 +37,11 @@ const counts = Object.fromEntries(categories.map((c) => [c.id, c.id === 'all' ? 
         </div>
       </div>
       <p class="result-count" data-work-count aria-live="polite">Showing {projects.length} of {projects.length}</p>
-      <div class="work-grid" data-work-grid>
-        {projects.map((p, i) => <ProjectCard project={p} index={i} searchable />)}
+      <div class="rows" data-work-grid data-rows>
+        {projects.map((p, i) => <ProjectRow project={p} index={i} searchable />)}
       </div>
       <p class="empty" data-work-empty hidden>No project matches that search. Try another word or clear the filter.</p>
     </div>
+    <div class="peek" data-peek-el aria-hidden="true"><div class="peek-in"><img alt="" width="900" height="563" /><p class="peek-cap"></p></div></div>
   </section>
 </Base>

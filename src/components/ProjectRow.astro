@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+// One project as a numbered row. The preview image is not in the page: the script loads it on first hover.
+const { project, index = 0, searchable = false } = Astro.props;
+const label = project.external ? 'View live demo' : 'View demo';
+const cats = project.categories.join(' ');
+const hay = `${project.title} ${project.subtitle} ${project.description} ${project.tags.join(' ')}`.toLowerCase();
+---
+<article class="row" data-card data-cats={cats} data-search={searchable ? hay : undefined} data-title={project.title}>
+  <a
+    class="row-link"
+    href={project.href}
+    target={project.external ? '_blank' : undefined}
+    rel={project.external ? 'noopener' : undefined}
+    data-img={project.image}
+    data-cap={project.subtitle}
+    aria-label={`${label}: ${project.title}${project.external ? ' (opens in a new tab)' : ''}`}
+  >
+    <span class="row-n">{String(index + 1).padStart(2, '0')}</span>
+    <span class="row-main">
+      <h3 class="row-t">{project.title}</h3>
+      <span class="row-s">{project.subtitle}</span>
+    </span>
+    <ul class="row-tags" role="list">
+      {project.tags.slice(0, 3).map((t) => <li>{t}</li>)}
+    </ul>
+    <span class="row-go" aria-hidden="true"><Icon name={project.external ? 'arrow-up-right' : 'arrow-right'} size={22} /></span>
+  </a>
+</article>

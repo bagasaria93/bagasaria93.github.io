@@ -4,6 +4,7 @@ import Icon from '../../components/Icon.astro';
 import ApprovalWidget from '../../components/ApprovalWidget.astro';
 import SafeSendWidget from '../../components/SafeSendWidget.astro';
 
+const departments = ['Sales', 'Procurement', 'Warehouse', 'PPC and MRP', 'Production', 'QC', 'Delivery', 'Finance', 'HRD', 'Production Engineering', 'Maintenance', 'General Affairs'];
 const toc = [
   ['scope', 'Scope'],
   ['access', 'Access control'],
@@ -25,7 +26,7 @@ const toc = [
   <section class="page-head">
     <div class="container">
       <p class="eyebrow"><Icon name="layers" /> Case study</p>
-      <h1 class="page-title">A manufacturing ERP for 12 departments</h1>
+      <h1 class="page-title" style="view-transition-name: case-erp">A manufacturing ERP for 12 departments</h1>
       <p class="page-lead">One developer, one production system, built end to end: access control, approvals, material planning, quality inspection and a connection to an accounting system that is designed to fail safe. This page explains the problems and the decisions. Company data and screens are intentionally not shown.</p>
       <dl class="facts" style="max-width:46rem">
         <div><dt><Icon name="user" size={14} />Role</dt><dd>Sole developer</dd></div>
@@ -48,6 +49,9 @@ const toc = [
           <h2><Icon name="compass" /> Scope</h2>
           <p>The system covers Sales, Procurement, Warehouse, PPC and MRP, Production, QC, Delivery, Finance, HRD, Production Engineering, Maintenance and General Affairs. Orders flow from sales order to delivery note, invoice and payment, while purchasing flows from purchase request to purchase order and goods receipt.</p>
           <p>The database holds more than 100 tables. Every department has its own screens and its own approval chain.</p>
+          <ul class="dept" role="list" aria-label="The twelve departments the system covers">
+            {departments.map((d, i) => <li style={`--i:${i}`}><span>{String(i + 1).padStart(2, '0')}</span>{d}</li>)}
+          </ul>
         </section>
 
         <section id="access">

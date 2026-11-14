@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ProjectRow from '../components/ProjectRow.astro';
 import projects from '../data/projects.json';
 import { profile, stats, ticker, experience, skills, education, certifications, testimonials } from '../data/site.js';
 
@@ -147,24 +147,30 @@ const plates = [
   <!-- Selected work -->
   <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0">
     <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow"><Icon name="folder" /> Selected work</p>
-        <h2 class="section-title" id="work-title">Working software, <mark>not mockups</mark></h2>
-        <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Each one is designed, built and shipped by me.</p>
-      </div>
-      <div class="bento">
-        {featured.map((p, i) => <div class="reveal" style={`--i:${i % 3}`}><ProjectCard project={p} index={i} /></div>)}
-        <div class="reveal" style="--i:1">
-          <div class="cta-tile">
-            <div>
-              <h3>{projects.length} projects, all open to try</h3>
-              <p>Filter by type or search by technology: business systems, web tools, data and AI, mobile and PWA, and websites.</p>
-            </div>
-            <a class="btn" href="/work/">Browse all projects <Icon name="arrow-right" /></a>
-          </div>
+      <div class="work-head reveal">
+        <div class="section-head">
+          <p class="eyebrow"><Icon name="folder" /> Selected work</p>
+          <h2 class="section-title" id="work-title">Working software, <mark>not mockups</mark></h2>
+          <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Each one is designed, built and shipped by me. Point at a row to preview it.</p>
         </div>
+        <p class="work-count" aria-hidden="true">{projects.length}<small>projects you can open</small></p>
+      </div>
+      <div class="rows reveal" data-rows>
+        {featured.map((p, i) => <ProjectRow project={p} index={i} />)}
+        <article class="row row--all">
+          <a class="row-link" href="/work/" aria-label={`Browse all ${projects.length} projects`}>
+            <span class="row-n">+{projects.length - featured.length}</span>
+            <span class="row-main">
+              <h3 class="row-t">Browse all {projects.length} projects</h3>
+              <span class="row-s">Filter by type or search by technology: business systems, web tools, data and AI, mobile and PWA, and websites.</span>
+            </span>
+            <span></span>
+            <span class="row-go" aria-hidden="true"><Icon name="arrow-right" size={22} /></span>
+          </a>
+        </article>
       </div>
     </div>
+    <div class="peek" data-peek-el aria-hidden="true"><div class="peek-in"><img alt="" width="900" height="563" /><p class="peek-cap"></p></div></div>
   </section>
 
   <!-- Case studies -->
@@ -179,7 +185,7 @@ const plates = [
         <article class="case-card reveal">
           <span class="big" aria-hidden="true">12</span>
           <small>Manufacturing</small>
-          <h3>ERP for 12 departments</h3>
+          <h3 style="view-transition-name: case-erp">ERP for 12 departments</h3>
           <p>Access control, multi-level approvals, material planning, quality inspection and a fail-safe connection to an accounting system. Includes an interactive approval demo.</p>
           <ul class="tags" role="list"><li class="tag">Laravel</li><li class="tag">MySQL</li><li class="tag">REST API</li><li class="tag">OAuth 2.0</li></ul>
           <a class="link-arrow" href="/case-study/erp/"><span>Read the ERP case study</span><Icon name="arrow-right" size={16} /></a>
@@ -187,7 +193,7 @@ const plates = [
         <article class="case-card reveal" style="--i:1">
           <span class="big" aria-hidden="true">3</span>
           <small>HR and service</small>
-          <h3>Aftercare, booking and HRIS</h3>
+          <h3 style="view-transition-name: case-rainbrow">Aftercare, booking and HRIS</h3>
           <p>Three applications built end to end for a service company: an aftercare platform for ratings and follow-up, a QR booking platform with a customer points program, and an HR information system.</p>
           <ul class="tags" role="list"><li class="tag">CodeIgniter 3</li><li class="tag">MySQL</li><li class="tag">Bootstrap</li><li class="tag">Tailwind CSS</li></ul>
           <a class="link-arrow" href="/case-study/rainbrow/"><span>Read the Rainbrow case study</span><Icon name="arrow-right" size={16} /></a>
@@ -203,20 +209,29 @@ const plates = [
         <p class="eyebrow"><Icon name="briefcase" /> Experience</p>
         <h2 class="section-title" id="exp-title">Where I have <mark>built things</mark></h2>
       </div>
-      <div class="timeline" data-timeline>
-        <span class="timeline-fill" aria-hidden="true"></span>
-        {experience.map((j) => (
-          <article class="job reveal" data-job>
-            <div>
-              <p class="job-period"><Icon name="calendar" /> {j.period}</p>
-              <h3>{j.title}</h3>
-              <p class="job-org"><Icon name="building" /> {j.org}</p>
-              <p class="job-meta"><Icon name="map-pin" /> {j.meta}</p>
-              <p class="job-stack">{j.stack}</p>
-            </div>
-            <ul role="list">{j.points.map((p) => <li>{p}</li>)}</ul>
-          </article>
-        ))}
+      <div class="xp" data-timeline data-xp>
+        <nav class="xp-nav" aria-label="Jobs">
+          <span class="timeline-fill" aria-hidden="true"></span>
+          <ol role="list">
+            {experience.map((j, i) => (
+              <li><a href={`#job-${i}`} data-xp-link><small>{j.period}</small><b>{j.org}</b></a></li>
+            ))}
+          </ol>
+        </nav>
+        <div class="xp-list">
+          {experience.map((j, i) => (
+            <article class="job reveal" id={`job-${i}`} data-job>
+              <div class="job-head">
+                <p class="job-period"><Icon name="calendar" /> {j.period}</p>
+                <h3>{j.title}</h3>
+                <p class="job-org"><Icon name="building" /> {j.org}</p>
+                <p class="job-meta"><Icon name="map-pin" /> {j.meta}</p>
+                <p class="job-stack">{j.stack}</p>
+              </div>
+              <ul role="list">{j.points.map((p) => <li>{p}</li>)}</ul>
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   </section>
