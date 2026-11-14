@@ -137,8 +137,18 @@
     color: #fff; mix-blend-mode: difference; view-transition-name: site-header;
   }
   .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .brand { display: inline-flex; align-items: baseline; gap: 0.7rem; text-decoration: none; white-space: nowrap; }
-  .brand-mark { font-family: var(--font-display); font-weight: 900; font-size: 1.2rem; letter-spacing: -0.06em; font-stretch: calc(112% + var(--wd, 0%)); }
+  .brand { display: inline-flex; align-items: center; gap: 0.8rem; text-decoration: none; white-space: nowrap; }
+  /* The BAS wordmark is two alpha masks: the letters take the current colour, the green blade has a colour of its own. */
+  .logo { position: relative; display: block; flex: none; height: var(--logo-h, 1.5rem); aspect-ratio: 1443 / 316; }
+  .logo i { position: absolute; inset: 0; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
+  .logo .lg-l { background: currentColor; -webkit-mask-image: url(/assets/img/logo-letters.png); mask-image: url(/assets/img/logo-letters.png); }
+  .logo .lg-a { background: var(--logo-acc, #03d457); -webkit-mask-image: url(/assets/img/logo-accent.png); mask-image: url(/assets/img/logo-accent.png); }
+  /* The header is blended with "difference", which inverts what is behind it. The blade is pre-compensated so it lands on
+     green over dark sections and a deeper green over paper. JS sets data-tone from the surface under the logo. */
+  .site-header .logo { --logo-acc: #fff; }
+  html[data-tone="dark"] .site-header .logo { --logo-acc: #03d457; }
+  html[data-tone="light"] .site-header .logo { --logo-acc: #ec499a; }
+  html:has(.menu-toggle[aria-expanded="true"]) .site-header .logo { --logo-acc: #03d457; }
   .brand-text { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
   .nav { display: flex; align-items: center; gap: 0.15rem; }
   .nav a {
@@ -253,22 +263,22 @@
   .idedge.l { transform: rotateY(-90deg) translateZ(calc(var(--w) / 2)); }
   .idface.front { background: var(--paper-2); color: var(--ink); display: flex; flex-direction: column; }
   .idface.back { background: var(--night-2); color: var(--frost); border: 1px solid color-mix(in srgb, var(--lime) calc(0.5 * 100%), transparent); display: flex; flex-direction: column; }
-  .idtop { display: flex; justify-content: space-between; align-items: baseline; padding: 3cqw 3.6cqw 2.2cqw; font-family: var(--font-mono); font-size: 2.2cqw; letter-spacing: 0.07em; text-transform: uppercase; }
-  .idtop b { font-family: var(--font-display); font-weight: 900; font-size: 3.4cqw; letter-spacing: -0.06em; text-transform: none; }
+  .idtop { display: flex; justify-content: space-between; align-items: baseline; padding: 3cqw 3.6cqw 2.2cqw; font-family: var(--font-mono); font-size: max(9px, 2.2cqw); letter-spacing: 0.07em; text-transform: uppercase; }
+  .idtop .logo { --logo-h: 4.4cqw; --logo-acc: #00a24b; color: var(--ink); align-self: center; }
   .idphoto { margin-inline: 3.6cqw; flex: 1 1 0; min-height: 0; background: #fff; border: 1px solid rgba(17, 18, 24, 0.2); overflow: hidden; }
   .idphoto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; }
   .idname { padding: 3cqw 3.6cqw 0; font-family: var(--font-display); font-weight: 900; font-size: 5.6cqw; line-height: 0.95; letter-spacing: -0.05em; }
-  .idrole { padding: 1cqw 3.6cqw 0; font-family: var(--font-mono); font-size: 2.2cqw; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+  .idrole { padding: 1cqw 3.6cqw 0; font-family: var(--font-mono); font-size: max(9px, 2.2cqw); letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
   .idbar { margin: 3cqw 3.6cqw; height: 6cqw; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px, var(--ink) 8px 11px, transparent 11px 13px); }
   .idsheen { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.22; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 255, 255, 0.9), transparent 48%), conic-gradient(from var(--ga, 0deg) at 50% 50%, #ff9ae2, #7ae8ff, #b9c7ff, #ffd27a, #ff9ae2); }
   .idclip { position: absolute; left: 50%; top: -6.5cqw; width: 8cqw; height: 8.5cqw; margin-left: -4cqw; background: #2a2f3c; border-radius: 1.2cqw 1.2cqw 0.4cqw 0.4cqw; transform: translateZ(calc(var(--t) / 2)); }
   .idback { padding: 4.4cqw 4.2cqw; display: flex; flex-direction: column; gap: 0.5rem; height: 100%; }
-  .idback .k { font-family: var(--font-mono); font-size: 2.2cqw; letter-spacing: 0.08em; text-transform: uppercase; color: var(--frost-2); }
+  .idback .k { font-family: var(--font-mono); font-size: max(9px, 2.2cqw); letter-spacing: 0.08em; text-transform: uppercase; color: var(--frost-2); }
   .idback h2 { font-size: 6.6cqw; line-height: 1; letter-spacing: -0.05em; color: var(--lime); margin-bottom: 1.4cqw; }
   .idback dl { display: grid; }
   .idback dl > div { padding: 2.4cqw 0; border-top: 1px solid rgba(233, 236, 242, 0.2); }
-  .idback dt { font-family: var(--font-mono); font-size: 2cqw; letter-spacing: 0.08em; text-transform: uppercase; color: var(--frost-2); }
-  .idback dd { margin: 0.4cqw 0 0; font-family: var(--font-display); font-weight: 700; font-size: 3.5cqw; line-height: 1.3; letter-spacing: -0.02em; }
+  .idback dt { font-family: var(--font-mono); font-size: max(9px, 2cqw); letter-spacing: 0.08em; text-transform: uppercase; color: var(--frost-2); }
+  .idback dd { margin: 0.4cqw 0 0; font-family: var(--font-display); font-weight: 700; font-size: max(11px, 3.5cqw); line-height: 1.3; letter-spacing: -0.02em; }
   .idback a { text-underline-offset: 3px; }
   .idflip { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--frost-2); border: 1px solid var(--line); padding: 0.5rem 0.9rem; transition: background var(--dur-2), color var(--dur-2), border-color var(--dur-2); }
   .idflip:hover, .idflip:focus-visible { background: var(--lime); color: var(--night); border-color: var(--lime); }
@@ -286,7 +296,7 @@
   .dtile:hover .glare, .dtile:focus-visible .glare { opacity: 1; }
   .dtile .z { position: absolute; pointer-events: none; }
   .dtile .z.lbl { left: -10px; bottom: 22px; max-width: 90%; background: var(--ink); color: var(--paper); padding: 0.5rem 0.8rem; font-family: var(--font-display); font-weight: 850; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.35rem); line-height: 1.05; letter-spacing: -0.04em; transform: translateZ(70px); }
-  .dtile .z.chip { right: 14px; top: 14px; background: var(--signal); color: var(--ink); padding: 0.25rem 0.55rem; font-family: var(--font-mono); font-weight: 700; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; transform: translateZ(105px); }
+  .dtile .z.chip { right: 14px; top: 14px; background: var(--signal); color: var(--ink); padding: 0.25rem 0.55rem; font-family: var(--font-mono); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; transform: translateZ(105px); }
   .dtile .z.num { left: 14px; top: 8px; color: #fff; font-family: var(--font-display); font-weight: 900; font-size: clamp(3.4rem, 2rem + 4vw, 6.2rem); line-height: 1; letter-spacing: -0.07em; text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); transform: translateZ(60px); }
   .dtile .z.num small { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 0.2rem; }
   .dtile .z.mini { width: 46%; aspect-ratio: 1.6; border: var(--hair) solid var(--ink); background: #fff; overflow: hidden; }
@@ -551,7 +561,7 @@
   .site[hidden] { display: none; }
   .site-link { display: block; text-decoration: none; }
   .site-frame { overflow: hidden; border-bottom: 1px solid var(--line); }
-  .site-bar { display: flex; align-items: center; gap: 6px; padding: 0.5rem 0.7rem; background: var(--night); border-bottom: 1px solid var(--line-soft); font-family: var(--font-mono); font-size: 0.66rem; color: var(--frost-2); }
+  .site-bar { display: flex; align-items: center; gap: 6px; padding: 0.5rem 0.7rem; background: var(--night); border-bottom: 1px solid var(--line-soft); font-family: var(--font-mono); font-size: 0.72rem; color: var(--frost-2); }
   .site-bar i { width: 8px; height: 8px; border: 1px solid var(--line); border-radius: 50%; flex: none; }
   .site-bar span { margin-left: 0.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   /* The screenshot is taller than its window: on hover it scrolls, as if the page were being read. */
@@ -582,7 +592,7 @@
   .belt-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
   .belt-card span { display: grid; padding: 0.65rem 0.85rem 0.8rem; border-top: 1px solid var(--line-soft); }
   .belt-card b { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em; font-size: 1rem; }
-  .belt-card small { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--frost-2); }
+  .belt-card small { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--frost-2); }
   .belt-card:hover, .belt-card:focus-visible { transform: translateY(-6px); border-color: var(--lime); }
   .belts-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2.2rem; }
   /* Brief builder: option chips that are real checkboxes and radios underneath. */
@@ -835,6 +845,11 @@
   @media (max-width: 860px) {
     .nav, .kbd-hint { display: none; }
     .menu-toggle { display: grid; }
+    /* Over body copy the blended header turns the wordmark into noise, so on small screens it becomes a bar that follows the surface. */
+    html[data-tone] .site-header { mix-blend-mode: normal; color: var(--ink); background: color-mix(in srgb, var(--paper-2) 92%, transparent); border-bottom: 1px solid var(--line-soft); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    html[data-tone="dark"] .site-header, html[data-tone]:has(.menu-toggle[aria-expanded="true"]) .site-header { color: var(--frost); background: color-mix(in srgb, var(--night) 90%, transparent); border-bottom-color: rgba(233, 236, 242, 0.12); }
+    html[data-tone="light"] .site-header .logo { --logo-acc: #00a24b; }
+    html[data-tone="light"] .progress i { background: var(--signal); }
     .mobile-menu {
       display: block; position: fixed; inset: 0; z-index: 40; padding: calc(var(--header-h) + 1rem) var(--gutter) 2rem; background: var(--night); color: var(--frost); overflow-y: auto;
       clip-path: circle(0 at calc(100% - 40px) 32px); visibility: hidden; transition: clip-path var(--dur-3) var(--ease), visibility 0s linear var(--dur-3);
@@ -848,6 +863,15 @@
     .work-count { text-align: left; font-size: clamp(4.5rem, 24vw, 8rem); }
     .work-count small { text-align: left; }
     .page-head::after { opacity: 0.35; }
+  }
+  /* A narrow screen gets a wider card, so the back of it still holds its text at a readable size. */
+  @media (max-width: 480px) {
+    .idcard { --w: 80cqw; }
+    .idback dl > div { padding-block: 1.7cqw; }
+  }
+  @media (pointer: coarse) {
+    .brand, .link-arrow, .footer-top { min-height: 44px; }
+    .dock-btn[data-keys-open] { display: none; }
   }
   @media (max-width: 640px) {
     .skills-bento { grid-template-columns: 1fr; }

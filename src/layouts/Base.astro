@@ -73,6 +73,7 @@ const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: profile.name,
+  honorificSuffix: 'S.Kom.',
   jobTitle: profile.role,
   email: profile.email,
   url: profile.site,
@@ -94,7 +95,9 @@ const jsonLd = JSON.stringify({
     {alt && <link rel="alternate" hreflang={locale} href={canonical} />}
     {alt && <link rel="alternate" hreflang={alt.lang} href={altUrl} />}
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="icon" href="/assets/img/favicon.svg?v=3" type="image/svg+xml" />
+    <link rel="icon" href="/assets/img/favicon-32.png?v=4" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/assets/img/favicon-48.png?v=4" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=4" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Bagas Aria Sativa Portfolio" />
     <meta property="og:title" content={title} />
@@ -111,7 +114,7 @@ const jsonLd = JSON.stringify({
     <header class="site-header" data-css="position mix-blend-mode view-transition-name">
       <div class="container header-inner">
         <a class="brand" href="/" aria-label={`${profile.name}, home`}>
-          <span class="brand-mark">B.A.S</span>
+          <span class="logo" aria-hidden="true"><i class="lg-l"></i><i class="lg-a"></i></span>
           <span class="brand-text">Full-Stack Developer</span>
         </a>
         <nav class="nav" aria-label="Primary">

@@ -83,7 +83,7 @@ export const education = [
     note: 'GPA 3.85/4.00 (after first semester)',
   },
   {
-    degree: 'Bachelor of Information Technology',
+    degree: 'Bachelor of Information Technology (S.Kom.)',
     school: 'Universitas Bina Sarana Informatika',
     period: '2020 to 2025',
     note: 'GPA 3.95/4.00, Cum Laude. Thesis: Web-Based Payroll Information System Using CodeIgniter 3 and Waterfall SDLC to Improve HR Operational Efficiency at PT Beauty Abadi Utama.',

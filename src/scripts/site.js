@@ -87,6 +87,25 @@ function initNav() {
   spy();
 }
 
+/* The header logo needs to know whether it sits on a dark or a light surface (see .logo in the CSS). */
+function initTone() {
+  const logo = $('.site-header .logo');
+  if (!logo) return;
+  const root = document.documentElement;
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const r = logo.getBoundingClientRect();
+    const under = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2).find((el) => !el.closest('.site-header, .mobile-menu'));
+    const tone = under && under.closest('.dark') ? 'dark' : 'light';
+    if (root.dataset.tone !== tone) root.dataset.tone = tone;
+  };
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  update();
+}
+
 function initMenu() {
   const btn = $('.menu-toggle');
   const menu = $('#mobile-menu');
@@ -888,7 +907,7 @@ function initToc() {
 }
 
 [
-  ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
+  ['header', initHeader], ['nav', initNav], ['tone', initTone], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
   ['totop', initToTop], ['card', initCard], ['tiles', initTiles], ['peek', initPeek], ['xp', initXp], ['sites', initSites], ['lab', initLab], ['xray', initXray], ['keys', initKeys],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
