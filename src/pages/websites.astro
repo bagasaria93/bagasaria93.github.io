@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import sites from '../data/websites.json';
+import { profile } from '../data/site.js';
+---
+<Base
+  title="Company profile websites by industry | Bagas Aria Sativa"
+  description="Fifteen live company profile websites, one per industry: gym, restaurant, clinic, workshop, school, manufacturing and more. Open any of them to see what a website for your business could look like."
+  path="/websites/"
+  current="websites"
+>
+  <!-- Hero -->
+  <section class="sites-hero dark" aria-labelledby="sites-title">
+    <div class="container sites-hero-inner">
+      <div>
+        <p class="eyebrow"><Icon name="globe" /> Company profile websites</p>
+        <h1 class="sites-title" id="sites-title">Pick your industry.<em>See the website.</em></h1>
+        <p class="hero-lead">Fifteen full company profile websites, one per industry, each running live. Open the one closest to your business and click through it like a visitor would, before we build the real thing together.</p>
+        <div class="hero-cta">
+          <a class="btn btn--primary" href="/?brief=website#contact">Plan my website <Icon name="arrow-right" /></a>
+          <a class="btn btn--ghost" href="/for-business/"><Icon name="building" /> For business owners</a>
+        </div>
+      </div>
+      <p class="work-count" aria-hidden="true">{sites.length}<small>industries, one live demo each</small></p>
+    </div>
+  </section>
+
+  <!-- Wall -->
+  <section class="sites-wall dark" aria-label="Website demos">
+    <div class="container">
+      <div class="sites-tools">
+        <div class="search">
+          <Icon name="search" size={16} />
+          <label class="visually-hidden" for="sites-search">Search industries</label>
+          <input id="sites-search" type="search" placeholder="Search by industry or name" autocomplete="off" data-sites-search />
+        </div>
+        <p class="result-count" data-sites-count aria-live="polite">Showing {sites.length} of {sites.length}</p>
+      </div>
+      <div class="wall" data-wall>
+        {sites.map((s, i) => (
+          <article class="site" data-site data-search={`${s.industry} ${s.name} ${s.features}`.toLowerCase()}>
+            <a class="site-link" href={s.href} aria-label={`Open the ${s.industry} demo: ${s.name}`}>
+              <div class="site-frame">
+                <div class="site-bar" aria-hidden="true"><i></i><i></i><i></i><span>{s.href}</span></div>
+                <img src={s.image} width={s.width} height={s.height} alt={`Preview of ${s.name}, ${s.industry} company profile`} loading="lazy" decoding="async" />
+              </div>
+              <div class="site-meta">
+                <span class="site-n">{String(i + 1).padStart(2, '0')} / {s.industry}</span>
+                <h2 class="site-t">{s.name}</h2>
+                <p class="site-d">{s.features}</p>
+                <span class="site-go">Open demo <Icon name="arrow-up-right" size={16} /></span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+      <p class="empty" data-sites-empty hidden>No industry matches that search. Try another word, or send me a message about yours.</p>
+    </div>
+  </section>
+
+  <!-- What every demo is built from -->
+  <section class="section" aria-labelledby="inc-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow"><Icon name="check" /> What you get</p>
+        <h2 class="section-title" id="inc-title">A website built around <mark>your business</mark></h2>
+        <p class="section-lead">Not a generic template. Each demo above was designed for its industry, and yours would be designed for you.</p>
+      </div>
+      <div class="inc reveal">
+        <div><span class="inc-n">01</span><h3>Pages that fit</h3><p>Home, about, and services or product pages built around your business, not a generic template.</p></div>
+        <div><span class="inc-n">02</span><h3>Ways to reach you</h3><p>Photo gallery, pricing section and a contact form or a direct WhatsApp button.</p></div>
+        <div><span class="inc-n">03</span><h3>Made for phones</h3><p>Looks good and works properly on phones, since that is how most customers will find you.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing call -->
+  <section class="section dark" aria-labelledby="sites-cta">
+    <div class="container sites-cta">
+      <div class="reveal">
+        <h2 class="contact-big" id="sites-cta">Not sure what you <em>need</em>?</h2>
+        <p class="section-lead">Send a message describing your business and how you currently manage it. I will give you an honest answer on what would actually help, along with a price and timeline, before you decide anything.</p>
+      </div>
+      <div class="contact-list reveal" style="--i:2;margin-top:0">
+        <a class="contact-row" href={profile.whatsapp} rel="noopener" target="_blank">
+          <div class="lead"><Icon name="whatsapp" /><div><small>WhatsApp</small><span>{profile.phone}</span></div></div>
+          <Icon name="arrow-up-right" />
+        </a>
+        <a class="contact-row" href="/?brief=website#contact">
+          <div class="lead"><Icon name="mail" /><div><small>Email brief</small><span>Plan my website</span></div></div>
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

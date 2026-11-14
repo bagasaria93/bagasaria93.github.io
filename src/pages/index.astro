@@ -28,6 +28,11 @@ const social = [
   { icon: 'whatsapp', label: 'WhatsApp', href: profile.whatsapp },
   { icon: 'mail', label: 'Email', href: `mailto:${profile.email}` },
 ];
+import sites from '../data/websites.json';
+const briefKinds = ['Company profile website', 'Cashier and POS', 'Booking and reservation', 'HR and payroll', 'Manufacturing and ERP', 'Customer management (CRM)', 'WhatsApp and email blast', 'Something else'];
+const briefWhen = ['As soon as possible', 'Within a month', 'In 2 to 3 months', 'Just exploring'];
+const beltA = sites;
+const beltB = [...sites].reverse();
 /* Five plates, back (0) to front (4). Each is a link to the part of the page it stands for. */
 const plates = [
   { i: 0, layer: 'contact', name: 'data', go: 'Contact', href: '#contact' },
@@ -171,6 +176,44 @@ const plates = [
       </div>
     </div>
     <div class="peek" data-peek-el aria-hidden="true"><div class="peek-in"><img alt="" width="900" height="563" /><p class="peek-cap"></p></div></div>
+  </section>
+
+  <!-- Company profile websites: two belts of live demos moving in opposite directions -->
+  <section class="section dark sites-home" id="websites" aria-labelledby="sites-title">
+    <div class="container">
+      <div class="work-head reveal">
+        <div class="section-head">
+          <p class="eyebrow"><Icon name="globe" /> Websites for business</p>
+          <h2 class="section-title" id="sites-title">Fifteen industries, <mark>fifteen live websites</mark></h2>
+          <p class="section-lead">Company profile websites for gyms, restaurants, clinics, workshops, schools, factories and more. Every one runs live, so you can click through it before we build yours.</p>
+        </div>
+        <p class="work-count" aria-hidden="true">{sites.length}<small>industries, one demo each</small></p>
+      </div>
+    </div>
+    <div class="belts" aria-label="Website demos by industry">
+      {[beltA, beltB].map((list, row) => (
+        <div class={`belt ${row ? 'belt--rev' : ''}`}>
+          <div class="belt-track">
+            {[0, 1].map((copy) => (
+              <ul class="belt-group" role="list" aria-hidden={copy ? 'true' : undefined}>
+                {list.map((s) => (
+                  <li>
+                    <a class="belt-card" href={s.href} tabindex={copy ? -1 : undefined}>
+                      <img src={s.image} width={s.width} height={s.height} alt={copy ? '' : `Preview of ${s.name}, ${s.industry} company profile`} loading="lazy" decoding="async" />
+                      <span><b>{s.name}</b><small>{s.industry}</small></span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="container belts-cta">
+      <a class="btn btn--primary" href="/websites/">See all {sites.length} websites <Icon name="arrow-right" /></a>
+      <a class="btn btn--ghost" href="/?brief=website#contact">Plan my website <Icon name="mail" /></a>
+    </div>
   </section>
 
   <!-- Case studies -->
@@ -345,13 +388,29 @@ const plates = [
             <span class="error" id="e-email"></span>
           </div>
         </div>
+        <fieldset class="brief">
+          <legend>What do you need?</legend>
+          <div class="opts">
+            {briefKinds.map((k) => (
+              <label class="opt"><input type="checkbox" name="kind" value={k} /><span>{k}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset class="brief">
+          <legend>When do you need it?</legend>
+          <div class="opts">
+            {briefWhen.map((w) => (
+              <label class="opt"><input type="radio" name="when" value={w} /><span>{w}</span></label>
+            ))}
+          </div>
+        </fieldset>
         <div class="field">
           <label for="f-msg"><Icon name="quote" /> Message</label>
           <textarea id="f-msg" name="message" required aria-describedby="e-msg"></textarea>
           <span class="error" id="e-msg"></span>
         </div>
         <button class="btn btn--primary" type="submit"><Icon name="send" /> Send message</button>
-        <p class="form-note">This opens your email app in a new tab with the message filled in. Nothing is stored on this site.</p>
+        <p class="form-note">Your choices are written into the email for you. It opens your email app in a new tab, and nothing is stored on this site.</p>
       </form>
     </div>
   </section>

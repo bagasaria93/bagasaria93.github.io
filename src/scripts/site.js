@@ -70,7 +70,7 @@ function initNav() {
   const links = $$('a', nav);
   const isHome = document.body.dataset.page === 'home';
   if (!isHome) return;
-  const ids = ['work', 'case', 'experience', 'skills', 'contact'];
+  const ids = ['work', 'websites', 'case', 'experience', 'skills', 'contact'];
   const sections = ids.map((id) => ({ id, el: document.getElementById(id) })).filter((s) => s.el);
   const layerEls = $$('[data-layer]');
   let current = '';
@@ -485,10 +485,45 @@ function initContact() {
     const name = document.getElementById('f-name').value.trim();
     const from = document.getElementById('f-email').value.trim();
     const msg = document.getElementById('f-msg').value.trim();
-    const subject = encodeURIComponent(`Portfolio message from ${name}`);
-    const body = encodeURIComponent(`${msg}\n\n${name}\n${from}`);
+    // The brief builder: the chosen options become structured lines at the top of the email.
+    const kinds = $$('input[name="kind"]:checked', form).map((i) => i.value);
+    const when = ($('input[name="when"]:checked', form) || {}).value;
+    const lines = ['Hi Bagas,', ''];
+    if (kinds.length) lines.push(`I would like to talk about: ${kinds.join(', ')}.`);
+    if (when) lines.push(`Timing: ${when}.`);
+    if (kinds.length || when) lines.push('');
+    lines.push(msg, '', 'Thanks,', name, from);
+    const subject = encodeURIComponent(kinds.length ? `${kinds[0]}${kinds.length > 1 ? ' and more' : ''}: message from ${name}` : `Portfolio message from ${name}`);
+    const body = encodeURIComponent(lines.join('\n'));
     toast('Opening your email app in a new tab');
     window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank', 'noopener');
+  });
+  // Links like /?brief=website#contact arrive with the right option already ticked.
+  const preset = { website: 'Company profile website' }[new URLSearchParams(location.search).get('brief')];
+  if (preset) {
+    const box = $$('input[name="kind"]', form).find((i) => i.value === preset);
+    if (box) box.checked = true;
+  }
+}
+
+/* ------------------------------------------------- company profile gallery */
+function initSites() {
+  const input = $('[data-sites-search]');
+  const wall = $('[data-wall]');
+  if (!input || !wall) return;
+  const items = $$('[data-site]', wall);
+  const count = $('[data-sites-count]');
+  const empty = $('[data-sites-empty]');
+  input.addEventListener('input', () => {
+    const words = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    items.forEach((el) => {
+      const ok = words.every((w) => el.dataset.search.includes(w));
+      el.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = `Showing ${shown} of ${items.length}`;
+    empty.hidden = shown !== 0;
   });
 }
 
@@ -677,7 +712,7 @@ function initToc() {
 
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
-  ['totop', initToTop], ['deck', initDeck], ['peek', initPeek], ['xp', initXp],
+  ['totop', initToTop], ['deck', initDeck], ['peek', initPeek], ['xp', initXp], ['sites', initSites],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));
