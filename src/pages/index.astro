@@ -16,7 +16,6 @@ const termLines = [
   { k: 'out', t: '19 to open, 2 in production' },
 ];
 const skillIcons = { Backend: 'server', Frontend: 'layout', Data: 'database', Integration: 'plug', Delivery: 'rocket', Practice: 'compass' };
-const statIcons = ['folder', 'code', 'building', 'clock'];
 const layers = [
   { icon: 'layout', name: 'Frontend', text: 'React, Next.js, JavaScript, TypeScript, Tailwind CSS' },
   { icon: 'server', name: 'Backend', text: 'Laravel, PHP, CodeIgniter, Node.js, Python' },
@@ -29,99 +28,81 @@ const social = [
   { icon: 'whatsapp', label: 'WhatsApp', href: profile.whatsapp },
   { icon: 'mail', label: 'Email', href: `mailto:${profile.email}` },
 ];
-
-/* The diorama. Units are tiles on a 12 x 12 ground plate; h is height, z is the base height.
-   Each building stands for something I actually built, and links to where it is explained. */
-const blocks = [
-  { cls: 'blk--ground', x: 0, y: 0, w: 12, d: 12, h: 0.45, z: -0.45 },
-  // tower: HR information system
-  { c: 'purple', cls: 'wins wins--tall', x: 1, y: 1, w: 1.8, d: 1.8, h: 5 },
-  { c: 'green', x: 1.5, y: 1.5, w: 0.8, d: 0.8, h: 0.9, z: 5 },
-  // aftercare building
-  { c: 'orange', cls: 'wins', x: 7.4, y: 1.2, w: 2.6, d: 2.6, h: 2.4 },
-  { c: 'yellow', x: 8, y: 1.8, w: 1.4, d: 1.4, h: 0.5, z: 2.4 },
-  { c: 'purple', x: 7.4, y: 3.8, w: 2.6, d: 0.5, h: 0.22, z: 1.1 },
-  // QR booking kiosk
-  { c: 'green', cls: 'wins qr', x: 4.2, y: 2.6, w: 1.8, d: 1.8, h: 2 },
-  // ERP factory
-  { c: 'blue', cls: 'wins', x: 1.2, y: 5.5, w: 4.6, d: 3.2, h: 1.8 },
-  { c: 'purple', x: 1.6, y: 5.9, w: 0.6, d: 0.6, h: 1.6, z: 1.8 },
-  { c: 'yellow', x: 2.7, y: 5.9, w: 1.1, d: 2.4, h: 0.45, z: 1.8 },
-  { c: 'yellow', x: 4.2, y: 5.9, w: 1.1, d: 2.4, h: 0.45, z: 1.8 },
-  { cls: 'puff', x: 1.7, y: 6, w: 0.45, d: 0.45, h: 0.45, z: 3.4, n: 0 },
-  { cls: 'puff', x: 1.7, y: 6, w: 0.45, d: 0.45, h: 0.45, z: 3.4, n: 1 },
-  { cls: 'puff', x: 1.7, y: 6, w: 0.45, d: 0.45, h: 0.45, z: 3.4, n: 2 },
-  // warehouse: material planning
-  { c: 'yellow', cls: 'stripes', x: 6.4, y: 6.4, w: 4.2, d: 2.8, h: 1.3 },
-  { c: 'orange', x: 7.2, y: 9.2, w: 1.1, d: 0.2, h: 0.9, z: 0 },
-  // trees
-  ...[[0.5, 3.6], [10.7, 4.4], [0.6, 10.3], [10.9, 10.6], [3.3, 0.7], [6.5, 0.6], [6.1, 10.4]].flatMap(([x, y]) => [
-    { cls: 'trunk', x: x + 0.32, y: y + 0.32, w: 0.26, d: 0.26, h: 0.55 },
-    { c: 'green', cls: 'tree', x, y, w: 0.9, d: 0.9, h: 0.85, z: 0.55 },
-  ]),
+/* Five plates, back (0) to front (4). Each is a link to the part of the page it stands for. */
+const plates = [
+  { i: 0, layer: 'contact', name: 'data', go: 'Contact', href: '#contact' },
+  { i: 1, layer: 'skills', name: 'backend', go: 'Skills', href: '#skills' },
+  { i: 2, layer: 'experience', name: 'integration', go: 'Experience', href: '#experience' },
+  { i: 3, layer: 'case', name: 'logic', go: 'Case studies', href: '#case' },
+  { i: 4, layer: 'work', name: 'interface', go: 'Work', href: '#work' },
 ];
-const pins = [
-  { c: 'blue', t: 'ERP', s: '12 departments', href: '/case-study/erp/', x: 3.5, y: 7.1, z: 2.9 },
-  { c: 'orange', t: 'Aftercare', s: 'ratings + follow-up', href: '/case-study/rainbrow/', x: 9.5, y: 1.5, z: 3.9 },
-  { c: 'purple', t: 'HRIS', s: 'attendance + payroll', href: '/case-study/rainbrow/', x: 1.9, y: 1.9, z: 6.5 },
-  { c: 'green', t: 'Booking', s: 'QR + points', href: '/case-study/rainbrow/', x: 4.7, y: 4.3, z: 2.6 },
-  { c: 'yellow', t: 'MRP', s: 'material planning', href: '/case-study/erp/#planning', x: 8.5, y: 7.8, z: 2.4 },
-];
-const ring = 'Open to remote and onsite roles • ';
-const ringChars = Array.from(ring);
 ---
 <Base current="home">
-  <!-- Hero -->
-  <section class="hero" aria-labelledby="hero-title">
+  <!-- Hero: dark console -->
+  <section class="hero dark" aria-labelledby="hero-title">
+    <span class="wordmark" aria-hidden="true">BAGAS ARIA SATIVA</span>
     <div class="container hero-inner">
       <div>
-        <p class="eyebrow" data-c="orange"><Icon name="map-pin" /> Full-Stack Developer / Bekasi, Indonesia</p>
-        <h1 class="hero-title" id="hero-title">
-          <span class="line"><span class="w" style="--i:0">Bagas</span></span>
-          <span class="line"><span class="w w--yellow" style="--i:1">Aria</span></span>
-          <span class="line"><span class="w w--blue" style="--i:2">Sativa</span></span>
-        </h1>
+        <p class="hero-id"><b>Bagas Aria Sativa</b><span>Full-Stack Developer</span><span>Bekasi, Indonesia</span></p>
+        <h1 class="hero-title" id="hero-title"><span class="vh">Bagas Aria Sativa. </span>Systems,<em>layer by layer.</em></h1>
         <p class="hero-lead">I build web applications end to end: Laravel and PHP back ends, React and Next.js interfaces, Python data tools, and the integrations that connect them to other systems.</p>
         <div class="hero-cta">
-          <a class="btn btn--primary" href="#work" data-magnetic>View selected work <Icon name="arrow-right" /></a>
-          <a class="btn btn--ghost" href={profile.cv} download data-magnetic><Icon name="download" /> Download CV</a>
+          <a class="btn btn--primary" href="#work">View selected work <Icon name="arrow-right" /></a>
+          <a class="btn btn--ghost" href={profile.cv} download><Icon name="download" /> Download CV</a>
         </div>
-        <div class="social">
-          {social.map((s) => (
-            <a href={s.href} aria-label={s.label} title={s.label} target={s.href.startsWith('http') || s.href.startsWith('mailto:') ? '_blank' : undefined} rel={s.href.startsWith('http') || s.href.startsWith('mailto:') ? 'noopener' : undefined}><Icon name={s.icon} /></a>
+        <div class="hero-meta">
+          <div class="social">
+            {social.map((s) => (
+              <a href={s.href} aria-label={s.label} title={s.label} target={s.href.startsWith('http') || s.href.startsWith('mailto:') ? '_blank' : undefined} rel={s.href.startsWith('http') || s.href.startsWith('mailto:') ? 'noopener' : undefined}><Icon name={s.icon} /></a>
+            ))}
+          </div>
+          <p class="status"><span class="dot" aria-hidden="true"></span>Open to remote and onsite roles</p>
+        </div>
+        <ul class="hero-stats" role="list">
+          {stats.map((s) => (
+            <li>
+              <strong data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</strong>
+              <span>{s.label}</span>
+            </li>
           ))}
-        </div>
-        <p class="status"><span class="dot" aria-hidden="true"></span>Open to remote and onsite roles</p>
+        </ul>
       </div>
 
-      <div class="iso" data-iso role="group" aria-label="A small city of the systems I built. Each label opens its explanation.">
-        <div class="scene">
-          {blocks.map((b, i) => (
-            <div class={`blk ${b.cls ?? ''}`} data-c={b.c} style={`--x:${b.x};--y:${b.y};--w:${b.w};--d:${b.d};--h:${b.h};--z:${b.z ?? 0};--n:${b.n ?? i}`}>
-              <i class="f top"></i><i class="f fr"></i><i class="f rt"></i>
-            </div>
-          ))}
-          {pins.map((p, i) => (
-            <a class="pin" data-c={p.c} href={p.href} style={`--x:${p.x};--y:${p.y};--pz:${p.z};--n:${i}`}><b>{p.t}<small>{p.s}</small></b></a>
-          ))}
-        </div>
-        <div class="badge-spin" aria-hidden="true">
-          <div class="ring" style={`--n:${ringChars.length}`}>
-            {ringChars.map((ch, i) => <span style={`--i:${i}`}>{ch}</span>)}
+      <div class="deck" data-deck role="group" aria-label="Five layers of a system. Each layer links to a part of this page.">
+        <div class="deck-in">
+          <div class="stack">
+            {plates.map((p) => (
+              <a class="plate" href={p.href} data-layer={p.layer} style={`--i:${p.i}`} aria-label={`${p.go}: ${p.name} layer`}>
+                <span class="plate-h"><span>0{p.i + 1} / {p.name}</span><span>{p.i === 4 ? 'front' : p.i === 0 ? 'base' : ''}</span></span>
+                {p.i === 0 && <><i></i><i style="width:92%"></i><i></i><i style="width:70%"></i><i></i><i style="width:84%"></i><i></i><i style="width:58%"></i><i></i></>}
+                {p.i === 1 && <><i class="c" style="width:48%"></i><i style="width:82%"></i><i style="width:64%"></i><i class="c" style="width:38%"></i><i style="width:90%"></i><i style="width:56%"></i><i class="c" style="width:70%"></i></>}
+                {p.i === 2 && <><i class="l" style="width:34%"></i><i style="width:72%"></i><i style="width:54%"></i><i class="l" style="width:62%"></i><i style="width:80%"></i><i style="width:44%"></i></>}
+                {p.i === 3 && <div class="steps"><i class="d"></i><i class="d"></i><i class="d"></i><i></i><i></i></div>}
+                {p.i === 4 && <><i style="width:100%;height:9cqw;background:rgba(200,245,60,.16)"></i><div class="bars"><i style="height:38%"></i><i style="height:72%"></i><i style="height:54%"></i><i style="height:92%"></i><i style="height:66%"></i></div><i class="l" style="width:58%;height:5cqw"></i></>}
+                <span class="plate-f"><span>{p.go}</span><span>&rarr;</span></span>
+              </a>
+            ))}
           </div>
-          <span class="core"><Icon name="zap" /></span>
         </div>
-        <p class="iso-hint" aria-hidden="true"><Icon name="compass" /> Drag to rotate</p>
+        <p class="deck-hint" aria-hidden="true">Move the pointer, scroll, or pick a layer</p>
       </div>
     </div>
   </section>
 
+  <!-- Ticker -->
+  <div class="ticker" aria-label="Core technologies">
+    <div class="ticker-track">
+      <ul class="ticker-group" role="list">{ticker.map((t) => <li>{t}</li>)}</ul>
+      <ul class="ticker-group" role="list" aria-hidden="true">{ticker.map((t) => <li>{t}</li>)}</ul>
+    </div>
+  </div>
+
   <!-- At a glance -->
-  <section class="glance" aria-label="At a glance">
+  <section class="glance" aria-label="At a glance" style="padding-top:var(--sp)">
     <div class="container hero-bento">
       <div class="tile tile--stack reveal">
         <p class="tile-label"><span>The stack, layer by layer</span><span>full-stack</span></p>
-        <div class="layers cycle">
+        <div class="layers">
           {layers.map((l) => (
             <div class="layer"><strong><Icon name={l.icon} /> {l.name}</strong><span>{l.text}</span></div>
           ))}
@@ -134,63 +115,44 @@ const ringChars = Array.from(ring);
         ))}</div>
       </div>
     </div>
-    <ul class="container hero-stats cycle" role="list">
-      {stats.map((s, i) => (
-        <li class="reveal" style={`--i:${i}`}>
-          <span class="stat-ico"><Icon name={statIcons[i]} /></span>
-          <div>
-            <strong data-count={s.value} data-suffix={s.suffix}>{s.value}{s.suffix}</strong>
-            <span>{s.label}</span>
-          </div>
-        </li>
-      ))}
-    </ul>
   </section>
 
-  <!-- Ticker -->
-  <div class="ticker" aria-label="Core technologies">
-    <div class="ticker-track">
-      <ul class="ticker-group" role="list">{ticker.map((t) => <li>{t}</li>)}</ul>
-      <ul class="ticker-group" role="list" aria-hidden="true">{ticker.map((t) => <li>{t}</li>)}</ul>
-    </div>
-  </div>
-
   <!-- About -->
-  <section class="section" id="about" aria-labelledby="about-title" data-c="orange">
+  <section class="section" id="about" aria-labelledby="about-title">
     <div class="container about-grid">
       <div class="reveal">
         <p class="eyebrow"><Icon name="user" /> About</p>
         <h2 class="section-title" id="about-title">Software that people use <mark>every day</mark></h2>
         <p class="section-lead">Based in Bekasi, I build production-grade software used daily by real teams. My work spans ERP and HRIS platforms, booking systems, POS applications, data tools and mobile apps, across manufacturing and service industries.</p>
         <p class="section-lead">I work end to end: from database design and backend logic in Laravel to the interfaces people click through. Beyond writing code, I analyse business workflows and gather requirements, so that what I ship fits how people actually work.</p>
-        <ul class="about-facts cycle" role="list">
+        <ul class="about-facts" role="list">
           <li><Icon name="map-pin" /> Bekasi, Indonesia</li>
           <li><Icon name="graduation" /> Master of Computer Science, in progress</li>
           <li><Icon name="layers" /> Database to interface, end to end</li>
         </ul>
       </div>
-      <div class="polaroids reveal" style="--i:2">
-        <figure class="polaroid polaroid--a" data-tilt>
-          <img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" loading="lazy" decoding="async" />
-          <figcaption>Bagas</figcaption>
+      <div class="portraits reveal" style="--i:2">
+        <figure class="portrait portrait--a">
+          <div class="ph"><img src="/assets/img/profile.webp" alt="Portrait of Bagas Aria Sativa" width="399" height="600" loading="lazy" decoding="async" /></div>
+          <figcaption><span>Bagas</span><span>01</span></figcaption>
         </figure>
-        <figure class="polaroid polaroid--b" data-tilt>
-          <img src="/assets/img/profile2.webp" alt="Bagas Aria Sativa playing golf" width="1080" height="1080" loading="lazy" decoding="async" />
-          <figcaption>Off duty: golf</figcaption>
+        <figure class="portrait portrait--b">
+          <div class="ph"><img src="/assets/img/profile2.webp" alt="Bagas Aria Sativa playing golf" width="1080" height="1080" loading="lazy" decoding="async" /></div>
+          <figcaption><span>Off duty: golf</span><span>02</span></figcaption>
         </figure>
       </div>
     </div>
   </section>
 
   <!-- Selected work -->
-  <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0" data-c="blue">
+  <section class="section" id="work" aria-labelledby="work-title" style="padding-top:0">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="folder" /> Selected work</p>
         <h2 class="section-title" id="work-title">Working software, <mark>not mockups</mark></h2>
         <p class="section-lead">Six demos that run in your browser, across Next.js, React, React Native and Python. Each one is designed, built and shipped by me.</p>
       </div>
-      <div class="bento cycle">
+      <div class="bento">
         {featured.map((p, i) => <div class="reveal" style={`--i:${i % 3}`}><ProjectCard project={p} index={i} /></div>)}
         <div class="reveal" style="--i:1">
           <div class="cta-tile">
@@ -205,8 +167,8 @@ const ringChars = Array.from(ring);
     </div>
   </section>
 
-  <!-- Case studies band -->
-  <section class="section band" id="case" aria-labelledby="case-title" data-c="purple">
+  <!-- Case studies -->
+  <section class="section alt" id="case" aria-labelledby="case-title">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="layers" /> Case studies</p>
@@ -214,18 +176,18 @@ const ringChars = Array.from(ring);
         <p class="section-lead">What the problem was, what I decided and why. Company data is never shown.</p>
       </div>
       <div class="case-cards">
-        <article class="case-card reveal" data-c="yellow">
+        <article class="case-card reveal">
           <span class="big" aria-hidden="true">12</span>
           <small>Manufacturing</small>
-          <h3><Icon name="building" /> ERP for 12 departments</h3>
+          <h3>ERP for 12 departments</h3>
           <p>Access control, multi-level approvals, material planning, quality inspection and a fail-safe connection to an accounting system. Includes an interactive approval demo.</p>
           <ul class="tags" role="list"><li class="tag">Laravel</li><li class="tag">MySQL</li><li class="tag">REST API</li><li class="tag">OAuth 2.0</li></ul>
           <a class="link-arrow" href="/case-study/erp/"><span>Read the ERP case study</span><Icon name="arrow-right" size={16} /></a>
         </article>
-        <article class="case-card reveal" style="--i:1" data-c="green">
+        <article class="case-card reveal" style="--i:1">
           <span class="big" aria-hidden="true">3</span>
           <small>HR and service</small>
-          <h3><Icon name="users" /> Aftercare, booking and HRIS</h3>
+          <h3>Aftercare, booking and HRIS</h3>
           <p>Three applications built end to end for a service company: an aftercare platform for ratings and follow-up, a QR booking platform with a customer points program, and an HR information system.</p>
           <ul class="tags" role="list"><li class="tag">CodeIgniter 3</li><li class="tag">MySQL</li><li class="tag">Bootstrap</li><li class="tag">Tailwind CSS</li></ul>
           <a class="link-arrow" href="/case-study/rainbrow/"><span>Read the Rainbrow case study</span><Icon name="arrow-right" size={16} /></a>
@@ -235,15 +197,15 @@ const ringChars = Array.from(ring);
   </section>
 
   <!-- Experience -->
-  <section class="section" id="experience" aria-labelledby="exp-title" data-c="green">
+  <section class="section" id="experience" aria-labelledby="exp-title">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="briefcase" /> Experience</p>
         <h2 class="section-title" id="exp-title">Where I have <mark>built things</mark></h2>
       </div>
-      <div class="timeline cycle" data-timeline>
+      <div class="timeline" data-timeline>
         <span class="timeline-fill" aria-hidden="true"></span>
-        {experience.map((j, i) => (
+        {experience.map((j) => (
           <article class="job reveal" data-job>
             <div>
               <p class="job-period"><Icon name="calendar" /> {j.period}</p>
@@ -260,15 +222,15 @@ const ringChars = Array.from(ring);
   </section>
 
   <!-- Skills -->
-  <section class="section" id="skills" aria-labelledby="skills-title" style="padding-top:0" data-c="purple">
+  <section class="section" id="skills" aria-labelledby="skills-title" style="padding-top:0">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="tool" /> Toolbox</p>
         <h2 class="section-title" id="skills-title">What I <mark>work with</mark></h2>
       </div>
-      <div class="skills-bento cycle">
-        {skills.map((g, i) => (
-          <section class="skill-card reveal" style={`--i:${i % 3}`}>
+      <div class="skills-bento reveal">
+        {skills.map((g) => (
+          <section class="skill-card">
             <h3><span class="ico"><Icon name={skillIcons[g.group]} /></span> {g.group}</h3>
             <ul role="list">{g.items.map((it) => <li>{it}</li>)}</ul>
           </section>
@@ -278,8 +240,8 @@ const ringChars = Array.from(ring);
   </section>
 
   <!-- Education -->
-  <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0" data-c="orange">
-    <div class="container split cycle">
+  <section class="section" id="education" aria-labelledby="edu-title" style="padding-top:0">
+    <div class="container split">
       <div class="panel reveal">
         <p class="eyebrow"><Icon name="graduation" /> Education</p>
         <h2 class="section-title" id="edu-title" style="margin-bottom:0.75rem;font-size:var(--step-3)">Studies</h2>
@@ -305,14 +267,14 @@ const ringChars = Array.from(ring);
   </section>
 
   <!-- Testimonials -->
-  <section class="section" id="testimonials" aria-labelledby="quotes-title" style="padding-top:0" data-c="blue">
+  <section class="section alt" id="testimonials" aria-labelledby="quotes-title">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow"><Icon name="quote" /> Testimonials</p>
         <h2 class="section-title" id="quotes-title">What <mark>colleagues</mark> say</h2>
       </div>
       <div class="reveal" data-carousel aria-roledescription="carousel" aria-label="Testimonials">
-        <div class="quotes cycle" data-track tabindex="0" aria-label="Testimonials, drag or scroll horizontally">
+        <div class="quotes" data-track tabindex="0" aria-label="Testimonials, drag or scroll horizontally">
           {testimonials.map((t, i) => (
             <figure class="quote" data-slide aria-roledescription="slide" aria-label={`${i + 1} of ${testimonials.length}`}>
               <blockquote>{t.quote}</blockquote>
@@ -330,8 +292,8 @@ const ringChars = Array.from(ring);
     </div>
   </section>
 
-  <!-- Contact -->
-  <section class="section band" id="contact" aria-labelledby="contact-title" data-c="yellow">
+  <!-- Contact: dark again, so the page ends where it started -->
+  <section class="section dark" id="contact" aria-labelledby="contact-title">
     <div class="container contact-grid">
       <div class="reveal">
         <p class="eyebrow"><Icon name="send" /> Contact</p>

@@ -1,8 +1,7 @@
 ---
-import '@fontsource-variable/unbounded';
-import '@fontsource-variable/plus-jakarta-sans';
-import '@fontsource/space-mono/400.css';
-import '@fontsource/space-mono/700.css';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/hanken-grotesk';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import { profile } from '../data/site.js';
@@ -20,15 +19,20 @@ const canonical = new URL(path, profile.site).href;
 const og = new URL('/assets/img/profile.png', profile.site).href;
 
 const nav = [
-  { label: 'Work', href: '/#work', id: 'work', page: 'work', icon: 'folder' },
-  { label: 'Case studies', href: '/#case', id: 'case', page: 'case', icon: 'layers' },
-  { label: 'Experience', href: '/#experience', id: 'experience', icon: 'briefcase' },
-  { label: 'Skills', href: '/#skills', id: 'skills', icon: 'tool' },
-  { label: 'For business', href: '/for-business/', id: 'business', page: 'business', icon: 'building' },
-  { label: 'Contact', href: '/#contact', id: 'contact', icon: 'send' },
+  { label: 'Work', href: '/#work', id: 'work', page: 'work', icon: 'folder', idx: '01' },
+  { label: 'Case studies', href: '/#case', id: 'case', page: 'case', icon: 'layers', idx: '02' },
+  { label: 'Experience', href: '/#experience', id: 'experience', icon: 'briefcase', idx: '03' },
+  { label: 'Skills', href: '/#skills', id: 'skills', icon: 'tool', idx: '04' },
+  { label: 'For business', href: '/for-business/', id: 'business', page: 'business', icon: 'building', idx: '05' },
+  { label: 'Contact', href: '/#contact', id: 'contact', icon: 'send', idx: '06' },
 ];
-
-const accents = [['blue', 'Blue'], ['yellow', 'Yellow'], ['green', 'Green'], ['orange', 'Orange'], ['purple', 'Purple']];
+const rail = [
+  { id: 'work', label: 'Work' },
+  { id: 'case', label: 'Case studies' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'contact', label: 'Contact' },
+];
 
 // Data for the command palette. Built at compile time, so there is no runtime fetch.
 const palette = {
@@ -73,11 +77,10 @@ const jsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
-    <meta name="theme-color" content="#FBF8F0" />
-    <meta name="color-scheme" content="light" />
-    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#090B10" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/assets/img/favicon.svg?v=2" type="image/svg+xml" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/assets/img/favicon.svg?v=3" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Bagas Aria Sativa Portfolio" />
     <meta property="og:title" content={title} />
@@ -85,32 +88,26 @@ const jsonLd = JSON.stringify({
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary" />
-    <script is:inline>document.documentElement.classList.add('js');try{var a=localStorage.getItem('accent');if(a)document.documentElement.dataset.accent=a;if(localStorage.getItem('calm')==='1')document.documentElement.dataset.calm='';}catch(e){}</script>
+    <script is:inline>document.documentElement.classList.add('js');try{if(localStorage.getItem('calm')==='1')document.documentElement.dataset.calm='';}catch(e){}</script>
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
-  <body data-page={current}>
+  <body id="top" data-page={current}>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header" id="top">
+    <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="/" aria-label={`${profile.name}, home`}>
-          <span class="brand-mark">B<i>.</i>A<i>.</i>S</span>
+          <span class="brand-mark">B.A.S</span>
           <span class="brand-text">Full-Stack Developer</span>
         </a>
         <nav class="nav" aria-label="Primary">
-          <span class="nav-indicator" aria-hidden="true"></span>
           {nav.map((n) => (
-            <a href={n.href} data-nav={n.id} aria-current={n.page && n.page === current ? 'page' : undefined}><Icon name={n.icon} />{n.label}</a>
+            <a href={n.href} data-nav={n.id} data-idx={n.idx} aria-current={n.page && n.page === current ? 'page' : undefined}>{n.label}</a>
           ))}
         </nav>
         <div class="header-actions">
-          <div class="accents" role="group" aria-label="Accent colour">
-            {accents.map(([id, label]) => (
-              <button type="button" data-accent-set={id} aria-pressed={id === 'blue' ? 'true' : 'false'} aria-label={`${label} accent`} title={`${label} accent`}></button>
-            ))}
-          </div>
           <button class="kbd-hint" type="button" data-open-palette aria-label="Open quick navigation" aria-haspopup="dialog">
-            <Icon name="search" size={16} /> <span>Quick nav</span> <kbd>Ctrl K</kbd>
+            <Icon name="search" size={15} /> <span>Quick nav</span> <kbd>Ctrl K</kbd>
           </button>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span></button>
         </div>
@@ -121,21 +118,22 @@ const jsonLd = JSON.stringify({
     <div class="mobile-menu" id="mobile-menu">
       {nav.map((n) => <a href={n.href}><Icon name={n.icon} />{n.label}</a>)}
       <a href="/work/"><Icon name="layers" />All work</a>
-      <div class="accents" role="group" aria-label="Accent colour">
-        {accents.map(([id, label]) => (
-          <button type="button" data-accent-set={id} aria-pressed={id === 'blue' ? 'true' : 'false'} aria-label={`${label} accent`}></button>
-        ))}
-      </div>
     </div>
+
+    {current === 'home' && (
+      <nav class="rail" aria-label="Page sections" data-rail>
+        {rail.map((r) => <a href={`/#${r.id}`} data-layer={r.id} data-label={r.label} aria-label={r.label}></a>)}
+      </nav>
+    )}
 
     <main id="main" tabindex="-1">
       <slot />
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer dark">
       <div class="container footer-inner">
         <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
-        <a class="footer-top" href="#top"><Icon name="arrow-up" />Back to top</a>
+        <a class="footer-top" href="#top" data-to-top><Icon name="arrow-up" />Back to top</a>
       </div>
     </footer>
 
@@ -146,7 +144,7 @@ const jsonLd = JSON.stringify({
         <div class="palette-foot"><span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span></div>
       </div>
     </dialog>
-    <a class="to-top" href="#top" aria-label="Back to top"><Icon name="arrow-up" /></a>
+    <a class="to-top" href="#top" data-to-top aria-label="Back to top"><Icon name="arrow-up" /></a>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script id="palette-data" type="application/json" set:html={JSON.stringify(palette)} />

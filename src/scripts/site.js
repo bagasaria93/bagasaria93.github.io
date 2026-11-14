@@ -25,41 +25,7 @@ function toast(message) {
   toastTimer = setTimeout(() => el.classList.remove('is-visible'), 2200);
 }
 
-/* ---------------------------------------- accent colour + calm mode */
-function initAccent() {
-  const buttons = $$('[data-accent-set]');
-  if (!buttons.length) return;
-  const root = document.documentElement;
-  const sync = () => {
-    const cur = root.dataset.accent || 'blue';
-    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.accentSet === cur)));
-  };
-  const apply = (v) => {
-    if (v === 'blue') delete root.dataset.accent; else root.dataset.accent = v;
-    sync();
-  };
-  buttons.forEach((b) => b.addEventListener('click', (e) => {
-    const v = b.dataset.accentSet;
-    try { localStorage.setItem('accent', v); } catch { /* private mode: the choice just will not persist */ }
-    const calm = reduce || root.hasAttribute('data-calm');
-    if (!document.startViewTransition || calm) { apply(v); return; }
-    // The new colour spreads out from the swatch as a growing circle (View Transitions + clip-path).
-    const r = b.getBoundingClientRect();
-    const x = r.left + r.width / 2, y = r.top + r.height / 2;
-    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    root.classList.add('vt-accent');
-    const vt = document.startViewTransition(() => apply(v));
-    vt.ready.then(() => {
-      root.animate(
-        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-        { duration: 700, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
-      );
-    }).catch(() => {});
-    vt.finished.finally(() => root.classList.remove('vt-accent'));
-  }));
-  sync();
-}
-
+/* ---------------------------------------------------------- calm mode */
 function toggleCalm() {
   const root = document.documentElement;
   const on = !root.hasAttribute('data-calm');
@@ -77,6 +43,8 @@ function initHeader() {
     header.classList.toggle('is-scrolled', scrollY > 8);
     const top = $('.to-top');
     if (top) top.classList.toggle('is-visible', scrollY > innerHeight * 0.9);
+    const rail = $('[data-rail]');
+    if (rail) rail.classList.toggle('is-visible', scrollY > innerHeight * 0.55);
     const max = document.documentElement.scrollHeight - innerHeight;
     if (bar) bar.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0);
   });
@@ -85,50 +53,38 @@ function initHeader() {
   update();
 }
 
+/* Back to top. The old link pointed at the sticky header, which is always "at the top",
+   so the browser had nowhere to go. Scroll to 0 explicitly. */
+function initToTop() {
+  $$('[data-to-top]').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    history.replaceState(null, '', location.pathname + location.search);
+  }));
+}
+
+/* One scroll spy drives the nav underline, the rail and the plate deck, so they always agree. */
 function initNav() {
   const nav = $('.nav');
-  const indicator = $('.nav-indicator');
-  if (!nav || !indicator) return;
+  if (!nav) return;
   const links = $$('a', nav);
   const isHome = document.body.dataset.page === 'home';
-  let active = links.find((a) => a.getAttribute('aria-current') === 'page') || null;
-
-  const place = (a) => {
-    if (!a) { indicator.style.opacity = '0'; return; }
-    indicator.style.opacity = '1';
-    indicator.style.width = `${a.offsetWidth}px`;
-    indicator.style.transform = `translateX(${a.offsetLeft}px)`;
-  };
-  const setActive = (a) => {
-    if (a === active) return;
-    active = a;
-    links.forEach((l) => { if (isHome) { if (l === a) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); } });
-    place(active);
-  };
-
-  links.forEach((a) => {
-    a.addEventListener('pointerenter', () => place(a));
-    a.addEventListener('focus', () => place(a));
-    a.addEventListener('blur', () => place(active));
+  if (!isHome) return;
+  const ids = ['work', 'case', 'experience', 'skills', 'contact'];
+  const sections = ids.map((id) => ({ id, el: document.getElementById(id) })).filter((s) => s.el);
+  const layerEls = $$('[data-layer]');
+  let current = '';
+  const spy = raf(() => {
+    let cur = '';
+    const line = innerHeight * 0.4;
+    sections.forEach((s) => { if (s.el.getBoundingClientRect().top <= line) cur = s.id; });
+    if (cur === current) return;
+    current = cur;
+    links.forEach((l) => { if (l.dataset.nav === cur) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); });
+    layerEls.forEach((el) => el.classList.toggle('is-active', el.dataset.layer === cur));
   });
-  nav.addEventListener('pointerleave', () => place(active));
-  addEventListener('resize', () => place(active), { passive: true });
-
-  if (isHome) {
-    const sections = ['work', 'case', 'experience', 'skills', 'contact']
-      .map((id) => ({ id, el: document.getElementById(id), link: links.find((l) => l.dataset.nav === id) }))
-      .filter((s) => s.el && s.link);
-    const spy = raf(() => {
-      let cur = null;
-      const line = innerHeight * 0.35;
-      sections.forEach((s) => { if (s.el.getBoundingClientRect().top <= line) cur = s.link; });
-      setActive(cur);
-    });
-    addEventListener('scroll', spy, { passive: true });
-    spy();
-  }
-  place(active);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => place(active));
+  addEventListener('scroll', spy, { passive: true });
+  spy();
 }
 
 function initMenu() {
@@ -180,71 +136,30 @@ function initCount() {
   els.forEach((e) => io.observe(e));
 }
 
-/* ---------------------------------- isometric diorama: parallax + drag to rotate */
-function initIso() {
-  const iso = $('[data-iso]');
-  const scene = iso && $('.scene', iso);
-  if (!scene) return;
-  const s = { tx: 0, ty: 0, x: 0, y: 0, drag: 0, vel: 0, down: false, dragging: false, startX: 0, lastX: 0, pid: 0, suppress: false };
+/* ------------------------------------------- plate deck: the layers follow the pointer */
+function initDeck() {
+  const deck = $('[data-deck]');
+  const stack = deck && $('.stack', deck);
+  if (!stack || !finePointer || reduce) return;
+  const s = { tx: 0, ty: 0, x: 0, y: 0 };
   let running = false;
-
-  const paint = () => {
-    scene.style.setProperty('--px', s.x.toFixed(3));
-    scene.style.setProperty('--py', s.y.toFixed(3));
-    scene.style.setProperty('--drag', `${s.drag.toFixed(2)}deg`);
-  };
   const step = () => {
-    s.x += (s.tx - s.x) * 0.09;
-    s.y += (s.ty - s.y) * 0.09;
-    if (!s.dragging && Math.abs(s.vel) > 0.02) { s.drag += s.vel; s.vel *= 0.94; } else if (!s.dragging) { s.vel = 0; }
-    paint();
-    const settled = Math.abs(s.tx - s.x) < 0.002 && Math.abs(s.ty - s.y) < 0.002 && Math.abs(s.vel) <= 0.02;
-    if (settled && !s.dragging) { running = false; return; }
+    s.x += (s.tx - s.x) * 0.1;
+    s.y += (s.ty - s.y) * 0.1;
+    stack.style.setProperty('--px', s.x.toFixed(3));
+    stack.style.setProperty('--py', s.y.toFixed(3));
+    if (Math.abs(s.tx - s.x) < 0.002 && Math.abs(s.ty - s.y) < 0.002) { running = false; return; }
     requestAnimationFrame(step);
   };
   const kick = () => { if (!running) { running = true; requestAnimationFrame(step); } };
-
-  if (finePointer && !reduce) {
-    iso.addEventListener('pointermove', (e) => {
-      if (s.down) return;
-      const r = iso.getBoundingClientRect();
-      s.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      s.ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
-      kick();
-    });
-    iso.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; kick(); });
-  }
-
-  iso.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0) return;
-    s.down = true; s.dragging = false; s.startX = s.lastX = e.clientX; s.pid = e.pointerId; s.vel = 0; s.suppress = false;
-  });
-  addEventListener('pointermove', (e) => {
-    if (!s.down || e.pointerId !== s.pid) return;
-    if (!s.dragging && Math.abs(e.clientX - s.startX) > 5) {
-      s.dragging = true;
-      iso.classList.add('is-dragging');
-      try { iso.setPointerCapture(s.pid); } catch { /* ignore */ }
-    }
-    if (s.dragging) {
-      const dx = e.clientX - s.lastX;
-      s.lastX = e.clientX;
-      s.drag += dx * 0.4;
-      s.vel = reduce ? 0 : dx * 0.4;
-      kick();
-    }
+  const hero = deck.closest('.hero') || deck;
+  hero.addEventListener('pointermove', (e) => {
+    const r = hero.getBoundingClientRect();
+    s.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    s.ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    kick();
   }, { passive: true });
-  const end = (e) => {
-    if (!s.down || (e && e.pointerId !== s.pid)) return;
-    s.down = false;
-    if (s.dragging) { s.dragging = false; s.suppress = true; iso.classList.remove('is-dragging'); kick(); }
-  };
-  addEventListener('pointerup', end);
-  addEventListener('pointercancel', end);
-  // A drag that ends on a label must not also follow the label's link.
-  iso.addEventListener('click', (e) => { if (s.suppress) { e.preventDefault(); e.stopPropagation(); s.suppress = false; } }, true);
-  iso.addEventListener('dragstart', (e) => e.preventDefault());
-  paint();
+  hero.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; kick(); });
 }
 
 /* ---------------------------------------------- card tilt and magnetic buttons */
@@ -722,7 +637,7 @@ function initToc() {
 
 [
   ['header', initHeader], ['nav', initNav], ['menu', initMenu], ['reveal', initReveal], ['count', initCount],
-  ['accent', initAccent], ['iso', initIso], ['tilt', initTilt], ['magnetic', initMagnetic],
+  ['totop', initToTop], ['deck', initDeck], ['tilt', initTilt], ['magnetic', initMagnetic],
   ['terminal', initTerminal], ['timeline', initTimeline], ['carousel', initCarousel], ['palette', initPalette], ['contact', initContact],
   ['work', initWork], ['approval', initApproval], ['safesend', initSafeSend], ['toc', initToc],
 ].forEach(([name, fn]) => safe(name, fn));
