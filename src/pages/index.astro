@@ -40,6 +40,7 @@ const plates = [
   { i: 2, layer: 'experience', name: 'integration', go: 'Experience', href: '#experience' },
   { i: 3, layer: 'case', name: 'logic', go: 'Case studies', href: '#case' },
   { i: 4, layer: 'work', name: 'interface', go: 'Work', href: '#work' },
+  { i: 5, layer: 'about', name: 'identity', go: 'About', href: '#about' },
 ];
 ---
 <Base current="home">
@@ -55,8 +56,9 @@ const plates = [
     <span class="wordmark" data-css="-webkit-text-stroke mask-image font-stretch" aria-hidden="true">BAGAS ARIA SATIVA</span>
     <div class="container hero-inner">
       <div>
-        <p class="hero-id"><b>Bagas Aria Sativa</b><span>Full-Stack Developer</span><span>Bekasi, Indonesia</span></p>
-        <h1 class="hero-title" id="hero-title" data-css="font-stretch letter-spacing text-wrap"><span class="vh">Bagas Aria Sativa. </span>Systems,<em>layer by layer.</em></h1>
+        <p class="hero-id"><b>Portfolio</b><span>2026</span><span>Bekasi, Indonesia</span></p>
+        <h1 class="hero-title" id="hero-title" data-css="font-stretch letter-spacing text-wrap">Bagas Aria <em>Sativa</em></h1>
+        <p class="hero-role"><b>Full-Stack Developer.</b> Systems, layer by layer.</p>
         <p class="hero-lead">I build web applications end to end: Laravel and PHP back ends, React and Next.js interfaces, Python data tools, and the integrations that connect them to other systems.</p>
         <div class="hero-cta">
           <a class="btn btn--primary" href="#work">View selected work <Icon name="arrow-right" /></a>
@@ -85,18 +87,19 @@ const plates = [
           <div class="stack" data-css="transform transform-style">
             {plates.map((p) => (
               <a class="plate" data-css="transform transition-property border-top-color" href={p.href} data-layer={p.layer} style={`--i:${p.i}`} aria-label={`${p.go}: ${p.name} layer`}>
-                <span class="plate-h"><span>0{p.i + 1} / {p.name}</span><span>{p.i === 4 ? 'front' : p.i === 0 ? 'base' : ''}</span></span>
+                <span class="plate-h"><span>0{p.i + 1} / {p.name}</span><span>{p.i === 5 ? 'front' : p.i === 0 ? 'base' : ''}</span></span>
                 {p.i === 0 && <><i></i><i style="width:92%"></i><i></i><i style="width:70%"></i><i></i><i style="width:84%"></i><i></i><i style="width:58%"></i><i></i></>}
                 {p.i === 1 && <><i class="c" style="width:48%"></i><i style="width:82%"></i><i style="width:64%"></i><i class="c" style="width:38%"></i><i style="width:90%"></i><i style="width:56%"></i><i class="c" style="width:70%"></i></>}
                 {p.i === 2 && <><i class="l" style="width:34%"></i><i style="width:72%"></i><i style="width:54%"></i><i class="l" style="width:62%"></i><i style="width:80%"></i><i style="width:44%"></i></>}
                 {p.i === 3 && <div class="steps"><i class="d"></i><i class="d"></i><i class="d"></i><i></i><i></i></div>}
+                {p.i === 5 && <><div class="id-photo"><img src="/assets/img/profile.webp" width="399" height="600" alt="Portrait of Bagas Aria Sativa" decoding="async" fetchpriority="low" /></div><div class="id-name"><b>Bagas Aria Sativa</b><small>Full-Stack Developer</small></div></>}
                 {p.i === 4 && <><i style="width:100%;height:9cqw;background:rgba(200,245,60,.16)"></i><div class="bars"><i style="height:38%"></i><i style="height:72%"></i><i style="height:54%"></i><i style="height:92%"></i><i style="height:66%"></i></div><i class="l" style="width:58%;height:5cqw"></i></>}
                 <span class="plate-f"><span>{p.go}</span><span>&rarr;</span></span>
               </a>
             ))}
           </div>
         </div>
-        <p class="deck-hint" aria-hidden="true">Move the pointer, scroll, or pick a layer</p>
+        <p class="deck-hint">Hover a layer to lift it, click to jump to that part of the page</p>
       </div>
     </div>
   </section>

@@ -6,8 +6,8 @@
     "features": "Program showcase, trainer profiles, membership pricing, and a trial registration form.",
     "href": "/demo/company-profile/",
     "image": "/demo/company-profile/preview.jpg",
-    "width": 900,
-    "height": 563
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "rimba-kitchen",
@@ -16,8 +16,8 @@
     "features": "Signature menu showcase, ambience gallery, and an inline-validated reservation form.",
     "href": "/demo/rimba-kitchen/",
     "image": "/demo/rimba-kitchen/preview.jpg",
-    "width": 900,
-    "height": 563
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "nexbyte",
@@ -26,8 +26,8 @@
     "features": "Icon category tiles, scrolling featured products, and an inline-validated contact form.",
     "href": "/demo/nexbyte/",
     "image": "/demo/nexbyte/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "studio-embun",
@@ -36,8 +36,8 @@
     "features": "Treatment showcase, membership pricing, and an inline-validated booking form.",
     "href": "/demo/studio-embun/",
     "image": "/demo/studio-embun/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "klinik-nirmala",
@@ -46,8 +46,8 @@
     "features": "Clinic department grid, doctor schedule directory, and an inline-validated appointment form.",
     "href": "/demo/klinik-nirmala/",
     "image": "/demo/klinik-nirmala/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "karsa-bangun",
@@ -56,8 +56,8 @@
     "features": "Before and after comparison slider, filterable project portfolio, and a quote form.",
     "href": "/demo/karsa-bangun/",
     "image": "/demo/karsa-bangun/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "torsi-garage",
@@ -66,8 +66,8 @@
     "features": "Car and Motorcycle pricing toggle, filterable gallery, and a service booking form.",
     "href": "/demo/torsi-garage/",
     "image": "/demo/torsi-garage/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "cendekia-prima",
@@ -76,8 +76,8 @@
     "features": "Grade-level tab switcher for school and exam-prep pricing, and a consultation form.",
     "href": "/demo/cendekia-prima/",
     "image": "/demo/cendekia-prima/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "karya-presisi",
@@ -86,8 +86,8 @@
     "features": "Interactive production line flow, capability grid, and a request for quotation form.",
     "href": "/demo/karya-presisi/",
     "image": "/demo/karya-presisi/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "danamitra-finance",
@@ -96,8 +96,8 @@
     "features": "Interactive installment simulator, financing product grid, and an inline-validated application form.",
     "href": "/demo/danamitra-finance/",
     "image": "/demo/danamitra-finance/preview.jpg",
-    "width": 1200,
-    "height": 675
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "kriyatama",
@@ -106,8 +106,8 @@
     "features": "Production process timeline, MOQ based package tiers, and an RFQ order form.",
     "href": "/demo/kriyatama/",
     "image": "/demo/kriyatama/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "gudang-bata",
@@ -116,8 +116,8 @@
     "features": "Product category grid, live price board, and a delivery or pickup order form.",
     "href": "/demo/gudang-bata/",
     "image": "/demo/gudang-bata/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "tinta-kertas",
@@ -126,8 +126,8 @@
     "features": "Print category catalog, color proofing workflow, and a print order consultation form.",
     "href": "/demo/tinta-kertas/",
     "image": "/demo/tinta-kertas/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "cendekia-harapan",
@@ -136,8 +136,8 @@
     "features": "Education level roadmap, facility showcase, and a student enrollment consultation form.",
     "href": "/demo/cendekia-harapan/",
     "image": "/demo/cendekia-harapan/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   },
   {
     "slug": "kilau-laundry",
@@ -146,7 +146,7 @@
     "features": "Service pricing, process timeline, and a pickup order consultation form.",
     "href": "/demo/kilau-laundry/",
     "image": "/demo/kilau-laundry/preview.jpg",
-    "width": 1200,
-    "height": 750
+    "width": 1100,
+    "height": 688
   }
 ]

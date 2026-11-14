@@ -218,8 +218,10 @@
   .hero-inner { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr); gap: clamp(1rem, 3vw, 3rem); align-items: center; padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(3.5rem, 7vw, 6rem); }
   .hero-id { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; align-items: baseline; font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--frost-2); margin-bottom: 1.4rem; }
   .hero-id b { color: var(--lime); font-weight: 500; }
-  .hero-title { font-size: clamp(2.6rem, 1rem + 3.9vw, 4.9rem); font-stretch: calc(108% + var(--wd, 0%)); font-weight: 850; line-height: 0.95; letter-spacing: -0.055em; }
-  .hero-title em { font-style: normal; color: var(--lime); display: block; white-space: nowrap; }
+  .hero-title { font-size: clamp(2.8rem, 1rem + 5vw, 5.8rem); font-stretch: calc(108% + var(--wd, 0%)); font-weight: 850; line-height: 0.94; letter-spacing: -0.055em; }
+  .hero-title em { font-style: normal; color: var(--lime); }
+  .hero-role { text-wrap: balance; margin-top: 1.1rem; font-family: var(--font-display); font-size: clamp(1.15rem, 1rem + 0.8vw, 1.55rem); font-weight: 700; letter-spacing: -0.035em; color: var(--frost-2); }
+  .hero-role b { color: var(--frost); font-weight: 800; }
   .hero-lead { font-size: var(--step-1); color: var(--frost-2); max-width: 32rem; line-height: 1.55; margin-top: 1.4rem; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.9rem; }
   .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; margin-top: 1.5rem; }
@@ -244,17 +246,19 @@
   }
   .stack {
     position: absolute; inset: 0; transform-style: preserve-3d;
-    transform: rotateX(calc(8deg + var(--py, 0) * -4deg)) rotateY(calc(-30deg + var(--sy) + var(--px, 0) * 10deg));
+    transform: rotateX(calc(8deg + var(--py, 0) * -8deg)) rotateY(calc(-30deg + var(--sy) + var(--px, 0) * 16deg));
   }
   .plate {
     --pw: 52cqw; --ph: 68cqw;
     position: absolute; left: 50%; top: 50%; width: var(--pw); height: var(--ph); margin: calc(var(--ph) / -2) 0 0 calc(var(--pw) / -2); display: flex; flex-direction: column; gap: 0.5rem;
-    padding: 5cqw 4.5cqw; text-decoration: none; color: var(--frost); background: rgba(16, 19, 27, 0.97); border: 1px solid rgba(233, 236, 242, 0.24);
-    transform: translateZ(calc((var(--i) - 2) * var(--gap)));
-    transition: transform var(--dur-3) var(--spring), border-color var(--dur-2), background var(--dur-2);
+    padding: 5cqw 4.5cqw; text-decoration: none; color: var(--frost); background: #10131B; border: 1px solid rgba(233, 236, 242, 0.24); cursor: pointer;
+    /* Each layer sits at its own depth and drifts sideways with the pointer by an amount that grows with depth. */
+    transform: translate3d(calc(var(--px, 0) * (var(--i) - 2.5) * -9cqw / 5), 0, calc((var(--i) - 2.5) * var(--gap)));
+    transition: transform var(--dur-3) var(--spring), border-color var(--dur-2), background var(--dur-2), filter var(--dur-2);
   }
-  .plate:hover, .plate:focus-visible { transform: translateZ(calc((var(--i) - 2) * var(--gap) + 34px)); border-color: var(--lime); }
-  .plate.is-active { border-color: var(--lime); background: rgba(22, 27, 20, 0.94); }
+  .plate:hover, .plate:focus-visible { transform: translate3d(calc(var(--px, 0) * (var(--i) - 2.5) * -9cqw / 5), 0, calc((var(--i) - 2.5) * var(--gap) + 46px)); border-color: var(--lime); background: #151A12; }
+  .deck:has(.plate:hover) .plate:not(:hover) { filter: brightness(0.6); }
+  .plate.is-active { border-color: var(--lime); }
   .plate-h { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 2.6cqw; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cyan); }
   .plate.is-active .plate-h, .plate:hover .plate-h { color: var(--lime); }
   .plate i { display: block; height: 1.4cqw; background: rgba(233, 236, 242, 0.15); flex: none; }
@@ -262,6 +266,11 @@
   .plate i.c { background: rgba(91, 227, 255, 0.5); }
   .plate-f { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 2.6cqw; letter-spacing: 0.06em; text-transform: uppercase; color: var(--frost-2); }
   .plate:hover .plate-f, .plate.is-active .plate-f { color: var(--lime); }
+  .id-photo { aspect-ratio: 1 / 1.02; overflow: hidden; background: #fff; border: 1px solid rgba(233, 236, 242, 0.3); }
+  .id-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 6%; }
+  .id-name { display: grid; gap: 0.5cqw; margin-top: 1cqw; }
+  .id-name b { font-family: var(--font-display); font-weight: 800; font-size: 4.2cqw; letter-spacing: -0.04em; line-height: 1.05; }
+  .id-name small { font-family: var(--font-mono); font-size: 2.5cqw; letter-spacing: 0.06em; text-transform: uppercase; color: var(--lime); }
   .plate .bars { display: flex; align-items: flex-end; gap: 1.8cqw; height: 15cqw; margin-block: 1cqw; }
   .plate .bars i { flex: 1 1 0; width: auto; background: var(--lime); }
   .plate .steps { display: grid; gap: 1.2cqw; }
@@ -310,9 +319,10 @@
   .about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
   .portraits { position: relative; min-height: clamp(22rem, 42vw, 32rem); }
   .portrait { position: absolute; margin: 0; border: var(--hair) solid var(--ink); background: var(--paper-2); padding: 0.5rem; transition: transform var(--dur-3) var(--spring), box-shadow var(--dur-3) var(--spring); }
-  .portrait .ph { position: relative; background: var(--signal); isolation: isolate; overflow: hidden; }
-  .portrait img { width: 100%; height: auto; filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; transition: filter var(--dur-3), mix-blend-mode var(--dur-3); }
-  .portrait:hover img { filter: none; mix-blend-mode: normal; }
+  /* A neutral mat and a black-and-white print; the colour comes back on hover. */
+  .portrait .ph { position: relative; background: var(--paper-3); isolation: isolate; overflow: hidden; }
+  .portrait img { width: 100%; height: auto; filter: grayscale(1) contrast(1.06); mix-blend-mode: multiply; transition: filter var(--dur-3); }
+  .portrait:hover img { filter: none; }
   .portrait figcaption { padding: 0.5rem 0.1rem 0.15rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; display: flex; justify-content: space-between; }
   .portrait--a { left: 0; top: 0; width: 52%; }
   .portrait--b { right: 0; bottom: 0; width: 58%; }

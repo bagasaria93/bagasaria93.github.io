@@ -70,7 +70,7 @@ function initNav() {
   const links = $$('a', nav);
   const isHome = document.body.dataset.page === 'home';
   if (!isHome) return;
-  const ids = ['work', 'websites', 'case', 'experience', 'skills', 'contact'];
+  const ids = ['about', 'work', 'websites', 'case', 'experience', 'skills', 'contact'];
   const sections = ids.map((id) => ({ id, el: document.getElementById(id) })).filter((s) => s.el);
   const layerEls = $$('[data-layer]');
   let current = '';
@@ -140,8 +140,9 @@ function initCount() {
 function initDeck() {
   const deck = $('[data-deck]');
   const stack = deck && $('.stack', deck);
-  if (!stack || !finePointer || reduce) return;
+  if (!stack || !finePointer) return;
   const s = { tx: 0, ty: 0, x: 0, y: 0 };
+  const amp = reduce ? 0.6 : 1; // Pointer-driven tilt is the visitor's own movement, so it stays, gentler, under reduced motion.
   let running = false;
   const step = () => {
     s.x += (s.tx - s.x) * 0.1;
@@ -155,8 +156,8 @@ function initDeck() {
   const hero = deck.closest('.hero') || deck;
   hero.addEventListener('pointermove', (e) => {
     const r = hero.getBoundingClientRect();
-    s.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-    s.ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    s.tx = ((e.clientX - r.left) / r.width - 0.5) * 2 * amp;
+    s.ty = ((e.clientY - r.top) / r.height - 0.5) * 2 * amp;
     kick();
   }, { passive: true });
   hero.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; kick(); });

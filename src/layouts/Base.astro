@@ -9,7 +9,7 @@ import { ui } from '../data/i18n.js';
 import projects from '../data/projects.json';
 
 const {
-  title = `${profile.name} | ${profile.role}`,
+  title = `${profile.name} | Portfolio, ${profile.role}`,
   description = 'Full-Stack Developer in Bekasi, Indonesia. I build production business systems: ERP, aftercare, booking and HR platforms, and the integrations that connect them to accounting.',
   path = '/',
   current = '',
@@ -33,6 +33,7 @@ const nav = [
   { label: 'Contact', href: '/#contact', id: 'contact', icon: 'send', idx: '07' },
 ];
 const rail = [
+  { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
   { id: 'case', label: 'Case studies' },
   { id: 'experience', label: 'Experience' },
