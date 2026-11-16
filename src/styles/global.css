@@ -131,7 +131,7 @@
 
 @layer components {
   /* ------------------------------------------------------------ header -- */
-  /* White text with mix-blend-mode: difference reads on dark and light sections alike. */
+  /* Until the page knows its surface, white text with mix-blend-mode: difference reads on dark and light sections alike. */
   .site-header {
     position: sticky; top: 0; z-index: 50; height: var(--header-h); margin-bottom: calc(var(--header-h) * -1);
     color: #fff; mix-blend-mode: difference; view-transition-name: site-header;
@@ -143,12 +143,13 @@
   .logo i { position: absolute; inset: 0; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
   .logo .lg-l { background: currentColor; -webkit-mask-image: url(/assets/img/logo-letters.png); mask-image: url(/assets/img/logo-letters.png); }
   .logo .lg-a { background: var(--logo-acc, #03d457); -webkit-mask-image: url(/assets/img/logo-accent.png); mask-image: url(/assets/img/logo-accent.png); }
-  /* The header is blended with "difference", which inverts what is behind it. The blade is pre-compensated so it lands on
-     green over dark sections and a deeper green over paper. JS sets data-tone from the surface under the logo. */
-  .site-header .logo { --logo-acc: #fff; }
-  html[data-tone="dark"] .site-header .logo { --logo-acc: #03d457; }
-  html[data-tone="light"] .site-header .logo { --logo-acc: #ec499a; }
-  html:has(.menu-toggle[aria-expanded="true"]) .site-header .logo { --logo-acc: #03d457; }
+  /* Once JS knows what sits under the logo (data-tone), the header becomes a bar that follows that surface, so nothing scrolls
+     through its text. Before that it keeps the blended look above. */
+  html[data-tone] .site-header { mix-blend-mode: normal; color: var(--ink); background: color-mix(in srgb, var(--paper-2) 95%, transparent); border-bottom: 1px solid var(--line-soft); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  html[data-tone="dark"] .site-header, html[data-tone]:has(.menu-toggle[aria-expanded="true"]) .site-header { color: var(--frost); background: color-mix(in srgb, var(--night) 92%, transparent); border-bottom-color: rgba(233, 236, 242, 0.12); }
+  html[data-tone="dark"] .site-header .logo, html[data-tone]:has(.menu-toggle[aria-expanded="true"]) .site-header .logo { --logo-acc: #03d457; }
+  html[data-tone="light"] .site-header .logo { --logo-acc: #00a24b; }
+  html[data-tone="light"] .progress i { background: var(--signal); }
   .brand-text { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
   .nav { display: flex; align-items: center; gap: 0.15rem; }
   .nav a {
@@ -845,11 +846,6 @@
   @media (max-width: 860px) {
     .nav, .kbd-hint { display: none; }
     .menu-toggle { display: grid; }
-    /* Over body copy the blended header turns the wordmark into noise, so on small screens it becomes a bar that follows the surface. */
-    html[data-tone] .site-header { mix-blend-mode: normal; color: var(--ink); background: color-mix(in srgb, var(--paper-2) 92%, transparent); border-bottom: 1px solid var(--line-soft); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-    html[data-tone="dark"] .site-header, html[data-tone]:has(.menu-toggle[aria-expanded="true"]) .site-header { color: var(--frost); background: color-mix(in srgb, var(--night) 90%, transparent); border-bottom-color: rgba(233, 236, 242, 0.12); }
-    html[data-tone="light"] .site-header .logo { --logo-acc: #00a24b; }
-    html[data-tone="light"] .progress i { background: var(--signal); }
     .mobile-menu {
       display: block; position: fixed; inset: 0; z-index: 40; padding: calc(var(--header-h) + 1rem) var(--gutter) 2rem; background: var(--night); color: var(--frost); overflow-y: auto;
       clip-path: circle(0 at calc(100% - 40px) 32px); visibility: hidden; transition: clip-path var(--dur-3) var(--ease), visibility 0s linear var(--dur-3);
