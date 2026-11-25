@@ -1,0 +1,47 @@
+---
+// Two live digital invitation demos. Used on the home page and on both For business pages.
+import Icon from './Icon.astro';
+import { profile } from '../data/site.js';
+import { invitationDemos, invitations } from '../data/invitations.js';
+
+const { locale = 'en', flush = false } = Astro.props;
+const t = invitations[locale];
+const waText = locale === 'id'
+  ? 'Halo Bagas, saya tertarik dengan undangan digital. Boleh tahu harga dan paketnya?'
+  : 'Hi Bagas, I am interested in a digital invitation. Could you tell me about pricing and packages?';
+const wa = `${profile.whatsapp}?text=${encodeURIComponent(waText)}`;
+---
+<section class="section" id="invitations" style={flush ? 'padding-top:0' : undefined} aria-labelledby="inv-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><Icon name="send" /> {t.eyebrow}</p>
+      <h2 class="section-title" id="inv-title">{t.title}</h2>
+      <p class="section-lead">{t.lead}</p>
+    </div>
+    <div class="inv-grid">
+      {t.cards.map((c, i) => {
+        const d = invitationDemos[i];
+        return (
+          <article class="inv reveal" style={`--i:${i}`}>
+            <a class="inv-link" href={d.href} aria-label={`${t.open}: ${c.title}`}>
+              <div class="inv-frame">
+                <div class="inv-bar" aria-hidden="true"><i></i><i></i><i></i><span>{d.href}</span></div>
+                <img src={d.image} width={d.width} height={d.height} alt={c.alt} loading="lazy" decoding="async" />
+              </div>
+              <div class="inv-meta">
+                <small>{c.kind}</small>
+                <h3>{c.title}</h3>
+                <p>{c.text}</p>
+                <ul class="inv-tags" role="list">{c.tags.map((tag) => <li>{tag}</li>)}</ul>
+                <span class="inv-go">{t.open} <Icon name="arrow-up-right" size={16} /></span>
+              </div>
+            </a>
+          </article>
+        );
+      })}
+    </div>
+    <p class="inv-cta reveal">
+      <a class="btn btn--primary" href={wa} target="_blank" rel="noopener"><Icon name="whatsapp" /> {t.contact}</a>
+    </p>
+  </div>
+</section>

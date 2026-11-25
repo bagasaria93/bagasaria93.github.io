@@ -2,6 +2,7 @@
 // The "For business" page, rendered from src/data/business.js in either language.
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
+import InvitationDemos from './InvitationDemos.astro';
 import projects from '../data/projects.json';
 import { profile, testimonials } from '../data/site.js';
 import { business, systemKeys } from '../data/business.js';
@@ -76,6 +77,8 @@ const alt = isId ? { lang: 'en', label: 'EN', href: '/for-business/' } : { lang:
       <p class="reveal" style="margin-top:2rem"><a class="btn btn--ghost" href="/websites/"><Icon name="globe" /> {t.systems.browse}</a></p>
     </div>
   </section>
+
+  <InvitationDemos locale={locale} flush />
 
   <section class="section" id="proof" style="padding-top:0" aria-labelledby="proof-title">
     <div class="container">

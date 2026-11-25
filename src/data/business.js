@@ -14,8 +14,8 @@ export const systemKeys = [
 
 export const business = {
   en: {
-    title: 'Websites and custom systems for businesses | Bagas Aria Sativa',
-    description: 'Company profile websites and custom business systems for small and medium businesses in Indonesia: cashier, booking, HR, ERP and CRM. Built around how your business actually works.',
+    title: 'Websites, systems and digital invitations for businesses | Bagas Aria Sativa',
+    description: 'Company profile websites, custom business systems and digital invitations for small and medium businesses in Indonesia: cashier, booking, HR, ERP and CRM. Built around how your business actually works.',
     head: {
       eyebrow: 'For business owners',
       title: 'A website and system built around how your business actually works.',
@@ -25,7 +25,7 @@ export const business = {
     },
     services: {
       eyebrow: 'Services',
-      title: 'Two ways I can help',
+      title: 'Three ways I can help',
       lead: 'Whether you need an online presence or you are tired of running your business on WhatsApp groups and spreadsheets, here is what I offer.',
       cards: [
         {
@@ -53,6 +53,18 @@ export const business = {
             'Other systems, depending on what your business needs',
           ],
           link: { href: '#systems', label: 'See system demos by type' },
+        },
+        {
+          icon: 'send',
+          title: 'Digital invitation',
+          text: 'An online invitation for weddings, engagements, birthdays, housewarmings and other events, shared as a single link. Guests open it on their phone, and you see who is coming.',
+          items: [
+            'Each guest sees their own name on the cover, taken from the link you send them',
+            'Countdown, schedule, location, save-to-calendar, photo gallery and music',
+            'RSVP with a wishes wall, plus a digital envelope for gifts',
+            'Pricing depends on the features you want, so contact Bagas',
+          ],
+          link: { href: '#invitations', label: 'See the two invitation demos' },
         },
       ],
     },
@@ -97,8 +109,8 @@ export const business = {
   },
 
   id: {
-    title: 'Website dan sistem kustom untuk bisnis | Bagas Aria Sativa',
-    description: 'Website company profile dan sistem bisnis kustom untuk usaha kecil dan menengah di Indonesia: kasir, booking, HR, ERP, dan CRM. Dibuat sesuai cara kerja bisnis Anda yang sebenarnya.',
+    title: 'Website, sistem, dan undangan digital untuk bisnis | Bagas Aria Sativa',
+    description: 'Website company profile, sistem bisnis kustom, dan undangan digital untuk usaha kecil dan menengah di Indonesia: kasir, booking, HR, ERP, dan CRM. Dibuat sesuai cara kerja bisnis Anda yang sebenarnya.',
     head: {
       eyebrow: 'Untuk pemilik bisnis',
       title: 'Website dan sistem yang dibuat sesuai cara kerja bisnis Anda yang sebenarnya.',
@@ -108,7 +120,7 @@ export const business = {
     },
     services: {
       eyebrow: 'Layanan',
-      title: 'Dua cara saya bisa membantu',
+      title: 'Tiga cara saya bisa membantu',
       lead: 'Entah Anda butuh kehadiran online, atau sudah lelah mengelola bisnis lewat grup WhatsApp dan spreadsheet, inilah yang saya tawarkan.',
       cards: [
         {
@@ -136,6 +148,18 @@ export const business = {
             'Sistem lain, sesuai kebutuhan bisnis Anda',
           ],
           link: { href: '#systems', label: 'Lihat demo sistem per jenis' },
+        },
+        {
+          icon: 'send',
+          title: 'Undangan digital',
+          text: 'Undangan online untuk pernikahan, tunangan, ulang tahun, syukuran rumah, dan acara lain, dibagikan lewat satu link. Tamu membukanya di ponsel, dan Anda bisa melihat siapa yang akan hadir.',
+          items: [
+            'Setiap tamu melihat namanya sendiri di sampul, diambil dari link yang Anda kirim',
+            'Hitung mundur, jadwal, lokasi, simpan ke kalender, galeri foto, dan musik',
+            'RSVP dengan dinding ucapan, plus amplop digital untuk hadiah',
+            'Harga menyesuaikan fitur yang Anda inginkan, jadi silakan hubungi Bagas',
+          ],
+          link: { href: '#invitations', label: 'Lihat dua demo undangan' },
         },
       ],
     },

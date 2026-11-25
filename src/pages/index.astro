@@ -29,7 +29,8 @@ const social = [
   { icon: 'mail', label: 'Email', href: `mailto:${profile.email}` },
 ];
 import sites from '../data/websites.json';
-const briefKinds = ['Company profile website', 'Cashier and POS', 'Booking and reservation', 'HR and payroll', 'Manufacturing and ERP', 'Customer management (CRM)', 'WhatsApp and email blast', 'Something else'];
+import InvitationDemos from '../components/InvitationDemos.astro';
+const briefKinds = ['Company profile website', 'Cashier and POS', 'Booking and reservation', 'HR and payroll', 'Manufacturing and ERP', 'Customer management (CRM)', 'WhatsApp and email blast', 'Digital invitation', 'Something else'];
 const briefWhen = ['As soon as possible', 'Within a month', 'In 2 to 3 months', 'Just exploring'];
 const beltA = sites;
 const beltB = [...sites].reverse();
@@ -261,6 +262,9 @@ const miniSites = sites.slice(0, 4);
       <a class="btn btn--ghost" href="/?brief=website#contact">Plan my website <Icon name="mail" /></a>
     </div>
   </section>
+
+  <!-- Digital invitations: two live demos -->
+  <InvitationDemos />
 
   <!-- Case studies -->
   <section class="section alt" id="case" aria-labelledby="case-title">
