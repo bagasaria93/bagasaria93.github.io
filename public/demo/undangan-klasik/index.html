@@ -4,9 +4,9 @@
 <script>document.documentElement.classList.add('js');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Pernikahan Romeo &amp; Juliet - Versi Klasik</title>
-<meta name="description" content="Demo undangan pernikahan digital versi klasik: amplop yang terbuka, nama tamu dari link, hitung mundur, simpan ke kalender, amplop digital, RSVP, dan musik. Dibuat oleh Bagas Aria Sativa.">
-<meta property="og:title" content="Undangan Pernikahan Romeo &amp; Juliet - Versi Klasik">
+<title>Undangan Pernikahan Ardan &amp; Nayla - Versi Klasik</title>
+<meta name="description" content="Demo undangan pernikahan digital versi klasik: amplop yang terbuka, nama tamu dari link, hitung mundur, simpan ke kalender, doa dan ucapan, kartu tamu, amplop digital, RSVP, dan musik. Dibuat oleh Bagas Aria Sativa.">
+<meta property="og:title" content="Undangan Pernikahan Ardan &amp; Nayla - Versi Klasik">
 <meta property="og:description" content="Demo undangan digital bergaya klasik, dengan amplop yang terbuka saat Anda menyentuhnya.">
 <meta name="theme-color" content="#45101a">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -193,12 +193,12 @@ h2.sec-title{font-family:var(--script);font-weight:400;font-size:clamp(2.6rem,9v
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-top:2.2rem;}
 @media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr);gap:1rem;}}
 .tile{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);background:linear-gradient(160deg,#fff7e6,#e9d6b0);margin:0;}
-.tile:nth-child(2n){background:linear-gradient(160deg,#7c1b2c,#45101a);}
+.tile--dark{background:linear-gradient(160deg,#7c1b2c,#45101a);}
 .tile svg{position:absolute;inset:0;width:100%;height:100%;color:var(--gold);transition:transform .8s ease;}
-.tile:nth-child(2n) svg{color:var(--gold-l);}
+.tile--dark svg{color:var(--gold-l);}
 .tile:hover svg{transform:scale(1.06);}
 .tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:.5rem .6rem;font-family:var(--sans);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--wine);background:linear-gradient(transparent,rgba(251,246,236,.9));}
-.tile:nth-child(2n) figcaption{color:var(--gold-l);background:linear-gradient(transparent,rgba(46,10,17,.85));}
+.tile--dark figcaption{color:var(--gold-l);background:linear-gradient(transparent,rgba(46,10,17,.85));}
 
 /* ---------- gifts ---------- */
 .gifts{display:grid;gap:1.1rem;margin:2.2rem auto 0;max-width:46rem;}
@@ -282,6 +282,65 @@ fieldset{border:0;}
   .cover,.env-flap,.env-card,.tile svg{transition-duration:.01s !important;transition-delay:0s !important;}
   html{scroll-behavior:auto;}
 }
+
+/* ---------- premium layer ---------- */
+.dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+.cover>*{z-index:1;}
+.hero-frame{z-index:1;}
+.foil{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;background-size:240% 100%;animation:foil 8s ease-in-out infinite alternate;}
+.foil--gold{background-image:linear-gradient(100deg,#b48a43 0%,#f3dca6 24%,#fff6dc 38%,#dcc08a 56%,#b48a43 78%,#f3dca6 100%);}
+.foil--wine{background-image:linear-gradient(100deg,#45101a 0%,#6b1523 28%,#b48a43 48%,#6b1523 68%,#45101a 100%);}
+@keyframes foil{from{background-position:0% 50%;}to{background-position:100% 50%;}}
+.hero::before,.parch::before{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+.menu{position:fixed;top:0;left:0;right:0;z-index:60;display:none;align-items:center;justify-content:space-between;gap:1rem;padding:.4rem clamp(1rem,3vw,2.2rem);
+  background:rgba(251,246,236,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  transform:translateY(-100%);visibility:hidden;transition:transform .5s ease,visibility 0s .5s;}
+.menu.show{transform:none;visibility:visible;transition:transform .5s ease,visibility 0s;}
+@media (min-width:900px){.opened .menu{display:flex;}}
+.menu>b{font-family:var(--script);font-weight:400;font-size:1.8rem;line-height:1;color:var(--wine);}
+.menu .links{display:flex;gap:1.3rem;flex-wrap:wrap;justify-content:flex-end;}
+.menu a{display:inline-flex;align-items:center;min-height:44px;font-family:var(--sans);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:1px solid transparent;}
+.menu a:hover,.menu a.is-on{border-bottom-color:var(--gold);color:var(--wine);}
+
+.rundown{list-style:none;max-width:34rem;margin:2.4rem auto 0;text-align:left;}
+.rundown li{display:grid;grid-template-columns:5.4rem 1fr;gap:1rem;padding:.9rem 0;border-top:1px solid var(--line);align-items:baseline;}
+.rundown li:last-child{border-bottom:1px solid var(--line);}
+.rundown time{font-family:var(--sans);font-weight:500;font-size:.86rem;letter-spacing:.1em;color:var(--wine);font-variant-numeric:lining-nums tabular-nums;}
+.rundown b{font-weight:600;}
+.rundown span{display:block;color:var(--mut);font-size:1.02rem;}
+.facts{display:grid;gap:1rem;margin-top:2.4rem;}
+@media(min-width:760px){.facts{grid-template-columns:repeat(3,1fr);}}
+.fact{border:1px solid var(--line);padding:1.3rem 1.1rem;background:var(--ivory);text-align:center;}
+.fact b{display:block;font-family:var(--script);font-weight:400;font-size:1.9rem;line-height:1.15;color:var(--wine);}
+.fact span{color:var(--mut);font-size:1.04rem;}
+
+.doa-box{position:relative;max-width:38rem;margin:2.2rem auto 0;padding:2.2rem 1.4rem 1.8rem;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:8px;background:linear-gradient(#fffdf8,var(--ivory));}
+.doa-box .divider{margin-top:0;}
+.doa-box p{font-size:clamp(1.2rem,4vw,1.45rem);font-style:italic;line-height:1.7;color:var(--wine);}
+.doa-box .for{display:block;margin-top:1.3rem;font-family:var(--sans);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mut);}
+.doa-box+.doa-box{margin-top:2.6rem;}
+
+.pass{max-width:21rem;margin:2.2rem auto 0;background:var(--ivory);border:1px solid var(--gold);box-shadow:0 22px 40px rgba(69,16,26,.16);}
+.pass-top{padding:1.6rem 1.2rem 1.3rem;text-align:center;color:#f3e6d0;background:linear-gradient(var(--wine),var(--wine-d));}
+.pass-top .label{color:var(--gold-l);}
+.pass-top b{display:block;font-family:var(--script);font-weight:400;font-size:2.1rem;line-height:1.15;color:var(--gold-l);margin-top:.2rem;word-break:break-word;}
+.pass-top small{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#ead9c0;}
+.pass-mid{border-top:2px dashed var(--gold);padding:1.5rem 1rem 1.2rem;text-align:center;}
+.pass-mid svg{width:9.5rem;height:9.5rem;margin:0 auto;color:var(--wine-d);--qr-bg:var(--ivory);}
+.pass-mid p{margin-top:.7rem;font-family:var(--sans);font-size:.7rem;letter-spacing:.06em;color:var(--mut);}
+.pass-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);}
+.pass-foot div{padding:.9rem .8rem;text-align:center;}
+.pass-foot div+div{border-left:1px solid var(--line);}
+.pass-foot small{display:block;font-family:var(--sans);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);}
+.pass-foot b{display:block;font-size:1rem;line-height:1.25;font-weight:600;}
+
+.dark .lead + .sign{margin-top:1.6rem;}
+.sign small.fam{display:block;font-family:var(--sans);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:#cdb998;margin-top:.2rem;}
+.share-row{margin-top:2rem;}
+.iv-zoomable:focus-visible{outline:2px solid var(--wine);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){.foil{animation:none;}.menu{transition:none;}}
 </style>
 </head>
 <body>
@@ -317,53 +376,70 @@ fieldset{border:0;}
 
 <!-- ============ COVER ============ -->
 <section class="cover" id="cover" aria-label="Sampul undangan">
+  <canvas class="dust" id="dustCover" aria-hidden="true"></canvas>
   <div class="cover-top">
     <p class="label">Undangan Pernikahan</p>
-    <p class="cover-names">Romeo <span>&amp;</span> Juliet</p>
+    <p class="cover-names foil foil--gold">Ardan <span>&amp;</span> Nayla</p>
   </div>
 
   <div class="env" aria-hidden="false">
     <div class="env-back"></div>
     <div class="env-card">
       <span class="label">Kepada Yth.</span>
-      <b data-guest>Tamu Undangan</b>
+      <b data-guest>Bapak/Ibu/Saudara/i</b>
       <small>Anda diundang</small>
     </div>
     <div class="env-pocket"></div>
     <div class="env-flap"></div>
-    <button class="seal" id="seal" type="button" aria-label="Buka undangan">R&amp;J</button>
+    <button class="seal" id="seal" type="button" aria-label="Buka undangan">A&amp;N</button>
   </div>
 
   <div class="cover-bottom">
-    <p class="guest-line">Kepada Yth. <b data-guest>Tamu Undangan</b></p>
+    <p class="guest-line">Kepada Yth. <b data-guest>Bapak/Ibu/Saudara/i</b></p>
     <button class="btn btn--gold" id="open" type="button">Buka Undangan</button>
   </div>
   <p class="demo-tag">Demo undangan digital oleh <a href="https://bagasaria93.github.io/for-business/">Bagas Aria Sativa</a>. Coba tambahkan <b>?to=Nama</b> di akhir alamat.</p>
 </section>
 
 <!-- ============ MAIN ============ -->
+<nav class="menu" id="menu" aria-label="Navigasi bagian">
+  <b aria-hidden="true">A&amp;N</b>
+  <div class="links">
+    <a href="#mempelai" data-sec="mempelai">Mempelai</a>
+    <a href="#acara" data-sec="acara">Acara</a>
+    <a href="#galeri" data-sec="galeri">Galeri</a>
+    <a href="#doa" data-sec="doa">Doa</a>
+    <a href="#hadiah" data-sec="hadiah">Hadiah</a>
+    <a href="#rsvp" data-sec="rsvp">RSVP</a>
+  </div>
+</nav>
+
 <main id="main">
 
   <header class="hero" id="beranda">
+    <canvas class="dust" id="dustHero" aria-hidden="true"></canvas>
     <div class="hero-frame">
       <svg class="corner corner--tl" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner corner--tr" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner corner--bl" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner corner--br" aria-hidden="true"><use href="#corner"/></svg>
       <p class="label hero-anim" style="--i:0">The Wedding of</p>
-      <h1 class="hero-anim" style="--i:1">Romeo <span>&amp;</span> Juliet</h1>
+      <h1 class="hero-anim foil foil--wine" style="--i:1">Ardan <span>&amp;</span> Nayla</h1>
       <svg class="divider hero-anim" style="--i:2" aria-hidden="true"><use href="#divider"/></svg>
       <p class="hero-date hero-anim" style="--i:3">Menuju hari bahagia kami<b id="heroDate">Sabtu</b></p>
       <p class="scroll-cue hero-anim" style="--i:4">Gulir ke bawah</p>
     </div>
   </header>
 
-  <section class="sec parch" aria-label="Kutipan">
+  <section class="sec parch" id="pembuka" aria-labelledby="t-pembuka">
     <div class="wrap reveal">
       <svg class="divider" aria-hidden="true"><use href="#divider"/></svg>
-      <blockquote class="quote">
-        My bounty is as boundless as the sea,<br>my love as deep; the more I give to thee,<br>the more I have, for both are infinite.
-        <cite>William Shakespeare, Romeo and Juliet</cite>
+      <p class="label">Salam Pembuka</p>
+      <h2 class="sec-title" id="t-pembuka">Dengan penuh syukur</h2>
+      <p class="lead">Salam sejahtera untuk Bapak/Ibu/Saudara/i. Dengan rasa syukur dan kebahagiaan, kami mengundang Anda untuk menyaksikan dan memberikan doa restu pada hari pernikahan kami.</p>
+      <blockquote class="quote" style="margin-top:2.2rem">
+        Dua hati bertemu dengan sederhana,<br>lalu memilih saling menjaga sepanjang hidup.
+        <cite>Dari kami untuk Anda</cite>
       </blockquote>
     </div>
   </section>
@@ -377,15 +453,15 @@ fieldset{border:0;}
       </div>
       <div class="couple">
         <article class="person reveal" style="--i:1">
-          <div class="frame"><div aria-hidden="true">R</div></div>
-          <h3>Romeo Montague</h3>
-          <p><b>Putra dari</b>Bapak Lord Montague<br>dan Ibu Lady Montague</p>
+          <div class="frame"><div aria-hidden="true">A</div></div>
+          <h3>Ardan Maulana</h3>
+          <p><b>Putra dari</b>Bapak Ahmad Maulana<br>dan Ibu Siti Aminah</p>
         </article>
         <div class="amp reveal" aria-hidden="true">&amp;</div>
         <article class="person reveal" style="--i:2">
-          <div class="frame"><div aria-hidden="true">J</div></div>
-          <h3>Juliet Capulet</h3>
-          <p><b>Putri dari</b>Bapak Lord Capulet<br>dan Ibu Lady Capulet</p>
+          <div class="frame"><div aria-hidden="true">N</div></div>
+          <h3>Nayla Azzahra</h3>
+          <p><b>Putri dari</b>Bapak Yusuf Hidayat<br>dan Ibu Nurhayati</p>
         </article>
       </div>
     </div>
@@ -402,16 +478,25 @@ fieldset{border:0;}
         <article class="card reveal" style="--i:1">
           <h3>Akad Nikah</h3>
           <p class="when"><b data-ev-date>Sabtu</b><span data-ev-time="akad">08.00 - 10.00 WIB</span></p>
-          <p class="where"><b>Gedung Serbaguna Verona</b>Jl. Melati No. 12, Kota Verona</p>
+          <p class="where"><b>Gedung Serbaguna Cendana</b>Jl. Melati No. 12, Jakarta Selatan</p>
           <button class="btn" type="button" data-ics="akad"><svg aria-hidden="true"><use href="#i-cal"/></svg>Simpan ke Kalender</button>
         </article>
         <article class="card reveal" style="--i:2">
           <h3>Resepsi</h3>
           <p class="when"><b data-ev-date>Sabtu</b><span data-ev-time="resepsi">11.00 - 14.00 WIB</span></p>
-          <p class="where"><b>Gedung Serbaguna Verona</b>Jl. Melati No. 12, Kota Verona</p>
+          <p class="where"><b>Gedung Serbaguna Cendana</b>Jl. Melati No. 12, Jakarta Selatan</p>
           <button class="btn" type="button" data-ics="resepsi"><svg aria-hidden="true"><use href="#i-cal"/></svg>Simpan ke Kalender</button>
         </article>
       </div>
+
+      <ol class="rundown reveal" aria-label="Susunan acara">
+        <li><time>07.30</time><div><b>Registrasi tamu</b><span>Tunjukkan kartu tamu kepada penerima tamu.</span></div></li>
+        <li><time>08.00</time><div><b>Akad nikah</b><span>Ijab kabul dan penandatanganan dokumen pernikahan.</span></div></li>
+        <li><time>10.00</time><div><b>Foto bersama keluarga</b><span>Sesi foto kedua keluarga besar.</span></div></li>
+        <li><time>11.00</time><div><b>Resepsi dimulai</b><span>Kedatangan mempelai dan ucapan selamat.</span></div></li>
+        <li><time>12.00</time><div><b>Santap hidangan</b><span>Hidangan prasmanan dan hiburan akustik.</span></div></li>
+        <li><time>14.00</time><div><b>Penutup</b><span>Doa penutup dan foto bersama tamu.</span></div></li>
+      </ol>
 
       <div class="map reveal">
         <svg viewBox="0 0 520 250" role="img" aria-label="Ilustrasi peta lokasi acara">
@@ -427,7 +512,7 @@ fieldset{border:0;}
           <circle cx="288" cy="126" r="6" fill="#fbf6ec"/>
         </svg>
         <div class="map-bar">
-          <div><b>Gedung Serbaguna Verona</b>Jl. Melati No. 12, Kota Verona</div>
+          <div><b>Gedung Serbaguna Cendana</b>Jl. Melati No. 12, Jakarta Selatan</div>
           <button class="btn" type="button" id="mapBtn"><svg aria-hidden="true"><use href="#i-pin"/></svg>Buka Peta</button>
         </div>
       </div>
@@ -438,6 +523,12 @@ fieldset{border:0;}
           <i style="background:#6b1523"></i><i style="background:#b48a43"></i><i style="background:#fbf6ec"></i><i style="background:#3a2a28"></i>
         </div>
         <p class="lead">Nuansa anggur, emas, dan gading. Kami menantikan Anda dengan busana terbaik.</p>
+      </div>
+
+      <div class="facts">
+        <div class="fact reveal"><b>Tiba lebih awal</b><span>Mohon hadir 15 menit sebelum acara dimulai agar kursi dapat diatur dengan nyaman.</span></div>
+        <div class="fact reveal" style="--i:1"><b>Parkir</b><span>Area parkir luas tersedia di basement dan halaman depan gedung.</span></div>
+        <div class="fact reveal" style="--i:2"><b>Foto bersama</b><span>Sesi foto tamu berlangsung sepanjang resepsi, di dekat pelaminan.</span></div>
       </div>
     </div>
   </section>
@@ -460,12 +551,12 @@ fieldset{border:0;}
     <div class="wrap">
       <div class="reveal">
         <p class="label">Kisah Kami</p>
-        <h2 class="sec-title" id="t-kisah">Dari pesta topeng hingga pelaminan</h2>
+        <h2 class="sec-title" id="t-kisah">Dari reuni kampus hingga pelaminan</h2>
       </div>
       <ol class="timeline">
-        <li class="reveal"><h3>Pesta Topeng</h3><p>Mereka bertemu di sebuah pesta topeng. Satu tatapan dari seberang ruangan, dan semuanya berubah.</p></li>
-        <li class="reveal"><h3>Surat dari Balkon</h3><p>Berminggu-minggu bertukar surat dan bercakap hingga larut malam, dari bawah sebuah balkon.</p></li>
-        <li class="reveal"><h3>Restu Dua Keluarga</h3><p>Dua keluarga yang dulu berjarak akhirnya duduk di satu meja, lalu memberi restu. Kali ini kisahnya berakhir bahagia.</p></li>
+        <li class="reveal"><h3>Pertemuan Pertama</h3><p>Mereka bertemu di acara reuni kampus. Obrolan singkat tentang buku favorit berlanjut sampai acara bubar.</p></li>
+        <li class="reveal"><h3>Pesan yang Tak Pernah Habis</h3><p>Berbulan-bulan bertukar cerita lewat pesan dan telepon larut malam, dari dua kota yang berbeda.</p></li>
+        <li class="reveal"><h3>Restu Dua Keluarga</h3><p>Kedua keluarga duduk di satu meja makan, saling berkenalan, lalu memberikan restu.</p></li>
         <li class="reveal"><h3>Menuju Hari Bahagia</h3><p>Kini mereka ingin merayakannya bersama orang-orang tercinta, termasuk Anda.</p></li>
       </ol>
       <p class="note reveal">Kisah contoh. Pada undangan asli, bagian ini diganti dengan cerita Anda sendiri.</p>
@@ -478,15 +569,35 @@ fieldset{border:0;}
         <p class="label">Galeri</p>
         <h2 class="sec-title" id="t-galeri">Potongan kenangan</h2>
       </div>
-      <div class="gallery">
-        <figure class="tile reveal"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="82" cy="118" r="38"/><circle cx="118" cy="118" r="38"/><path d="M100 54l7 10-7 10-7-10z" fill="currentColor" stroke="none"/><circle cx="100" cy="80" r="2.5" fill="currentColor" stroke="none"/></svg><figcaption>Cincin</figcaption></figure>
-        <figure class="tile reveal" style="--i:1"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="100" cy="110" r="52"/><circle cx="100" cy="110" r="38"/><circle cx="100" cy="110" r="25"/><circle cx="100" cy="110" r="12"/><path d="M100 162c0 22-6 40-6 56M100 190c-18-4-30-14-32-28 16 0 28 10 32 28zM100 198c16-2 28-12 30-24-14-1-26 8-30 24z"/></svg><figcaption>Mawar</figcaption></figure>
-        <figure class="tile reveal" style="--i:2"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M50 210V110a50 50 0 0 1 100 0v100"/><path d="M62 210V112a38 38 0 0 1 76 0v98" opacity=".6"/><path d="M40 210h120"/><path d="M62 170h76M62 190h76" opacity=".7"/><path d="M78 170v20M100 170v20M122 170v20"/><circle cx="148" cy="52" r="15"/><circle cx="156" cy="48" r="13" fill="#fff7e6" stroke="none" opacity="0"/><path d="M70 50l3 7 7 1-5 5 1 7-6-4-6 4 1-7-5-5 7-1z" fill="currentColor" stroke="none"/></svg><figcaption>Balkon</figcaption></figure>
-        <figure class="tile reveal"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="45" y="85" width="110" height="80" rx="3"/><path d="M45 88l55 42 55-42"/><path d="M100 60c10-14 30-4 24 10-4 10-24 22-24 22s-20-12-24-22c-6-14 14-24 24-10z" fill="currentColor" stroke="none" opacity=".85"/></svg><figcaption>Surat</figcaption></figure>
-        <figure class="tile reveal" style="--i:1"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="62" y="120" width="26" height="80" rx="2"/><rect x="112" y="136" width="26" height="64" rx="2"/><path d="M75 118c-9-10-9-20 0-30 9 10 9 20 0 30zM125 134c-9-10-9-20 0-30 9 10 9 20 0 30z" fill="currentColor" stroke="none"/><path d="M50 200h100"/><path d="M75 120v-4M125 136v-4"/></svg><figcaption>Lilin</figcaption></figure>
-        <figure class="tile reveal" style="--i:2"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M100 168C48 132 44 90 70 78c14-6 26 2 30 14 4-12 16-20 30-14 26 12 22 54-30 90z"/><text x="100" y="128" text-anchor="middle" fill="currentColor" stroke="none" font-family="Great Vibes,cursive" font-size="30">R&amp;J</text><path d="M60 200h80M80 210h40" opacity=".6"/></svg><figcaption>Selamanya</figcaption></figure>
+      <div class="gallery" id="gallery">
+        <figure class="tile reveal" data-cap="Cincin"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="82" cy="118" r="38"/><circle cx="118" cy="118" r="38"/><path d="M100 54l7 10-7 10-7-10z" fill="currentColor" stroke="none"/><circle cx="100" cy="80" r="2.5" fill="currentColor" stroke="none"/></svg><figcaption>Cincin</figcaption></figure>
+        <figure class="tile tile--dark reveal" style="--i:1" data-cap="Mawar"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="100" cy="110" r="52"/><circle cx="100" cy="110" r="38"/><circle cx="100" cy="110" r="25"/><circle cx="100" cy="110" r="12"/><path d="M100 162c0 22-6 40-6 56M100 190c-18-4-30-14-32-28 16 0 28 10 32 28zM100 198c16-2 28-12 30-24-14-1-26 8-30 24z"/></svg><figcaption>Mawar</figcaption></figure>
+        <figure class="tile reveal" style="--i:2" data-cap="Malam"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M50 210V110a50 50 0 0 1 100 0v100"/><path d="M62 210V112a38 38 0 0 1 76 0v98" opacity=".6"/><path d="M40 210h120"/><path d="M62 170h76M62 190h76" opacity=".7"/><path d="M78 170v20M100 170v20M122 170v20"/><circle cx="148" cy="52" r="15"/><path d="M70 50l3 7 7 1-5 5 1 7-6-4-6 4 1-7-5-5 7-1z" fill="currentColor" stroke="none"/></svg><figcaption>Malam</figcaption></figure>
+        <figure class="tile tile--dark reveal" data-cap="Surat"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="45" y="85" width="110" height="80" rx="3"/><path d="M45 88l55 42 55-42"/><path d="M100 60c10-14 30-4 24 10-4 10-24 22-24 22s-20-12-24-22c-6-14 14-24 24-10z" fill="currentColor" stroke="none" opacity=".85"/></svg><figcaption>Surat</figcaption></figure>
+        <figure class="tile reveal" style="--i:1" data-cap="Lilin"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="62" y="120" width="26" height="80" rx="2"/><rect x="112" y="136" width="26" height="64" rx="2"/><path d="M75 118c-9-10-9-20 0-30 9 10 9 20 0 30zM125 134c-9-10-9-20 0-30 9 10 9 20 0 30z" fill="currentColor" stroke="none"/><path d="M50 200h100"/><path d="M75 120v-4M125 136v-4"/></svg><figcaption>Lilin</figcaption></figure>
+        <figure class="tile tile--dark reveal" style="--i:2" data-cap="Selamanya"><svg viewBox="0 0 200 250" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M100 168C48 132 44 90 70 78c14-6 26 2 30 14 4-12 16-20 30-14 26 12 22 54-30 90z"/><text x="100" y="128" text-anchor="middle" fill="currentColor" stroke="none" font-family="Great Vibes,cursive" font-size="30">A&amp;N</text><path d="M60 200h80M80 210h40" opacity=".6"/></svg><figcaption>Selamanya</figcaption></figure>
       </div>
-      <p class="note reveal">Ilustrasi contoh. Pada undangan asli, ruang ini diisi foto prewedding Anda.</p>
+      <p class="note reveal">Ilustrasi contoh. Pada undangan asli, ruang ini diisi foto prewedding Anda. Ketuk gambar untuk memperbesar.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="doa" aria-labelledby="t-doa">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="label">Doa dan Harapan</p>
+        <h2 class="sec-title" id="t-doa">Doa untuk kedua mempelai</h2>
+        <p class="lead">Doa Anda adalah hadiah yang paling kami nantikan. Berikut harapan kami, dan doa yang kami panjatkan untuk Anda.</p>
+      </div>
+      <div class="doa-box reveal">
+        <svg class="divider" aria-hidden="true"><use href="#divider"/></svg>
+        <p>Ya Tuhan Yang Maha Kuasa, berkatilah Ardan dan Nayla. Satukan mereka dalam kasih yang tulus, jadikan rumah tangga mereka tempat yang teduh, penuh tawa, dan dipenuhi kesabaran, dari hari ini hingga usia senja.</p>
+        <span class="for">Doa untuk kedua mempelai</span>
+      </div>
+      <div class="doa-box reveal">
+        <svg class="divider" aria-hidden="true"><use href="#divider"/></svg>
+        <p>Terima kasih atas kehadiran dan doa restu Bapak/Ibu/Saudara/i. Semoga setiap kebaikan yang Anda berikan dibalas berlipat ganda, dan kesehatan serta kebahagiaan senantiasa menyertai Anda sekeluarga.</p>
+        <span class="for">Doa untuk para tamu</span>
+      </div>
     </div>
   </section>
 
@@ -501,18 +612,33 @@ fieldset{border:0;}
         <article class="gift reveal" style="--i:1">
           <p class="bank">Bank Contoh</p>
           <p class="no">1234 5678 90</p>
-          <p>a.n. Romeo Montague</p>
+          <p>a.n. Ardan Maulana</p>
           <button class="btn" type="button" data-copy="1234567890" data-copy-msg="Nomor rekening contoh disalin"><svg aria-hidden="true"><use href="#i-copy"/></svg>Salin Nomor</button>
         </article>
         <article class="gift reveal" style="--i:2">
           <p class="bank">Bank Contoh</p>
           <p class="no">0987 6543 21</p>
-          <p>a.n. Juliet Capulet</p>
+          <p>a.n. Nayla Azzahra</p>
           <button class="btn" type="button" data-copy="0987654321" data-copy-msg="Nomor rekening contoh disalin"><svg aria-hidden="true"><use href="#i-copy"/></svg>Salin Nomor</button>
         </article>
       </div>
-      <div class="address reveal"><b>Kirim kado</b>Jl. Melati No. 12, Kota Verona. Penerima: Romeo &amp; Juliet</div>
+      <div class="address reveal"><b>Kirim kado</b>Jl. Melati No. 12, Jakarta Selatan. Penerima: Ardan &amp; Nayla</div>
       <p class="note reveal">Nomor rekening dan alamat di atas hanya contoh.</p>
+    </div>
+  </section>
+
+  <section class="sec parch" id="tiket" aria-labelledby="t-tiket">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="label">Kartu Tamu</p>
+        <h2 class="sec-title" id="t-tiket">Tunjukkan saat tiba</h2>
+        <p class="lead">Tunjukkan kartu ini kepada penerima tamu agar registrasi lebih cepat.</p>
+      </div>
+      <div class="pass reveal" style="--i:1">
+        <div class="pass-top"><span class="label">Pernikahan Ardan &amp; Nayla</span><b data-guest>Bapak/Ibu/Saudara/i</b><small>Kartu tamu</small></div>
+        <div class="pass-mid"><svg id="qrPass" role="img" aria-label="Contoh tampilan kode QR kartu tamu"></svg><p>Contoh tampilan kode QR, bukan kode yang asli.</p></div>
+        <div class="pass-foot"><div><small>Tanggal</small><b data-ev-date>Sabtu</b></div><div><small>Tempat</small><b>Gedung Serbaguna Cendana</b></div></div>
+      </div>
     </div>
   </section>
 
@@ -566,8 +692,10 @@ fieldset{border:0;}
   <section class="sec dark" id="kontak" aria-labelledby="t-thanks">
     <div class="wrap reveal">
       <p class="label">Terima Kasih</p>
-      <h2 class="thanks" id="t-thanks">Sampai jumpa</h2>
-      <p class="sign">Dengan penuh cinta,<b>Romeo &amp; Juliet</b></p>
+      <h2 class="thanks foil foil--gold" id="t-thanks">Sampai jumpa</h2>
+      <p class="lead" style="max-width:34rem">Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Atas kehadiran dan doa restu Anda, kami mengucapkan terima kasih yang sebesar-besarnya.</p>
+      <p class="sign">Kami yang berbahagia,<b>Ardan &amp; Nayla</b><small class="fam">beserta keluarga besar</small></p>
+      <div class="share-row"><button class="btn btn--gold" type="button" id="shareBtn"><svg aria-hidden="true"><use href="#i-send"/></svg>Bagikan undangan</button></div>
 
       <div class="biz">
         <h3>Ingin undangan digital seperti ini untuk acara Anda?</h3>
@@ -575,6 +703,7 @@ fieldset{border:0;}
         <div class="row">
           <a class="btn btn--gold" id="waBtn" href="https://wa.me/6281255557994?text=Halo%20Bagas%2C%20saya%20tertarik%20dengan%20undangan%20digital%20(versi%20klasik)." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-chat"/></svg>Hubungi Bagas</a>
           <a class="btn" href="../undangan-modern/">Lihat versi modern</a>
+          <a class="btn" href="../undangan-islami/">Lihat versi islami</a>
           <a class="btn" href="https://bagasaria93.github.io/for-business/">Kembali ke portfolio</a>
         </div>
       </div>
@@ -598,7 +727,7 @@ fieldset{border:0;}
   /* Event times: a rolling Saturday so the countdown always has a future date. */
   var akad = IV.rollingDate(45, 6, 8, 0);
   var resepsi = IV.rollingDate(45, 6, 11, 0);
-  var place = 'Gedung Serbaguna Verona, Jl. Melati No. 12, Kota Verona';
+  var place = 'Gedung Serbaguna Cendana, Jl. Melati No. 12, Jakarta Selatan';
 
   IV.$('#heroDate').textContent = IV.fmtDate(akad);
   IV.$$('[data-ev-date]').forEach(function(el){ el.textContent = IV.fmtDate(akad); });
@@ -612,8 +741,8 @@ fieldset{border:0;}
       var isAkad = btn.getAttribute('data-ics') === 'akad';
       var start = isAkad ? akad : resepsi;
       IV.downloadIcs({
-        file: 'romeo-juliet-' + (isAkad ? 'akad' : 'resepsi'),
-        title: (isAkad ? 'Akad Nikah' : 'Resepsi') + ' Romeo & Juliet',
+        file: 'ardan-nayla-' + (isAkad ? 'akad' : 'resepsi'),
+        title: (isAkad ? 'Akad Nikah' : 'Resepsi') + ' Ardan & Nayla',
         start: start,
         end: IV.addMinutes(start, isAkad ? 120 : 180),
         location: place,
@@ -626,6 +755,16 @@ fieldset{border:0;}
     IV.toast('Di undangan asli, tombol ini membuka lokasi acara Anda di Google Maps.');
   });
 
+  IV.qr(IV.$('#qrPass'), 11, 25);
+  IV.lightbox(IV.$$('#gallery .tile'), { label: 'Galeri foto', canOpen: function(){ return opened; } });
+  IV.progress();
+  IV.dust(IV.$('#dustCover'), { count: 38 });
+  IV.dust(IV.$('#dustHero'), { kind: 'petal', count: 14, colors: ['#c98a93', '#e3b9bd', '#d8b27a'] });
+
+  IV.$('#shareBtn').addEventListener('click', function(){
+    IV.share({ title: 'Undangan Pernikahan Ardan & Nayla', text: 'Anda diundang ke pernikahan Ardan & Nayla.' });
+  });
+
   /* Music: slow, soft arpeggio. */
   var music = IV.music({
     bpm: 66, wave: 'triangle', decay: 2.2, vol: 0.07, master: 0.9,
@@ -635,15 +774,33 @@ fieldset{border:0;}
 
   /* RSVP + wishes */
   IV.rsvp({
-    form: '#rsvpForm', list: '#wishes', key: 'iv:klasik:wishes',
+    form: '#rsvpForm', list: '#wishes', key: 'iv:klasik:wishes:v2',
+    onSubmit: function(r){ if (r.attend === 'hadir') IV.confetti(['#dcc08a', '#b48a43', '#ffffff', '#a63348', '#6b1523']); },
     seed: [
-      { name: 'Benvolio', attend: 'hadir', guests: 2, msg: 'Selamat Romeo dan Juliet! Semoga kisah kalian berakhir jauh lebih bahagia dari yang dibayangkan orang. Sampai bertemu di hari H.', ago: '2 hari lalu' },
-      { name: 'Mercutio', attend: 'hadir', guests: 1, msg: 'Akhirnya! Aku bawa musik, kalian bawa senyum. Selamat berbahagia.', ago: '3 hari lalu' },
-      { name: 'Rosaline', attend: 'tidak', guests: 0, msg: 'Maaf belum bisa hadir, tapi doaku menyertai kalian. Hidup bahagia selalu.', ago: '4 hari lalu' },
-      { name: 'Frater Laurence', attend: 'hadir', guests: 1, msg: 'Dengan senang hati menjadi saksi. Semoga pernikahan kalian dipenuhi kesabaran, tawa, dan secangkir teh hangat.', ago: '5 hari lalu' },
-      { name: 'Count Paris', attend: 'ragu', guests: 0, msg: 'Aku usahakan datang. Jadwalku padat, tapi kalian layak dirayakan.', ago: '6 hari lalu' }
+      { name: 'Raka Pratama', attend: 'hadir', guests: 2, msg: 'Selamat Ardan dan Nayla! Semoga pernikahan kalian penuh kebahagiaan dan langgeng sampai tua. Sampai bertemu di hari H.', ago: '2 hari lalu' },
+      { name: 'Bima Wirawan', attend: 'hadir', guests: 1, msg: 'Akhirnya sampai juga di hari ini! Aku datang dengan senyum paling lebar. Selamat berbahagia.', ago: '3 hari lalu' },
+      { name: 'Sekar Ayu', attend: 'tidak', guests: 0, msg: 'Maaf belum bisa hadir, tapi doaku menyertai kalian. Semoga selalu bahagia dan saling menjaga.', ago: '4 hari lalu' },
+      { name: 'Pak Hadi Santoso', attend: 'hadir', guests: 1, msg: 'Dengan senang hati kami hadir menyaksikan kebahagiaan kalian. Semoga rumah tangganya dipenuhi kesabaran, tawa, dan secangkir teh hangat.', ago: '5 hari lalu' },
+      { name: 'Arka Wijaya', attend: 'ragu', guests: 0, msg: 'Saya usahakan hadir. Jadwal cukup padat, tetapi kalian layak dirayakan.', ago: '6 hari lalu' },
+      { name: 'Bu Ratna', attend: 'hadir', guests: 2, msg: 'Selamat ya, Nak. Ibu doakan kalian selalu rukun dan bahagia sampai tua.', ago: '1 minggu lalu' }
     ]
   });
+
+  /* Top menu (desktop): appears after the first screen, highlights the section in view */
+  var menu = IV.$('#menu');
+  function onScroll(){ menu.classList.toggle('show', (window.pageYOffset || 0) > window.innerHeight * 0.6); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if ('IntersectionObserver' in window) {
+    var links = IV.$$('#menu a');
+    var sio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        links.forEach(function(a){ a.classList.toggle('is-on', a.getAttribute('data-sec') === en.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['mempelai', 'acara', 'galeri', 'doa', 'hadiah', 'rsvp'].forEach(function(id){ var el = IV.$('#' + id); if (el) sio.observe(el); });
+  }
 
   /* Opening the envelope */
   function finish(){

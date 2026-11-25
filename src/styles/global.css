@@ -792,7 +792,7 @@
   .system .best { font-weight: 800; font-size: 0.92rem; color: var(--fg); }
 
   /* Digital invitation demos: two preview cards with a small browser bar, then a contact call. */
-  .inv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-g); }
+  .inv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--gap-g); }
   .inv { border: var(--hair) solid var(--line); background: var(--bg-2); transition: transform var(--dur-3) var(--spring), box-shadow var(--dur-3) var(--spring); }
   .inv:hover, .inv:focus-within { transform: translate(-4px, -4px); box-shadow: 8px 8px 0 var(--signal); }
   .inv-link { display: block; text-decoration: none; color: inherit; }

@@ -4,9 +4,9 @@
 <script>document.documentElement.classList.add('js');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Digital Romeo &amp; Juliet - Versi Modern, Banyak Jenis Acara</title>
-<meta name="description" content="Demo undangan digital versi modern untuk banyak jenis acara: pernikahan, tunangan, ulang tahun, dan syukuran rumah. Satu desain, warna dan isi menyesuaikan acara. Dibuat oleh Bagas Aria Sativa.">
-<meta property="og:title" content="Undangan Digital Romeo &amp; Juliet - Versi Modern">
+<title>Undangan Digital Ardan &amp; Nayla - Versi Modern, Banyak Jenis Acara</title>
+<meta name="description" content="Demo undangan digital versi modern untuk banyak jenis acara: pernikahan, tunangan, ulang tahun, dan syukuran rumah. Satu desain, warna dan isi menyesuaikan acara, lengkap dengan ucapan dan doa. Dibuat oleh Bagas Aria Sativa.">
+<meta property="og:title" content="Undangan Digital Ardan &amp; Nayla - Versi Modern">
 <meta property="og:description" content="Satu desain undangan untuk pernikahan, tunangan, ulang tahun, dan syukuran rumah. Ganti jenis acara dan lihat semuanya berubah.">
 <meta name="theme-color" content="#16130f">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -269,6 +269,44 @@ fieldset{border:0;}
   .cover{transition-duration:.01s;}
   :root{transition:none;}
 }
+
+/* ---------- premium layer ---------- */
+:root{--iv-progress:var(--ac);}
+.spin{position:absolute;right:1.1rem;top:9.4rem;width:5.4rem;height:5.4rem;color:var(--ink);pointer-events:none;animation:spin 20s linear infinite;z-index:1;}
+.spin text{font-family:var(--body);font-weight:800;font-size:10.5px;fill:currentColor;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.blob--a{animation:drift 14s ease-in-out infinite alternate;}
+.blob--b{animation:drift 18s ease-in-out infinite alternate-reverse;}
+@keyframes drift{to{transform:translate(18px,-22px) scale(1.07);}}
+.marquee{overflow:hidden;background:var(--ink);color:var(--ac);}
+.mq-track{display:flex;width:max-content;animation:mq 30s linear infinite;font-family:var(--display);font-weight:800;font-size:1.02rem;letter-spacing:.05em;text-transform:uppercase;padding:.8rem 0;white-space:nowrap;}
+@keyframes mq{to{transform:translateX(-50%);}}
+
+.bless{font-family:var(--display);font-weight:600;font-size:clamp(1.3rem,5.2vw,1.75rem);line-height:1.3;letter-spacing:-.015em;margin-top:1.4rem;color:var(--ink);}
+.doa-card{margin-top:1rem;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:1.2rem 1.25rem 1.3rem;}
+.doa-card small{display:block;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ac-d);}
+.doa-card p{margin-top:.45rem;font-size:1.02rem;line-height:1.6;}
+.doa-card--you{background:var(--ink);color:#fff;}
+.doa-card--you small{color:var(--ac);}
+
+.pal{display:flex;align-items:center;gap:.5rem;margin-top:.2rem;}
+.pal i{width:2.1rem;height:2.1rem;border-radius:50%;border:2px solid var(--ink);flex:none;}
+
+.pass{position:relative;max-width:21rem;margin:1.6rem auto 0;background:var(--ink);color:#fff;border-radius:28px;overflow:hidden;box-shadow:0 24px 40px rgba(0,0,0,.2);}
+.pass-head{padding:1.4rem 1.3rem 1.1rem;background:var(--ac);color:var(--ink);}
+.pass-head small{display:block;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;}
+.pass-head b{display:block;font-family:var(--display);font-weight:800;font-size:1.7rem;line-height:1.05;letter-spacing:-.03em;margin-top:.3rem;word-break:break-word;}
+.pass-qr{padding:1.4rem;display:grid;place-items:center;border-bottom:2px dashed rgba(255,255,255,.35);}
+.pass-qr svg{width:9.6rem;height:9.6rem;background:#fff;color:var(--ink);--qr-bg:#fff;padding:.5rem;border-radius:16px;}
+.pass-foot{display:grid;grid-template-columns:1fr 1fr;}
+.pass-foot div{padding:.9rem 1rem 1rem;}
+.pass-foot div+div{border-left:2px dashed rgba(255,255,255,.35);}
+.pass-foot small{display:block;font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ac);}
+.pass-foot b{display:block;font-family:var(--display);font-weight:800;font-size:.98rem;line-height:1.2;margin-top:.1rem;}
+
+.iv-lb__stage>.g{flex:none;}
+.iv-zoomable:focus-visible{outline:3px solid #fff;outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){.spin,.blob--a,.blob--b,.mq-track{animation:none;}}
 </style>
 </head>
 <body>
@@ -281,6 +319,7 @@ fieldset{border:0;}
     <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8"/><path d="M12 8C10 4 6 4 6.5 6.5 7 8 12 8 12 8zM12 8c2-4 6-4 5.5-1.5C17 8 12 8 12 8z"/></g></symbol>
     <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.5 7.5L3 21l1.6-5A8.5 8.5 0 1 1 21 12z"/></g></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.6-9-9.3C1.8 7.4 4 4 7.2 4c2 0 3.6 1.1 4.8 3 1.2-1.9 2.8-3 4.8-3C20 4 22.2 7.4 21 10.7 19 15.4 12 20 12 20z"/></g></symbol>
     <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></g></symbol>
     <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></g></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
@@ -292,6 +331,7 @@ fieldset{border:0;}
 
 <!-- ============ COVER ============ -->
 <section class="cover" id="cover" aria-label="Sampul undangan">
+  <svg class="spin" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><defs><path id="spinPath" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text><textPath href="#spinPath" textLength="268" lengthAdjust="spacing">SAVE THE DATE &#8226; SAVE THE DATE &#8226; </textPath></text></svg>
   <div class="cover-in">
     <div class="cover-top">
       <small>Demo &middot; pilih jenis acara</small>
@@ -299,7 +339,7 @@ fieldset{border:0;}
     </div>
     <div>
       <p class="eyebrow" data-t="kicker">Pernikahan</p>
-      <h1 class="title" data-title aria-live="polite"><span>Romeo</span><span class="mid-w">&amp;</span><span>Juliet</span></h1>
+      <h1 class="title" data-title aria-live="polite"><span>Ardan</span><span class="mid-w">&amp;</span><span>Nayla</span></h1>
       <p class="cover-tag" data-t="tag">Kami akan menikah!</p>
     </div>
     <div class="cover-bot">
@@ -321,7 +361,7 @@ fieldset{border:0;}
       <p class="eyebrow" data-t="kicker">Pernikahan</p>
     </div>
     <div>
-      <div class="title" data-title><span>Romeo</span><span class="mid-w">&amp;</span><span>Juliet</span></div>
+      <div class="title" data-title><span>Ardan</span><span class="mid-w">&amp;</span><span>Nayla</span></div>
       <p class="stage-tag" data-t="tag">Kami akan menikah!</p>
     </div>
     <div class="stage-foot">
@@ -350,7 +390,7 @@ fieldset{border:0;}
         <span class="blob blob--a"></span><span class="blob blob--b"></span>
         <div>
           <p class="eyebrow hero-anim" style="--i:0" data-t="kicker">Pernikahan</p>
-          <h2 class="title hero-anim" style="--i:1;margin-top:.8rem" data-title><span>Romeo</span><span class="mid-w">&amp;</span><span>Juliet</span></h2>
+          <h2 class="title hero-anim" style="--i:1;margin-top:.8rem" data-title><span>Ardan</span><span class="mid-w">&amp;</span><span>Nayla</span></h2>
         </div>
         <p class="hero-lead hero-anim" style="--i:2" data-t="lead"></p>
         <div class="ticket hero-anim" style="--i:3">
@@ -366,6 +406,8 @@ fieldset{border:0;}
         </div>
         <p class="scroll-cue hero-anim" style="--i:5">Gulir untuk detail acara</p>
       </header>
+
+      <div class="marquee" aria-hidden="true"><div class="mq-track" id="mq"></div></div>
 
       <!-- schedule -->
       <section class="slide" id="acara" aria-labelledby="t-acara">
@@ -399,6 +441,23 @@ fieldset{border:0;}
         <div class="info reveal" id="info"></div>
       </section>
 
+      <!-- blessing -->
+      <section class="slide mid" id="doa" aria-labelledby="t-doa">
+        <div class="reveal">
+          <p class="eyebrow">Ucapan dan doa</p>
+          <h2 class="h" id="t-doa">Dari kami, untukmu</h2>
+        </div>
+        <blockquote class="bless reveal" style="--i:1" data-t="ucapan"></blockquote>
+        <div class="doa-card reveal" style="--i:2">
+          <small>Doa kami</small>
+          <p data-t="doa"></p>
+        </div>
+        <div class="doa-card doa-card--you reveal" style="--i:3">
+          <small>Doa untukmu</small>
+          <p>Semoga kehadiran dan doa yang kamu berikan dibalas dengan kebaikan berlipat ganda, dan kesehatan serta kebahagiaan selalu menyertaimu sekeluarga.</p>
+        </div>
+      </section>
+
       <!-- gallery -->
       <section class="slide on-dark" id="galeri" aria-labelledby="t-galeri">
         <div class="gal-head reveal">
@@ -412,13 +471,13 @@ fieldset{border:0;}
           </div>
         </div>
         <div class="gtrack" id="gtrack" tabindex="0" role="region" aria-label="Galeri foto, geser ke samping">
-          <figure class="g g1"><b>01</b><span>Foto kamu di sini</span></figure>
-          <figure class="g g2"><b>02</b><span>Foto kamu di sini</span></figure>
-          <figure class="g g3"><b>03</b><span>Foto kamu di sini</span></figure>
-          <figure class="g g4"><b>04</b><span>Foto kamu di sini</span></figure>
-          <figure class="g g5"><b>05</b><span>Foto kamu di sini</span></figure>
+          <figure class="g g1" data-cap="Foto 01"><b>01</b><span>Foto kamu di sini</span></figure>
+          <figure class="g g2" data-cap="Foto 02"><b>02</b><span>Foto kamu di sini</span></figure>
+          <figure class="g g3" data-cap="Foto 03"><b>03</b><span>Foto kamu di sini</span></figure>
+          <figure class="g g4" data-cap="Foto 04"><b>04</b><span>Foto kamu di sini</span></figure>
+          <figure class="g g5" data-cap="Foto 05"><b>05</b><span>Foto kamu di sini</span></figure>
         </div>
-        <p class="note">Ruang contoh. Pada undangan asli, galeri berisi foto dan video milikmu, dan bisa digeser dengan jari atau mouse.</p>
+        <p class="note">Ruang contoh. Pada undangan asli, galeri berisi foto dan video milikmu, dan bisa digeser dengan jari atau mouse. Ketuk foto untuk memperbesar.</p>
       </section>
 
       <!-- gifts -->
@@ -436,7 +495,7 @@ fieldset{border:0;}
           <div class="bank">
             <small>Bank Contoh</small>
             <p class="no">1234 5678 90</p>
-            <p>a.n. Romeo Montague</p>
+            <p>a.n. Ardan Maulana</p>
             <button class="btn btn--ac" type="button" data-copy="1234567890" data-copy-msg="Nomor rekening contoh disalin"><svg aria-hidden="true"><use href="#i-copy"/></svg>Salin nomor</button>
           </div>
         </div>
@@ -447,6 +506,21 @@ fieldset{border:0;}
           </div>
         </div>
         <p class="note">Nomor rekening dan kode di atas hanya contoh.</p>
+      </section>
+
+      <!-- guest pass -->
+      <section class="slide tint" id="tiket" aria-labelledby="t-tiket">
+        <div class="reveal">
+          <p class="eyebrow">Tiket masuk</p>
+          <h2 class="h" id="t-tiket">Tunjukkan saat tiba</h2>
+          <p class="lead">Tunjukkan kartu ini kepada penerima tamu supaya registrasi lebih cepat.</p>
+        </div>
+        <div class="pass reveal" style="--i:1">
+          <div class="pass-head"><small data-t="kicker">Pernikahan</small><b data-guest>Bapak/Ibu/Saudara/i</b></div>
+          <div class="pass-qr"><svg id="qrPass" role="img" aria-label="Contoh tampilan kode QR tiket masuk"></svg></div>
+          <div class="pass-foot"><div><small>Tanggal</small><b data-datefull>Sabtu</b></div><div><small>Tempat</small><b data-t="venue">Venue</b></div></div>
+        </div>
+        <p class="note">Contoh tampilan kode QR, bukan kode yang asli.</p>
       </section>
 
       <!-- rsvp -->
@@ -500,14 +574,16 @@ fieldset{border:0;}
         </div>
         <div class="stack reveal">
           <a class="btn btn--ac" id="waBtn" href="https://wa.me/6281255557994?text=Halo%20Bagas%2C%20saya%20tertarik%20dengan%20undangan%20digital%20(versi%20modern)." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-chat"/></svg>Hubungi Bagas</a>
+          <button class="btn btn--line" type="button" id="shareBtn"><svg aria-hidden="true"><use href="#i-send"/></svg>Bagikan demo ini</button>
           <a class="btn btn--line" href="../undangan-klasik/">Lihat versi klasik</a>
+          <a class="btn btn--line" href="../undangan-islami/">Lihat versi islami</a>
           <a class="btn btn--line" href="https://bagasaria93.github.io/for-business/">Kembali ke portfolio</a>
         </div>
         <div class="linkgen reveal">
           <h3>Link personal untuk setiap tamu</h3>
           <p>Ketik nama tamu, dan link undangannya langsung siap dibagikan. Nama itu muncul di sampul undangan.</p>
           <label class="sr" for="genIn">Nama tamu</label>
-          <input id="genIn" type="text" maxlength="60" placeholder="Contoh: Keluarga Benvolio" autocomplete="off">
+          <input id="genIn" type="text" maxlength="60" placeholder="Contoh: Keluarga Mahendra" autocomplete="off">
           <p class="linkout" id="genOut" aria-live="polite"></p>
           <button class="btn btn--line" type="button" id="genCopy" style="margin-top:.7rem;width:100%"><svg aria-hidden="true"><use href="#i-copy"/></svg>Salin link</button>
         </div>
@@ -520,6 +596,7 @@ fieldset{border:0;}
 <nav class="dock" id="dock" aria-label="Navigasi undangan">
   <a href="#beranda" data-sec="beranda"><svg aria-hidden="true"><use href="#i-home"/></svg>Beranda</a>
   <a href="#acara" data-sec="acara"><svg aria-hidden="true"><use href="#i-cal"/></svg>Acara</a>
+  <a href="#doa" data-sec="doa"><svg aria-hidden="true"><use href="#i-heart"/></svg>Doa</a>
   <a href="#galeri" data-sec="galeri"><svg aria-hidden="true"><use href="#i-img"/></svg>Galeri</a>
   <a href="#hadiah" data-sec="hadiah"><svg aria-hidden="true"><use href="#i-gift"/></svg>Hadiah</a>
   <a href="#rsvp" data-sec="rsvp"><svg aria-hidden="true"><use href="#i-chat"/></svg>RSVP</a>
@@ -534,66 +611,74 @@ fieldset{border:0;}
   var EVENTS = {
     nikah: {
       label: 'Pernikahan', h: 18, l: 62, kicker: 'Pernikahan',
-      lines: ['Romeo', '&', 'Juliet'], cal: 'Pernikahan Romeo & Juliet',
+      lines: ['Ardan', '&', 'Nayla'], cal: 'Pernikahan Ardan & Nayla',
       tag: 'Kami akan menikah!',
       lead: 'Setelah sekian lama bersama, kami memutuskan melangkah ke jenjang berikutnya. Datang dan rayakan bersama kami.',
       day: [50, 6], items: [['Akad nikah', 8, 0, 120], ['Resepsi', 11, 0, 180]],
-      venue: 'Gedung Serbaguna Verona', addr: 'Jl. Melati No. 12, Kota Verona',
+      venue: 'Gedung Serbaguna Cendana', addr: 'Jl. Melati No. 12, Jakarta Selatan',
       info: [['Busana', 'Earth tone: terakota, krem, dan cokelat.'], ['Datang lebih awal', 'Akad dimulai tepat waktu, jadi mohon tiba 15 menit sebelumnya.'], ['Foto bareng', 'Ada photo booth dan sesi foto keluarga setelah resepsi.']],
+      ucapan: 'Dengan penuh syukur, kami mengundangmu menyaksikan hari pernikahan kami. Kehadiran dan doamu melengkapi kebahagiaan ini.',
+      doa: 'Ya Tuhan, berkatilah langkah kami. Jadikan rumah tangga ini tempat pulang yang tenang, penuh tawa, dan saling menguatkan, dari hari ini sampai usia senja.',
       giftTitle: 'Amplop digital', giftLead: 'Kehadiranmu sudah sangat berarti. Kalau ingin berbagi kebahagiaan, bisa lewat sini.',
       rsvpTitle: 'Kamu datang, kan?', rsvpLead: 'Konfirmasi dulu supaya kami bisa menyiapkan kursi dan hidangan untukmu.',
       seeds: [
-        { name: 'Benvolio', attend: 'hadir', guests: 2, msg: 'Selamat ya Romeo dan Juliet! Sampai ketemu di hari H.', ago: '2 hari lalu' },
-        { name: 'Mercutio', attend: 'hadir', guests: 1, msg: 'Akhirnya sah juga. Aku tunggu bagian makanannya.', ago: '3 hari lalu' },
-        { name: 'Rosaline', attend: 'tidak', guests: 0, msg: 'Maaf belum bisa hadir. Doa terbaik untuk kalian.', ago: '4 hari lalu' }
+        { name: 'Raka Pratama', attend: 'hadir', guests: 2, msg: 'Selamat ya Ardan dan Nayla! Semoga langgeng dan bahagia selalu. Sampai ketemu di hari H.', ago: '2 hari lalu' },
+        { name: 'Bima Wirawan', attend: 'hadir', guests: 1, msg: 'Akhirnya sah juga. Aku tunggu bagian makanannya.', ago: '3 hari lalu' },
+        { name: 'Sekar Ayu', attend: 'tidak', guests: 0, msg: 'Maaf belum bisa hadir. Doa terbaik untuk kalian berdua.', ago: '4 hari lalu' }
       ]
     },
     tunangan: {
       label: 'Tunangan', h: 262, l: 70, kicker: 'Lamaran',
-      lines: ['Romeo', '&', 'Juliet'], cal: 'Lamaran Romeo & Juliet',
+      lines: ['Ardan', '&', 'Nayla'], cal: 'Lamaran Ardan & Nayla',
       tag: 'Kami bertunangan!',
       lead: 'Langkah kecil yang berarti besar. Acara hangat bersama keluarga dan sahabat terdekat.',
       day: [30, 0], items: [['Lamaran', 16, 0, 90], ['Makan malam keluarga', 18, 30, 120]],
-      venue: 'Taman Balkon Verona', addr: 'Jl. Anggrek No. 3, Kota Verona',
+      venue: 'Taman Anggrek', addr: 'Jl. Anggrek No. 3, Jakarta Selatan',
       info: [['Busana', 'Smart casual dengan nuansa ungu dan putih.'], ['Tamu terbatas', 'Acaranya intim, jadi mohon konfirmasi kehadiranmu.'], ['Setelah acara', 'Makan malam bersama kedua keluarga.']],
+      ucapan: 'Ini baru permulaan. Terima kasih sudah menjadi bagian dari perjalanan kami, dan mari rayakan langkah kecil yang berarti besar.',
+      doa: 'Ya Tuhan, mudahkan jalan kami menuju pernikahan. Satukan niat, kuatkan hati kami berdua, dan pertemukan kedua keluarga dalam kebaikan.',
       giftTitle: 'Hadiah', giftLead: 'Tidak wajib sama sekali. Doa kalian sudah paling berharga.',
       rsvpTitle: 'Bisa hadir?', rsvpLead: 'Tempat terbatas, jadi kabari kami secepatnya ya.',
       seeds: [
-        { name: 'Frater Laurence', attend: 'hadir', guests: 1, msg: 'Langkah yang indah. Semoga dilancarkan sampai hari pernikahan.', ago: '1 hari lalu' },
-        { name: 'Nurse', attend: 'hadir', guests: 2, msg: 'Dari dulu saya sudah tahu kalian berjodoh!', ago: '2 hari lalu' },
-        { name: 'Benvolio', attend: 'ragu', guests: 0, msg: 'Aku usahakan datang, tunggu kepastian jadwal.', ago: '3 hari lalu' }
+        { name: 'Pak Hadi Santoso', attend: 'hadir', guests: 1, msg: 'Langkah yang indah. Semoga dilancarkan sampai hari pernikahan.', ago: '1 hari lalu' },
+        { name: 'Bu Ratna', attend: 'hadir', guests: 2, msg: 'Dari dulu Ibu sudah merasa kalian berjodoh!', ago: '2 hari lalu' },
+        { name: 'Raka Pratama', attend: 'ragu', guests: 0, msg: 'Aku usahakan datang, tunggu kepastian jadwal.', ago: '3 hari lalu' }
       ]
     },
     ultah: {
       label: 'Ulang tahun', h: 48, l: 60, kicker: 'Pesta ulang tahun',
-      lines: ['Juliet', 'berusia', '25'], cal: 'Pesta ulang tahun Juliet (kejutan dari Romeo)',
-      tag: 'Romeo menyiapkan pesta kejutan.',
-      lead: 'Juliet belum tahu apa-apa. Datang tepat waktu, jangan bocorkan, dan siapkan senyum paling lebar.',
+      lines: ['Nayla', 'berusia', '25'], cal: 'Pesta ulang tahun Nayla (kejutan dari Ardan)',
+      tag: 'Ardan menyiapkan pesta kejutan.',
+      lead: 'Nayla belum tahu apa-apa. Datang tepat waktu, jangan bocorkan, dan siapkan senyum paling lebar.',
       day: [21, 5], items: [['Kumpul dan bersembunyi', 18, 30, 60], ['Tiup lilin', 19, 30, 30], ['Makan dan musik', 20, 0, 180]],
-      venue: 'Rooftop Kafe Verona', addr: 'Jl. Raya Verona No. 25, lantai 5',
-      info: [['Rahasia', 'Jangan unggah apa pun sebelum acara selesai.'], ['Tiba tepat waktu', 'Semua tamu harus sudah berkumpul sebelum Juliet datang.'], ['Dress code', 'Nuansa kuning dan hitam. Pakai yang paling nyaman.']],
+      venue: 'Rooftop Kafe Senja', addr: 'Jl. Kenanga No. 25, lantai 5, Jakarta Selatan',
+      info: [['Rahasia', 'Jangan unggah apa pun sebelum acara selesai.'], ['Tiba tepat waktu', 'Semua tamu harus sudah berkumpul sebelum Nayla datang.'], ['Dress code', 'Nuansa kuning dan hitam. Pakai yang paling nyaman.']],
+      ucapan: 'Terima kasih sudah ikut menjaga rahasia ini. Hadirmu membuat kejutan untuk Nayla jadi benar-benar tidak terlupakan.',
+      doa: 'Semoga Nayla diberi umur yang panjang dan berkah, kesehatan yang baik, dan kebahagiaan yang tidak habis di usia yang baru.',
       giftTitle: 'Kado', giftLead: 'Tanpa kado pun tidak apa-apa. Tapi kalau mau, ini cara termudahnya.',
-      rsvpTitle: 'Ikut, ya?', rsvpLead: 'Kabari Romeo supaya jumlah kursi dan kuenya pas.',
+      rsvpTitle: 'Ikut, ya?', rsvpLead: 'Kabari Ardan supaya jumlah kursi dan kuenya pas.',
       seeds: [
-        { name: 'Mercutio', attend: 'hadir', guests: 1, msg: 'Rahasia aman bersamaku. Juliet tidak akan tahu.', ago: '1 hari lalu' },
-        { name: 'Benvolio', attend: 'hadir', guests: 2, msg: 'Aku bawa kuenya. Romeo bagian lilin.', ago: '2 hari lalu' },
-        { name: 'Nurse', attend: 'hadir', guests: 1, msg: 'Selamat ulang tahun untuk Juliet kecil kesayanganku.', ago: '3 hari lalu' }
+        { name: 'Bima Wirawan', attend: 'hadir', guests: 1, msg: 'Rahasia aman bersamaku. Nayla tidak akan tahu.', ago: '1 hari lalu' },
+        { name: 'Raka Pratama', attend: 'hadir', guests: 2, msg: 'Aku bawa kuenya. Ardan bagian lilin.', ago: '2 hari lalu' },
+        { name: 'Bu Ratna', attend: 'hadir', guests: 1, msg: 'Selamat ulang tahun, Nayla. Semoga sehat dan bahagia selalu.', ago: '3 hari lalu' }
       ]
     },
     rumah: {
       label: 'Syukuran rumah', h: 168, l: 52, kicker: 'Syukuran rumah baru',
-      lines: ['Romeo', '&', 'Juliet'], cal: 'Syukuran rumah baru Romeo & Juliet',
+      lines: ['Ardan', '&', 'Nayla'], cal: 'Syukuran rumah baru Ardan & Nayla',
       tag: 'Kami pindah rumah!',
       lead: 'Pintu rumah baru kami terbuka untukmu. Datang, lihat-lihat, lalu makan bersama.',
       day: [35, 6], items: [['Open house', 10, 0, 120], ['Doa dan syukuran', 11, 0, 60], ['Makan siang bersama', 12, 0, 120]],
-      venue: 'Rumah Romeo & Juliet', addr: 'Jl. Anggrek No. 7, Kota Verona',
+      venue: 'Rumah Ardan & Nayla', addr: 'Jl. Anggrek No. 7, Jakarta Selatan',
       info: [['Parkir', 'Tersedia di depan rumah dan di lapangan sebelah.'], ['Lepas alas kaki', 'Rumahnya masih baru, jadi mohon lepas alas kaki.'], ['Bawa apa?', 'Cukup bawa diri. Kalau mau membawa tanaman, kami senang sekali.']],
+      ucapan: 'Terima kasih sudah ikut bersuka cita. Rumah ini baru benar-benar terasa hangat setelah ada kalian di dalamnya.',
+      doa: 'Ya Tuhan, jadikan rumah ini tempat yang aman, penuh berkah, dan selalu terbuka untuk keluarga dan sahabat yang datang.',
       giftTitle: 'Hadiah rumah baru', giftLead: 'Tidak perlu repot. Kalau ingin ikut mengisi rumah kami, bisa lewat sini.',
       rsvpTitle: 'Mampir, ya?', rsvpLead: 'Kabari kami agar makanannya cukup untuk semua.',
       seeds: [
-        { name: 'Mercutio', attend: 'hadir', guests: 2, msg: 'Rumah baru, alasan baru untuk makan enak.', ago: '1 hari lalu' },
-        { name: 'Benvolio', attend: 'hadir', guests: 1, msg: 'Aku bawa tanaman. Jangan sampai mati ya.', ago: '2 hari lalu' },
-        { name: 'Count Paris', attend: 'tidak', guests: 0, msg: 'Maaf, sedang di luar kota. Selamat menempati rumah baru.', ago: '4 hari lalu' }
+        { name: 'Bima Wirawan', attend: 'hadir', guests: 2, msg: 'Rumah baru, alasan baru untuk makan enak.', ago: '1 hari lalu' },
+        { name: 'Raka Pratama', attend: 'hadir', guests: 1, msg: 'Aku bawa tanaman. Jangan sampai mati ya.', ago: '2 hari lalu' },
+        { name: 'Arka Wijaya', attend: 'tidak', guests: 0, msg: 'Maaf, sedang di luar kota. Selamat menempati rumah baru.', ago: '4 hari lalu' }
       ]
     }
   };
@@ -640,9 +725,9 @@ fieldset{border:0;}
     root.style.setProperty('--l', e.l);
     $$('[data-ev]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-ev') === id ? 'true' : 'false'); });
 
-    ['kicker', 'tag', 'lead', 'venue', 'addr', 'giftTitle', 'giftLead', 'rsvpTitle', 'rsvpLead'].forEach(function(k){ fill('[data-t="' + k + '"]', e[k]); });
+    ['kicker', 'tag', 'lead', 'venue', 'addr', 'ucapan', 'doa', 'giftTitle', 'giftLead', 'rsvpTitle', 'rsvpLead'].forEach(function(k){ fill('[data-t="' + k + '"]', e[k]); });
     renderTitle(e.lines);
-    document.title = e.label + ' Romeo & Juliet - Undangan Digital Versi Modern (Demo)';
+    document.title = 'Undangan ' + e.label + ' Ardan & Nayla - Versi Modern (Demo)';
 
     // Dates: each item gets a start time on the rolling event day.
     var items = e.items.map(function(it){
@@ -686,9 +771,21 @@ fieldset{border:0;}
       div.appendChild(b); div.appendChild(s);
       info.appendChild(div);
     });
+    var palRow = document.createElement('div');
+    var palB = document.createElement('b'); palB.textContent = 'Palet warna acara';
+    var pal = document.createElement('span'); pal.className = 'pal'; pal.setAttribute('role', 'img'); pal.setAttribute('aria-label', 'Empat warna utama acara');
+    ['--ac', '--ac-m', '--ac-l', '--ink'].forEach(function(v){ var i = document.createElement('i'); i.style.background = 'var(' + v + ')'; pal.appendChild(i); });
+    palRow.appendChild(palB); palRow.appendChild(pal);
+    info.appendChild(palRow);
+
+    // Running text band under the hero
+    var unit = e.kicker + ' \u2022 ' + e.lines.join(' ') + ' \u2022 ' + IV.fmtDate(d) + ' \u2022 ';
+    var mq = $('#mq');
+    mq.textContent = '';
+    for (var k = 0; k < 2; k++) { var sp = document.createElement('span'); sp.textContent = unit.repeat(4); mq.appendChild(sp); }
 
     cds.forEach(function(c){ c.set(curStart); });
-    if (rsvp) rsvp.use('iv:modern:wishes:' + id, e.seeds);
+    if (rsvp) rsvp.use('iv:modern:wishes:v2:' + id, e.seeds);
 
     if (!silent) {
       try {
@@ -703,7 +800,10 @@ fieldset{border:0;}
   $$('[data-countdown]').forEach(function(box){ cds.push(IV.countdown(box, new Date(Date.now() + 864e5), 'Hari ini!')); });
 
   /* ---------- RSVP ---------- */
-  rsvp = IV.rsvp({ form: '#rsvpForm', list: '#wishes', key: 'iv:modern:wishes:nikah', seed: EVENTS.nikah.seeds });
+  rsvp = IV.rsvp({
+    form: '#rsvpForm', list: '#wishes', key: 'iv:modern:wishes:v2:nikah', seed: EVENTS.nikah.seeds,
+    onSubmit: function(r){ if (r.attend === 'hadir') IV.confetti(['#ff7a3d', '#ffd23f', '#ffffff', '#16130f', '#7be0a6']); }
+  });
 
   /* ---------- Guest name ---------- */
   var gin = $('#guestIn');
@@ -723,7 +823,7 @@ fieldset{border:0;}
   $('#icsBtn').addEventListener('click', function(){
     var e = EVENTS[current];
     IV.downloadIcs({
-      file: 'romeo-juliet-' + current,
+      file: 'ardan-nayla-' + current,
       title: e.cal, start: curStart, end: curEnd,
       location: e.venue + ', ' + e.addr,
       description: 'Undangan demo oleh Bagas Aria Sativa.'
@@ -735,22 +835,23 @@ fieldset{border:0;}
 
   /* ---------- Gallery: swipe, mouse drag, arrows ---------- */
   var tr = $('#gtrack');
-  var down = false, sx = 0, sl = 0;
+  var down = false, moved = false, sx = 0, sl = 0;
   tr.addEventListener('pointerdown', function(e){
     if (e.pointerType !== 'mouse') return;
-    down = true; sx = e.clientX; sl = tr.scrollLeft;
+    down = true; moved = false; sx = e.clientX; sl = tr.scrollLeft;
     tr.classList.add('drag');
-    try { tr.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
   });
-  tr.addEventListener('pointermove', function(e){ if (down) tr.scrollLeft = sl - (e.clientX - sx); });
+  // Listen on the window instead of capturing the pointer, so a plain click still reaches the photo.
+  window.addEventListener('pointermove', function(e){ if (!down) return; if (Math.abs(e.clientX - sx) > 6) moved = true; tr.scrollLeft = sl - (e.clientX - sx); });
   function endDrag(){ if (!down) return; down = false; tr.classList.remove('drag'); }
-  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function(n){ tr.addEventListener(n, endDrag); });
+  ['pointerup', 'pointercancel'].forEach(function(n){ window.addEventListener(n, endDrag); });
   function slide(dir){
     var w = tr.firstElementChild ? tr.firstElementChild.getBoundingClientRect().width + 13 : 280;
     tr.scrollBy({ left: dir * w, behavior: IV.reduce ? 'auto' : 'smooth' });
   }
   $('#gPrev').addEventListener('click', function(){ slide(-1); });
   $('#gNext').addEventListener('click', function(){ slide(1); });
+  IV.lightbox($$('#gtrack .g'), { label: 'Galeri foto', canOpen: function(){ return !moved; } });
 
   /* ---------- Gifts: tabs + a decorative QR-like pattern ---------- */
   var tabBank = $('#tab-bank'), tabQr = $('#tab-qr');
@@ -782,6 +883,12 @@ fieldset{border:0;}
     svg.innerHTML = out;
   })();
 
+  IV.qr($('#qrPass'), 13, 25);
+  IV.progress();
+  $('#shareBtn').addEventListener('click', function(){
+    IV.share({ title: 'Demo undangan digital modern', text: 'Lihat demo undangan digital ini.', msg: 'Link demo disalin' });
+  });
+
   /* ---------- Personal link generator ---------- */
   var gen = $('#genIn'), out = $('#genOut');
   function link(){
@@ -806,7 +913,7 @@ fieldset{border:0;}
         links.forEach(function(a){ a.classList.toggle('is-on', a.getAttribute('data-sec') === id); });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    ['beranda', 'acara', 'galeri', 'hadiah', 'rsvp'].forEach(function(id){ sio.observe($('#' + id)); });
+    ['beranda', 'acara', 'doa', 'galeri', 'hadiah', 'rsvp'].forEach(function(id){ sio.observe($('#' + id)); });
   }
 
   /* ---------- Music: a mellow loop ---------- */

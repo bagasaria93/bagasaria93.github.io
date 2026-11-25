@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Undangan islami">
+  <circle cx="32" cy="32" r="31" fill="#0f4a3a"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#e2c98a" stroke-width="1.2" opacity=".6"/>
+  <g fill="none" stroke="#e2c98a" stroke-width="2.4" stroke-linejoin="round">
+    <rect x="18" y="18" width="28" height="28"/>
+    <rect x="18" y="18" width="28" height="28" transform="rotate(45 32 32)"/>
+  </g>
+  <circle cx="32" cy="32" r="4" fill="#e2c98a"/>
+</svg>
